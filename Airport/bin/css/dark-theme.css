@@ -1,0 +1,67 @@
+.root {
+    -fx-background-color: #1E1E2F;
+    -fx-font-family: Arial;
+}
+
+.label {
+    -fx-text-fill: #ffffff;
+}
+
+.button {
+    -fx-background-color: #0B3D91;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 5;
+    -fx-padding: 10 20 10 20;
+}
+
+.text-field, .password-field {
+    -fx-background-color: #2A2A40;
+    -fx-text-fill: #ffffff;
+    -fx-prompt-text-fill: #aaaaaa;
+}
+
+.table-view {
+    -fx-background-color: #2A2A40;
+    -fx-text-fill: #ffffff;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #0B3D91;
+}
+
+/* Custom Alert Styling */
+.dialog-pane {
+    -fx-background-color: #2A2A40;
+    -fx-border-color: #444466;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 15;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: #1E1E2F;
+    -fx-padding: 10;
+}
+
+.dialog-pane .header-panel .label {
+    -fx-font-size: 16pt;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+.dialog-pane .content.label {
+    -fx-font-size: 14pt;
+    -fx-text-fill: #cccccc;
+    -fx-padding: 10 0 10 0;
+}
+
+.dialog-pane .button-bar .button {
+    -fx-background-color: #0B3D91;
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-padding: 8 16;
+}
+
+.dialog-pane .button-bar .button:hover {
+    -fx-background-color: #0A337B;
+}
