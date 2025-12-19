@@ -1,5 +1,3 @@
-
-
 public class Duty {
     private String time;
     private String location;

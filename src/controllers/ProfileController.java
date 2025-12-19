@@ -89,6 +89,23 @@ public class ProfileController extends SharedController {
             e.printStackTrace();
         }
     }
+
+    @FXML private void viewVisa(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ViewVisa.fxml"));
+            Stage stage = getStageFromEvent(event);
+            stage.setScene(new Scene(loader.load()));
+            ViewVisaController controller = loader.getController();
+            controller.setUser(user);
+            controller.initializeVisaDetails();
+            // Do not set width/height to allow maximized state to persist
+            // stage.setFullScreen(true);
+            stage.setMaximized(true);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     
     @FXML private void viewDuty(ActionEvent event) {
         try {
