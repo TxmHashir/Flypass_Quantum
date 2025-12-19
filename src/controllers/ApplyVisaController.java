@@ -1,17 +1,14 @@
-
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 public class ApplyVisaController extends SharedController {
-
-    // These IDs must exactly match the fx:id in your FXML
     @FXML private TextField nameField;
     @FXML private TextField cnicField;
     @FXML private TextField passportField;
@@ -19,50 +16,62 @@ public class ApplyVisaController extends SharedController {
     @FXML private TextField bankAccountField;
     @FXML private TextField countryField;
     @FXML private ComboBox<String> visaTypeComboBox;
-
     @FXML
     private void initialize() {
-        // Populating the ComboBox as defined in your logic
         visaTypeComboBox.setItems(FXCollections.observableArrayList(
-            "Tourist", "Business", "Student", "Work", "Transit", "Medical"
+        "Tourist", "Business", "Student", "Work", "Transit", "Medical"
         ));
     }
-
+    public void prefillFields() {
+        if (user != null) {
+            nameField.setText(user.getName());
+            cnicField.setText(user.getCnic());
+            passportField.setText(user.getPassportNumber());
+            bankNameField.setText(user.getBankName());
+            bankAccountField.setText(user.getBankAccount());
+        }
+    }
     @FXML
     private void applyVisa() {
         String visaType = visaTypeComboBox.getValue();
         String country = countryField.getText();
-
         // Validation
-        if (visaType == null || country.isEmpty() || nameField.getText().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Please fill in all required fields.");
+        if (visaType == null || country.isEmpty() || nameField.getText().isEmpty() || cnicField.getText().isEmpty()
+        || passportField.getText().isEmpty() || bankNameField.getText().isEmpty() || bankAccountField.getText().isEmpty()) {
+            Alert alert = new Alert(AlertType.ERROR, "Please fill in all required fields.");
             alert.initOwner((Stage) countryField.getScene().getWindow());
             alert.show();
             return;
         }
-
         // Processing logic
-        user.setVisa(visaType + " to " + country);
-        
-        Alert success = new Alert(Alert.AlertType.INFORMATION, "Visa applied successfully!");
+        user.setName(nameField.getText());
+        user.setCnic(cnicField.getText());
+        user.setPassportNumber(passportField.getText());
+        user.setBankName(bankNameField.getText());
+        user.setBankAccount(bankAccountField.getText());
+        user.setVisa(visaType + ", " + country);
+        // Mock save
+        UserDAO userDAO = new UserDAO();
+        userDAO.updateUser(user);
+        Alert success = new Alert(AlertType.INFORMATION, "Visa applied successfully!");
         success.initOwner((Stage) countryField.getScene().getWindow());
         success.show();
     }
-
     @FXML
     private void goBack(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Profile.fxml"));
             Stage stage = getStageFromEvent(event);
-            
-            // Navigate back to Profile
-            stage.setScene(new Scene(loader.load()));
-            
+            double x = stage.getX();
+            double y = stage.getY();
+            Scene newScene = new Scene(loader.load());
+            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());  // Copy theme
+            stage.setScene(newScene);
+            stage.setX(x);
+            stage.setY(y);
             ProfileController controller = loader.getController();
             controller.setUser(user);
             controller.initializeProfile();
-            
-            stage.setMaximized(true);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

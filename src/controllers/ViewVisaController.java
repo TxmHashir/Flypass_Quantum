@@ -1,36 +1,98 @@
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.print.PageLayout;
+import javafx.print.PrinterJob;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 
-public class ViewVisaController extends SharedController {
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Random;
 
-    @FXML private Label visaTypeLabel, visaCountryLabel, visaStatusLabel;
+public class ViewVisaController extends SharedController {
+    @FXML private VBox visaDetailsPane;
+    @FXML private HBox buttonBox;
+    @FXML private Label headerLabel, visaTypeHeader, nameLabel, cnicLabel, passportLabel, citizenshipLabel,
+                       issueDateLabel, expiryDateLabel, visaNumberLabel;
+    @FXML private Text mrzLine1, mrzLine2;
 
     public void initializeVisaDetails() {
         String visa = user.getVisa();
         if (visa != null && !visa.isEmpty()) {
             String[] parts = visa.split(", ");
             if (parts.length == 2) {
-                visaTypeLabel.setText("Visa Type: " + parts[0]);
-                visaCountryLabel.setText("Country: " + parts[1]);
-                visaStatusLabel.setText("Status: Active");
-                visaStatusLabel.setStyle("-fx-text-fill: green; -fx-effect: dropshadow(gaussian, green, 10, 0.5, 0, 0);");
+                String visaType = parts[0].trim();
+                String country = parts[1].trim();
+                
+                headerLabel.setText(country.toUpperCase() + " VISA");
+                visaTypeHeader.setText("Type: " + visaType);
+                
+                nameLabel.setText(user.getName() != null ? user.getName() : "N/A");
+                cnicLabel.setText(user.getCnic() != null ? user.getCnic() : "N/A");
+                passportLabel.setText(user.getPassportNumber() != null ? user.getPassportNumber() : "N/A");
+                citizenshipLabel.setText(user.getCitizenship() != null ? user.getCitizenship() : "N/A");
+                
+                // Mock dates and visa number
+                LocalDate now = LocalDate.now();
+                issueDateLabel.setText(now.format(DateTimeFormatter.ofPattern("dd MMM yyyy")));
+                expiryDateLabel.setText(now.plusYears(1).format(DateTimeFormatter.ofPattern("dd MMM yyyy")));
+                
+                // Mock visa number
+                visaNumberLabel.setText("Visa No: V" + new Random().nextInt(1000000));
+                
+                // Mock MRZ
+                mrzLine1.setText("V<" + country.toUpperCase() + "<" + visaType.toUpperCase() + "<<" + user.getName().toUpperCase().replace(" ", "<") + "<<<<<<<<<<<<<<<<<<<");
+                mrzLine2.setText(user.getPassportNumber() + "<<" + country.toUpperCase() + "<" + now.format(DateTimeFormatter.ofPattern("yyMMdd")) + "<<<<<<<<<<<<<<<<<<<");
             }
-        } else {
-            visaTypeLabel.setText("Visa Type: N/A");
-            visaCountryLabel.setText("Country: N/A");
-            visaStatusLabel.setText("Status: Inactive");
-            visaStatusLabel.setStyle("-fx-text-fill: red; -fx-effect: dropshadow(gaussian, red, 10, 0.5, 0, 0);");
         }
     }
 
     @FXML
-    private void printVisa() {
-        new Alert(Alert.AlertType.INFORMATION, "Visa details printed to PDF (mock).").show();
+    private void handlePrint(ActionEvent event) {
+        PrinterJob job = PrinterJob.createPrinterJob();
+        if (job != null && job.showPrintDialog(getStageFromEvent(event))) {
+            // Hide buttons during print
+            buttonBox.setVisible(false);
+            
+            // Force layout update
+            visaDetailsPane.layout();
+            
+            PageLayout pageLayout = job.getJobSettings().getPageLayout();
+            
+            double nodeWidth = visaDetailsPane.getBoundsInLocal().getWidth();
+            double nodeHeight = visaDetailsPane.getBoundsInLocal().getHeight();
+            
+            double scaleX = pageLayout.getPrintableWidth() / nodeWidth;
+            double scaleY = pageLayout.getPrintableHeight() / nodeHeight;
+            double scale = Math.min(scaleX, scaleY);
+            
+            Scale printScale = new Scale(scale, scale);
+            visaDetailsPane.getTransforms().add(printScale);
+            
+            boolean success = job.printPage(pageLayout, visaDetailsPane);
+            
+            visaDetailsPane.getTransforms().remove(printScale);
+            
+            // Show buttons back
+            buttonBox.setVisible(true);
+            
+            if (success) {
+                job.endJob();
+                new Alert(AlertType.INFORMATION, "Visa details sent to printer.").show();
+            } else {
+                new Alert(AlertType.ERROR, "Printing failed.").show();
+            }
+        } else {
+            new Alert(AlertType.ERROR, "No printer available.").show();
+        }
     }
 
     @FXML
@@ -38,12 +100,16 @@ public class ViewVisaController extends SharedController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Profile.fxml"));
             Stage stage = getStageFromEvent(event);
-            stage.setScene(new Scene(loader.load()));
+            double x = stage.getX();
+            double y = stage.getY();
+            Scene newScene = new Scene(loader.load());
+            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());  // Copy theme
+            stage.setScene(newScene);
+            stage.setX(x);
+            stage.setY(y);
             ProfileController controller = loader.getController();
             controller.setUser(user);
             controller.initializeProfile();
-            // stage.setFullScreen(true);
-            stage.setMaximized(true);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
