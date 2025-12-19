@@ -1,5 +1,3 @@
-
-
 public class Flight {
     private int flightNumber;
     private String origin;

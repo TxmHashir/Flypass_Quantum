@@ -40,6 +40,7 @@
                     <Button text="View Flights" onAction="#viewFlights" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 14px;"/>
                     <Button text="Book Flight" onAction="#bookFlight" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 14px;"/>
                     <Button text="Apply Visa" onAction="#applyVisa" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 14px;"/>
+                    <Button text="View Visa" onAction="#viewVisa" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 14px;"/>
                 </HBox>
             </VBox>
 
