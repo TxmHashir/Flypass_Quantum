@@ -1,46 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="BookFlightController">
+<BorderPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BookFlightController">
     <center>
-        <VBox spacing="15" alignment="CENTER">
+        <VBox alignment="CENTER" spacing="15">
             <padding>
-                <Insets top="40" right="40" bottom="40" left="40"/>
+                <Insets bottom="40" left="40" right="40" top="40" />
             </padding>
-            <Button text="Back" onAction="#goBack" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 14px;" alignment="TOP_LEFT"/>
-            <Label text="Book Flight" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #0B3D91;"/>
+            <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #0B3D91;" text="Book Flight" />
             <GridPane hgap="10" vgap="10">
-                <Label GridPane.columnIndex="0" GridPane.rowIndex="0" text="Origin:" style="-fx-text-fill: #0B3D91;"/>
-                <TextField fx:id="originField" GridPane.columnIndex="1" GridPane.rowIndex="0" promptText="Origin"/>
-                <Label GridPane.columnIndex="0" GridPane.rowIndex="1" text="Destination:" style="-fx-text-fill: #0B3D91;"/>
-                <TextField fx:id="destinationField" GridPane.columnIndex="1" GridPane.rowIndex="1" promptText="Destination"/>
-                <Label GridPane.columnIndex="0" GridPane.rowIndex="2" text="Date:" style="-fx-text-fill: #0B3D91;"/>
-                <DatePicker fx:id="datePicker" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                <Label GridPane.columnIndex="0" GridPane.rowIndex="3" text="Number of Seats:" style="-fx-text-fill: #0B3D91;"/>
-                <TextField fx:id="seatsField" GridPane.columnIndex="1" GridPane.rowIndex="3" promptText="Number of Seats"/>
+                <Label style="-fx-text-fill: #0B3D91;" text="Origin:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <TextField fx:id="originField" promptText="Origin" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <Label style="-fx-text-fill: #0B3D91;" text="Destination:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <TextField fx:id="destinationField" promptText="Destination" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Label style="-fx-text-fill: #0B3D91;" text="Date:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                <DatePicker fx:id="datePicker" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <Label style="-fx-text-fill: #0B3D91;" text="Number of Seats:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                <TextField fx:id="seatsField" promptText="Number of Seats" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <columnConstraints>
+               <ColumnConstraints />
+               <ColumnConstraints />
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+            </rowConstraints>
             </GridPane>
-            <Button text="Search Flights" onAction="#searchFlights" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 14px;"/>
             <TableView fx:id="flightsTable" prefHeight="300" style="-fx-border-color: #E6F0FF;">
                 <columns>
-                    <TableColumn text="Flight #" fx:id="flightNumberCol" prefWidth="100"/>
-                    <TableColumn text="Origin" fx:id="originCol" prefWidth="150"/>
-                    <TableColumn text="Destination" fx:id="destinationCol" prefWidth="150"/>
-                    <TableColumn text="Schedule" fx:id="scheduleCol" prefWidth="200"/>
-                    <TableColumn text="Status" fx:id="statusCol" prefWidth="100"/>
+                    <TableColumn fx:id="flightNumberCol" prefWidth="100" text="Flight #" />
+                    <TableColumn fx:id="originCol" prefWidth="150" text="Origin" />
+                    <TableColumn fx:id="destinationCol" prefWidth="150" text="Destination" />
+                    <TableColumn fx:id="scheduleCol" prefWidth="200" text="Schedule" />
+                    <TableColumn fx:id="statusCol" prefWidth="100" text="Status" />
                 </columns>
             </TableView>
-            <Button text="Confirm Booking &amp; Pay" onAction="#confirmBooking" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 14px;"/>
+         <HBox alignment="CENTER" maxHeight="30.0" prefHeight="30.0" prefWidth="630.0" spacing="20.0">
+            <children>
+                  <Button alignment="TOP_LEFT" onAction="#goBack" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 14px;" text="Back" />
+                  <Button onAction="#searchFlights" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 14px;" text="Search Flights" />
+                  <Button onAction="#confirmBooking" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 14px;" text="Confirm Booking &amp; Pay" />
+            </children>
+         </HBox>
         </VBox>
     </center>
 </BorderPane>
