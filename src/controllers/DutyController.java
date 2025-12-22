@@ -37,11 +37,14 @@ public class DutyController extends SharedController {
             Stage stage = getStageFromEvent(event);
             double x = stage.getX();  // Preserve position
             double y = stage.getY();
-            stage.setScene(new Scene(loader.load()));
+            Scene newScene = new Scene(loader.load());
+            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());  // Copy theme
+            stage.setScene(newScene);
             stage.setX(x);  // Restore position
             stage.setY(y);
-            DutyController controller = loader.getController();
+            ProfileController controller = loader.getController();  // Fixed: Was DutyController
             controller.setUser(user);
+            controller.initializeProfile();
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

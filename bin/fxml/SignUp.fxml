@@ -10,62 +10,48 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-
 <StackPane prefHeight="550" prefWidth="700" style="-fx-background-color: #F4F4F4;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SignUpController">
-
-    <VBox alignment="CENTER" maxHeight="400.0" maxWidth="550.0" spacing="25" style="-fx-background-color: white; -fx-background-radius: 15; -fx-padding: 40;">
-
+    <vbox alignment="CENTER" maxheight="400.0" maxwidth="550.0" spacing="25" style="-fx-background-color: white; -fx-background-radius: 15; -fx-padding: 40;">
         <effect>
-            <DropShadow color="#00000033" radius="15" spread="0.1" />
-        </effect>
+            <dropshadow color="#00000033" radius="15" spread="0.1">
+        </dropshadow></effect>
+        <label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #0B3D91;" text="Flypass Quantum Sign Up">
+        <gridpane alignment="CENTER" hgap="10" vgap="10">
+            <label style="-fx-text-fill: #0B3D91;" text="Full Name:" gridpane.columnindex="0" gridpane.rowindex="0">
+            <textfield fx:id="nameField" prompttext="Full Name" gridpane.columnindex="1" gridpane.rowindex="0">
+            <label style="-fx-text-fill: #0B3D91;" text="CNIC:" gridpane.columnindex="0" gridpane.rowindex="1">
+            <textfield fx:id="cnicField" prompttext="CNIC" gridpane.columnindex="1" gridpane.rowindex="1">
+            <label style="-fx-text-fill: #0B3D91;" text="Email:" gridpane.columnindex="0" gridpane.rowindex="2">
+            <textfield fx:id="emailField" prompttext="Email" gridpane.columnindex="1" gridpane.rowindex="2">
+            <label style="-fx-text-fill: #0B3D91;" text="Contact:" gridpane.columnindex="0" gridpane.rowindex="3">
+            <textfield fx:id="contactField" prompttext="Contact" gridpane.columnindex="1" gridpane.rowindex="3">
+            <label style="-fx-text-fill: #0B3D91;" text="Passport Number:" gridpane.columnindex="0" gridpane.rowindex="4">
+            <textfield fx:id="passportField" prompttext="Passport Number" gridpane.columnindex="1" gridpane.rowindex="4">
+            <label style="-fx-text-fill: #0B3D91;" text="Citizenship:" gridpane.columnindex="0" gridpane.rowindex="5">
+            <textfield fx:id="citizenshipField" prompttext="Citizenship" gridpane.columnindex="1" gridpane.rowindex="5">
+            <label style="-fx-text-fill: #0B3D91;" text="Visa Type:" gridpane.columnindex="0" gridpane.rowindex="6">
+            <combobox fx:id="visaTypeField" prompttext="Visa Type" gridpane.columnindex="1" gridpane.rowindex="6">
+            <label style="-fx-text-fill: #0B3D91;" text="Visa Country:" gridpane.columnindex="0" gridpane.rowindex="7">
+            <textfield fx:id="visaCountryField" prompttext="Visa Country" gridpane.columnindex="1" gridpane.rowindex="7">
+         <columnconstraints>
+            <columnconstraints>
+            <columnconstraints>
+         </columnconstraints>
+         <rowconstraints>
+            <rowconstraints>
+            <rowconstraints>
+            <rowconstraints>
+            <rowconstraints>
+            <rowconstraints>
+            <rowconstraints>
+            <rowconstraints>
+            <rowconstraints>
+         </rowconstraints>
+        </rowconstraints></rowconstraints></rowconstraints></rowconstraints></rowconstraints></rowconstraints></rowconstraints></rowconstraints></columnconstraints></columnconstraints></textfield></label></combobox></label></textfield></label></textfield></label></textfield></label></textfield></label></textfield></label></textfield></label></gridpane>
+        <hbox alignment="CENTER" spacing="15">
+            <button onaction="#goBack" style="-fx-background-color: #9AA0A6; -fx-text-fill: white; -fx-font-size: 14px;" text="Back">
+            </button><button onaction="#handleSignUp" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 14px;" text="Sign Up">
+        
+    
 
-        <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #0B3D91;" text="Flypass Quantum Sign Up" />
-
-        <GridPane alignment="CENTER" hgap="10" vgap="10">
-            <Label style="-fx-text-fill: #0B3D91;" text="Full Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-            <TextField fx:id="nameField" promptText="Full Name" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-            
-            <Label style="-fx-text-fill: #0B3D91;" text="CNIC:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-            <TextField fx:id="cnicField" promptText="CNIC" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            
-            <Label style="-fx-text-fill: #0B3D91;" text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-            <TextField fx:id="emailField" promptText="Email" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            
-            <Label style="-fx-text-fill: #0B3D91;" text="Contact:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-            <TextField fx:id="contactField" promptText="Contact" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            
-            <Label style="-fx-text-fill: #0B3D91;" text="Passport Number:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-            <TextField fx:id="passportField" promptText="Passport Number" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            
-            <Label style="-fx-text-fill: #0B3D91;" text="Citizenship:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-            <TextField fx:id="citizenshipField" promptText="Citizenship" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            
-            <Label style="-fx-text-fill: #0B3D91;" text="Visa Type:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
-            <TextField fx:id="visaTypeField" promptText="Visa Type" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            
-            <Label style="-fx-text-fill: #0B3D91;" text="Visa Country:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
-            <TextField fx:id="visaCountryField" promptText="Visa Country" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            
-         <columnConstraints>
-            <ColumnConstraints />
-            <ColumnConstraints />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-         </rowConstraints>
-        </GridPane>
-
-        <HBox alignment="CENTER" spacing="15">
-            <Button onAction="#goBack" style="-fx-background-color: #9AA0A6; -fx-text-fill: white; -fx-font-size: 14px;" text="Back" />
-            <Button onAction="#handleSignUp" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 14px;" text="Sign Up" />
-        </HBox>
-
-    </VBox>
-</StackPane>
+</button></hbox></label></vbox>
