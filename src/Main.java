@@ -1,3 +1,4 @@
+// Updated Main.java (no changes needed, but included for completeness)
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

@@ -1,15 +1,28 @@
+// SharedController.java (updated)
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.Node;
 import javafx.stage.Stage;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import java.io.IOException;
+
 public class SharedController {
     protected User user;
     public void setUser(User user) {
         this.user = user;
     }
     public void signOut(ActionEvent event) {
+        // Check if USB is still inserted
+        String key = UsbKeyFetcher.fetchEncryptionKeyFromUsb("encrypted_key.txt");  // Assuming filename from LoginController
+        if (key != null) {
+            Alert alert = new Alert(AlertType.WARNING, "First remove your card.");
+            alert.initOwner(getStageFromEvent(event));
+            alert.show();
+            return;  // Prevent sign out
+        }
+        
         try {
             Stage stage = getStageFromEvent(event);
             double x = stage.getX();
@@ -21,6 +34,8 @@ public class SharedController {
             stage.setX(x);
             stage.setY(y);
             stage.show();
+            LoginController controller = loader.getController();
+            controller.setJustSignedOut(true);
         } catch (IOException e) {
             e.printStackTrace();
         }

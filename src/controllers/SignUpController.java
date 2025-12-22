@@ -8,7 +8,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-public class SignUpController extends SharedController {
+public class SignUpController extends SharedController 
+{
     @FXML private TextField nameField, cnicField, contactField, emailField,
     passportField, citizenshipField, visaCountryField;
     @FXML private ComboBox<String> visaTypeField;
