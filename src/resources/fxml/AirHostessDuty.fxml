@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AirHostessDutyController">
+    <center>
+        <VBox alignment="CENTER" spacing="15">
+            <padding>
+                <Insets bottom="40" left="40" right="40" top="40" />
+            </padding>
+            <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #0B3D91;" text="Air Hostess Schedule" />
+            <TableView fx:id="dutyTable" prefHeight="400" style="-fx-border-color: #E6F0FF;">
+                <columns>
+                    <TableColumn fx:id="flightCol" prefWidth="100" text="Flight #" />
+                    <TableColumn fx:id="originCol" prefWidth="150" text="Origin" />
+                    <TableColumn fx:id="destinationCol" prefWidth="150" text="Destination" />
+                    <TableColumn fx:id="timeCol" prefWidth="200" text="Time" />
+                    <TableColumn fx:id="statusCol" prefWidth="100" text="Status" />
+                </columns>
+            </TableView>
+            <Button alignment="TOP_LEFT" onAction="#goBack" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 14px;" text="Back" />
+        </VBox>
+    </center>
+</BorderPane>

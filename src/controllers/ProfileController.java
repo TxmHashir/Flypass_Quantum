@@ -9,9 +9,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class ProfileController extends SharedController {
-    @FXML private VBox customerPane, staffPane, pilotPane, adminPane;
+    @FXML private VBox customerPane, staffPane, pilotPane, adminPane, airHostessPane;
     @FXML private Label nameLabel, cnicLabel, emailLabel, contactLabel, passportLabel, citizenshipLabel, visaLabel, visaStatusLabel;
     @FXML private Label pilotNameLabel, pilotCnicLabel, pilotEmailLabel, pilotContactLabel, pilotPassportLabel, pilotCitizenshipLabel, pilotVisaLabel, pilotVisaStatusLabel, pilotRoleLabel;
+    @FXML private Label airHostessNameLabel, airHostessCnicLabel, airHostessEmailLabel, airHostessContactLabel, airHostessPassportLabel, airHostessCitizenshipLabel, airHostessVisaLabel, airHostessVisaStatusLabel, airHostessRoleLabel;
 
     public void initializeProfile() {
         hideAllPanes();
@@ -50,6 +51,19 @@ public class ProfileController extends SharedController {
             case "admin":
                 adminPane.setVisible(true);
                 break;
+            case "airhostess":
+                airHostessPane.setVisible(true);
+                airHostessNameLabel.setText("Name: " + user.getName());
+                airHostessCnicLabel.setText("CNIC: " + user.getCnic());
+                airHostessEmailLabel.setText("Email: " + user.getEmail());
+                airHostessContactLabel.setText("Contact: " + (user.getContact() != null ? user.getContact() : "N/A"));
+                airHostessPassportLabel.setText("Passport: " + (user.getPassportNumber() != null ? user.getPassportNumber() : "N/A"));
+                airHostessCitizenshipLabel.setText("Citizenship: " + (user.getCitizenship() != null ? user.getCitizenship() : "N/A"));
+                String airHostessVisa = user.getVisa();
+                boolean airHostessIsActive = airHostessVisa != null && !airHostessVisa.trim().isEmpty();
+                airHostessVisaStatusLabel.setText("Visa Status: " + (airHostessIsActive ? "Active" : "Non Active"));
+                airHostessVisaLabel.setText("Visa: " + (airHostessVisa != null ? airHostessVisa : "N/A"));
+                airHostessRoleLabel.setText("Role: Air Hostess");
         }
     }
 
@@ -58,6 +72,7 @@ public class ProfileController extends SharedController {
         staffPane.setVisible(false);
         pilotPane.setVisible(false);
         adminPane.setVisible(false);
+        airHostessPane.setVisible(false);
     }
 
     @FXML
@@ -87,6 +102,11 @@ public class ProfileController extends SharedController {
     @FXML
     private void viewPilotDuty(ActionEvent event) {
         loadScene(event, "/fxml/PilotDuty.fxml", "Pilot Duty");
+    }
+
+    @FXML
+    private void viewAirHostessDuty(ActionEvent event) {
+        loadScene(event, "/fxml/AirHostessDuty.fxml", "Air Hostess Duty");
     }
 
     private void loadScene(ActionEvent event, String fxmlPath, String title) {

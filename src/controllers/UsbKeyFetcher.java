@@ -18,7 +18,7 @@ public class UsbKeyFetcher {
                         while (scanner.hasNextLine()) {
                             key.append(scanner.nextLine());
                         }
-                        System.out.println("Successfully read key: " + key.toString().trim());
+                        
                         return key.toString().trim();  // Return the huge key as string
                     } catch (IOException e) {
                         System.err.println("Error reading key file on " + root + ": " + e.getMessage());

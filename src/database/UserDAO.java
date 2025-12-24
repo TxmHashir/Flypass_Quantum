@@ -14,8 +14,15 @@ User pilot = new User();
 pilot.setName("Captain Skies");
 pilot.setRole("pilot");
 pilot.setEncryptedKey("pilot123");
+User airHostess = new User();
+airHostess.setName("Alice Tester");
+airHostess.setRole("airhostess");
+airHostess.setEncryptedKey("airh123");
+airHostess.setEmail("alice@example.com");
+airHostess.setCnic("12345-0000000-1");
 mockUsers.add(customer);
 mockUsers.add(pilot);
+mockUsers.add(airHostess);
 }
 public User getUserByEncryptedKey(String key) {
 return mockUsers.stream()
