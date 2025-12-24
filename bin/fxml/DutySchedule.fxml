@@ -5,6 +5,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane xmlns="http://javafx.com/javafx"
@@ -24,6 +25,9 @@
                     <TableColumn text="Flight #" fx:id="flightCol" prefWidth="100"/>
                 </columns>
             </TableView>
+            <HBox alignment="CENTER" spacing="15">
+                <Button text="Report Issue" onAction="#reportIssue" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 14px;"/>
+            </HBox>
         </VBox>
     </center>
 </BorderPane>
