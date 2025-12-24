@@ -25,36 +25,38 @@ public class BookFlightController extends SharedController {
     private ObservableList<Flight> allFlights = FXCollections.observableArrayList();
 
     @FXML
-private void initialize() {
-    flightNumberCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getFlightNumber()));
-    originCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getOrigin()));
-    destinationCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDestination()));
-    scheduleCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getSchedule()));
-    statusCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getStatus()));
-    // Load mock flights
-    allFlights.addAll(getMockFlights());
-    flightsTable.setItems(allFlights);
-}
+    private void initialize() {
+        flightNumberCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getFlightNumber()));
+        originCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getOrigin()));
+        destinationCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDestination()));
+        scheduleCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getSchedule()));
+        statusCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getStatus()));
+        // Load mock flights
+        allFlights.addAll(getMockFlights());
+        flightsTable.setItems(allFlights);
+    }
 
     private ObservableList<Flight> getMockFlights() {
-        ObservableList<Flight> list = FXCollections.observableArrayList();
-        list.add(new Flight(101, "LAX", "JFK", "2025-12-20 08:00", "On Time", "Domestic"));
-        list.add(new Flight(102, "JFK", "LAX", "2025-12-21 10:00", "Delayed", "Domestic"));
-        list.add(new Flight(103, "ORD", "SFO", "2025-12-22 14:00", "On Time", "Domestic"));
-        list.add(new Flight(104, "SFO", "ORD", "2025-12-23 16:00", "Cancelled", "Domestic"));
-        return list;
+        return FXCollections.observableArrayList(
+                new Flight(101, "LAX", "JFK", "2025-12-20 08:00", "On Time", "Domestic"),
+                new Flight(102, "JFK", "LAX", "2025-12-21 10:00", "Delayed", "Domestic"),
+                new Flight(103, "LAX", "LHR", "2025-12-22 14:00", "On Time", "International"),
+                new Flight(104, "SFO", "CDG", "2025-12-23 16:00", "On Time", "International")
+        );
     }
 
     @FXML
     private void searchFlights() {
-        String origin = originField.getText().trim().toUpperCase();
-        String destination = destinationField.getText().trim().toUpperCase();
+        String origin = originField.getText().toLowerCase().trim();
+        String destination = destinationField.getText().toLowerCase().trim();
         LocalDate date = datePicker.getValue();
+
         ObservableList<Flight> filtered = allFlights.stream()
-                .filter(f -> (origin.isEmpty() || f.getOrigin().toUpperCase().contains(origin))
-                        && (destination.isEmpty() || f.getDestination().toUpperCase().contains(destination))
-                        && (date == null || f.getSchedule().startsWith(date.toString())))
+                .filter(f -> (origin.isEmpty() || f.getOrigin().toLowerCase().contains(origin))
+                        && (destination.isEmpty() || f.getDestination().toLowerCase().contains(destination))
+                        && (date == null || f.getSchedule().contains(date.toString())))
                 .collect(Collectors.toCollection(FXCollections::observableArrayList));
+
         flightsTable.setItems(filtered);
     }
 
@@ -80,6 +82,17 @@ private void initialize() {
             new Alert(AlertType.WARNING, "Invalid number of seats.").show();
             return;
         }
+
+        // Visa check for international flights
+        String type = selected.getType();
+        if ("International".equals(type)) {
+            String visa = user.getVisa();
+            if (visa == null || !visa.toLowerCase().contains(selected.getDestination().toLowerCase())) {
+                new Alert(AlertType.WARNING, "You need a valid visa for " + selected.getDestination() + ".").show();
+                return;
+            }
+        }
+
         // Mock booking logic
         Alert alert = new Alert(AlertType.INFORMATION, "Payment successful! Booked " + seats + " seats on flight " + selected.getFlightNumber() + ".");
         alert.initOwner(flightsTable.getScene().getWindow());

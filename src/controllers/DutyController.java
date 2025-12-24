@@ -2,6 +2,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.stage.Stage;
@@ -27,7 +29,15 @@ public class DutyController extends SharedController {
         ObservableList<Duty> list = FXCollections.observableArrayList();
         list.add(new Duty("08:00-12:00", "LAX Terminal 1", 101));
         list.add(new Duty("12:00-16:00", "NYC Terminal 2", 102));
+        list.add(new Duty("16:00-20:00", "SFO Terminal 3", 103));
+        list.add(new Duty("20:00-00:00", "ORD Terminal 4", 104));
         return list;
+    }
+
+    @FXML
+    private void reportIssue() {
+        Alert alert = new Alert(AlertType.INFORMATION, "Issue reported successfully (mock).");
+        alert.show();
     }
 
     @FXML
