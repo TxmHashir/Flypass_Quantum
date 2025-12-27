@@ -38,6 +38,23 @@ public class LoginController extends SharedController {
     public void setJustSignedOut(boolean value) {
         this.justSignedOut = value;
     }
+    
+    public void startUsbPolling() {
+        if (timeline != null) {
+            timeline.stop();
+        }
+        wasPresent = false;
+        // Start polling for USB key every 5 seconds
+        timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> checkAndLogin()));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+    }
+    
+    public void stopUsbPolling() {
+        if (timeline != null) {
+            timeline.stop();
+        }
+    }
 
     private void handleLogin(String encryptedKey) {
         User user = userDAO.getUserByEncryptedKey(encryptedKey);
@@ -58,6 +75,11 @@ public class LoginController extends SharedController {
     private void openProfile(User user) {
         Platform.runLater(() -> {
             try {
+                // Stop USB polling when logged in
+                if (timeline != null) {
+                    timeline.stop();
+                }
+                
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Profile.fxml"));
                 Stage stage = (Stage) instructionLabel.getScene().getWindow();
                 double x = stage.getX();
@@ -76,7 +98,7 @@ public class LoginController extends SharedController {
             }
         });
     }
-
+    
     @FXML
     private void goToSignUp(ActionEvent event) {
         try {
@@ -118,11 +140,43 @@ public class LoginController extends SharedController {
     }
 
     private void checkAndLogin() {
-        String key = UsbKeyFetcher.fetchEncryptionKeyFromUsb("encryption_key.txt");
-        if (key != null) {
-            if (!wasPresent) {
-                wasPresent = true;
-                handleLogin(key);
+        // First try the new method: search all .txt files on USB
+        String key = UsbKeyFetcher.searchAllTxtFiles();
+        
+        // If not found, try the old method for backward compatibility
+        if (key == null) {
+            key = UsbKeyFetcher.fetchEncryptionKeyFromUsb("encryption_key.txt");
+        }
+        
+        if (key != null && !key.trim().isEmpty()) {
+            // Try to find a user with matching encryptedKey
+            User user = userDAO.getUserByEncryptedKey(key.trim());
+            
+            // If direct match not found, try hashing the key (in case txt file contains plain password)
+            if (user == null) {
+                try {
+                    String hashedKey = EncryptionUtil.encryptSHA256(key.trim());
+                    user = userDAO.getUserByEncryptedKey(hashedKey);
+                    if (user != null) {
+                        key = hashedKey; // Use hashed key for login
+                    }
+                } catch (Exception e) {
+                    // Ignore hashing errors
+                }
+            }
+            
+            if (user != null) {
+                if (!wasPresent) {
+                    wasPresent = true;
+                    System.out.println("Found matching user: " + user.getName() + " (" + user.getRole() + ")");
+                    handleLogin(user.getEncryptedKey());
+                }
+            } else {
+                // Key found but no matching user
+                if (wasPresent) {
+                    wasPresent = false;
+                    System.out.println("No user found for key: " + key);
+                }
             }
         } else {
             wasPresent = false;
@@ -163,10 +217,8 @@ public class LoginController extends SharedController {
 
         wasPresent = justSignedOut ? true : false;
 
-        // Start polling for USB key every 5 seconds
-        timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> checkAndLogin()));
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
+        // Start polling for USB key
+        startUsbPolling();
 
         // Perform initial check after the window is set
         instructionLabel.sceneProperty().addListener(new ChangeListener<Scene>() {

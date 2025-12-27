@@ -38,4 +38,28 @@ public class Flight {
     public String getType() {
         return type;
     }
+
+    public void setFlightNumber(int flightNumber) {
+        this.flightNumber = flightNumber;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

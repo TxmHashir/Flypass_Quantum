@@ -3,25 +3,54 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+
 public class SettingsController extends SharedController {
+
+    @FXML private Label contentTitle;
+    @FXML private TextArea contentBody;
+
     @FXML
-    public void switchDark(ActionEvent event) {
-        Stage stage = getStageFromEvent(event);
-        if (stage != null) {
-            Scene scene = stage.getScene();
-            scene.getStylesheets().clear();
-            scene.getStylesheets().add(getClass().getResource("/css/dark-theme.css").toExternalForm());
-        }
+    private void initialize() {
+        showHelp(null); // default view
     }
+
     @FXML
-    public void switchLight(ActionEvent event) {
-        Stage stage = getStageFromEvent(event);
-        if (stage != null) {
-            Scene scene = stage.getScene();
-            scene.getStylesheets().clear();
-            scene.getStylesheets().add(getClass().getResource("/css/light-theme.css").toExternalForm());
-        }
+    public void showContact(ActionEvent event) {
+        setContent("Contact",
+                "Need assistance or have a question?\n\n" +
+                "Email: support@airportapp.com\n" +
+                "Phone: +1 (800) 555-0147\n" +
+                "Hours: Mon–Fri, 9:00 AM – 6:00 PM");
     }
+
+    @FXML
+    public void showHelp(ActionEvent event) {
+        setContent("Help",
+                "Tips to get started:\n" +
+                "• Upload your profile image from the Profile page.\n" +
+                "• Use your USB key to log in securely.\n" +
+                "• Manage bookings and duties from your dashboard.\n\n" +
+                "Need more? Contact support anytime.");
+    }
+
+    @FXML
+    public void showFaq(ActionEvent event) {
+        setContent("FAQ",
+                "Q: How do I change my profile image?\n" +
+                "A: Go to Profile and use the Upload Image button.\n\n" +
+                "Q: My USB key isn’t detected.\n" +
+                "A: Reconnect the drive and ensure the key file exists.\n\n" +
+                "Q: How do I switch accounts?\n" +
+                "A: Sign out from Profile, then log in with another key.");
+    }
+
+    private void setContent(String title, String body) {
+        contentTitle.setText(title);
+        contentBody.setText(body);
+    }
+
     @FXML
     public void goBack(ActionEvent event) {
         try {

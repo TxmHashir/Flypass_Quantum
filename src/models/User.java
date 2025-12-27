@@ -1,102 +1,125 @@
-// User.java
+import java.util.ArrayList;
+import java.util.List;
 public class User {
-    private String name;
-    private String cnic;
-    private String email;
-    private String contact;
-    private String passportNumber;
-    private String citizenship;
-    private String visa;
-    private String role;
-    private String encryptedKey;
-    private String bankName;
-    private String bankAccount;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCnic() {
-        return cnic;
-    }
-
-    public void setCnic(String cnic) {
-        this.cnic = cnic;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getContact() {
-        return contact;
-    }
-
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
-
-    public String getPassportNumber() {
-        return passportNumber;
-    }
-
-    public void setPassportNumber(String passportNumber) {
-        this.passportNumber = passportNumber;
-    }
-
-    public String getCitizenship() {
-        return citizenship;
-    }
-
-    public void setCitizenship(String citizenship) {
-        this.citizenship = citizenship;
-    }
-
-    public String getVisa() {
-        return visa;
-    }
-
-    public void setVisa(String visa) {
-        this.visa = visa;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public String getEncryptedKey() {
-        return encryptedKey;
-    }
-
-    public void setEncryptedKey(String encryptedKey) {
-        this.encryptedKey = encryptedKey;
-    }
-
-    public String getBankName() {
-        return bankName;
-    }
-
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
-    }
-
-    public String getBankAccount() {
-        return bankAccount;
-    }
-
-    public void setBankAccount(String bankAccount) {
-        this.bankAccount = bankAccount;
-    }
+private String name;
+private String cnic;
+private String email;
+private String contact;
+private String passportNumber;
+private String citizenship;
+private String visa;
+private String role;
+private String encryptedKey;
+private String bankName;
+private String bankAccount;
+private double salary = 0.0;
+private String profileImagePath = "titleicon.png"; // Default mock image (using the provided logo as mock)
+private String country;
+private String city;
+private String postalCode;
+// New associations
+private List<Flight> assignedFlights = new ArrayList<>();
+private List<Duty> assignedDuties = new ArrayList<>();
+public String getName() {
+return name;
+}
+public void setName(String name) {
+this.name = name;
+}
+public String getCnic() {
+return cnic;
+}
+public void setCnic(String cnic) {
+this.cnic = cnic;
+}
+public String getEmail() {
+return email;
+}
+public void setEmail(String email) {
+this.email = email;
+}
+public String getContact() {
+return contact;
+}
+public void setContact(String contact) {
+this.contact = contact;
+}
+public String getPassportNumber() {
+return passportNumber;
+}
+public void setPassportNumber(String passportNumber) {
+this.passportNumber = passportNumber;
+}
+public String getCitizenship() {
+return citizenship;
+}
+public void setCitizenship(String citizenship) {
+this.citizenship = citizenship;
+}
+public String getVisa() {
+return visa;
+}
+public void setVisa(String visa) {
+this.visa = visa;
+}
+public String getRole() {
+return role;
+}
+public void setRole(String role) {
+this.role = role;
+}
+public String getEncryptedKey() {
+return encryptedKey;
+}
+public void setEncryptedKey(String encryptedKey) {
+this.encryptedKey = encryptedKey;
+}
+public String getBankName() {
+return bankName;
+}
+public void setBankName(String bankName) {
+this.bankName = bankName;
+}
+public String getBankAccount() {
+return bankAccount;
+}
+public void setBankAccount(String bankAccount) {
+this.bankAccount = bankAccount;
+}
+public double getSalary() {
+return salary;
+}
+public void setSalary(double salary) {
+this.salary = salary;
+}
+public String getProfileImagePath() {
+return profileImagePath;
+}
+public void setProfileImagePath(String profileImagePath) {
+this.profileImagePath = profileImagePath;
+}
+public String getCountry() {
+return country;
+}
+public void setCountry(String country) {
+this.country = country;
+}
+public String getCity() {
+return city;
+}
+public void setCity(String city) {
+this.city = city;
+}
+public String getPostalCode() {
+return postalCode;
+}
+public void setPostalCode(String postalCode) {
+this.postalCode = postalCode;
+}
+public List<Flight> getAssignedFlights() {
+return assignedFlights;
+}
+public List<Duty> getAssignedDuties() {
+return assignedDuties;
+}
 }

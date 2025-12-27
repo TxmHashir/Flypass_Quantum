@@ -31,18 +31,10 @@ public class BookFlightController extends SharedController {
         destinationCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDestination()));
         scheduleCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getSchedule()));
         statusCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getStatus()));
-        // Load mock flights
-        allFlights.addAll(getMockFlights());
+        // Load flights from DAO
+        FlightDAO flightDAO = new FlightDAO();
+        allFlights = flightDAO.getAllFlights();
         flightsTable.setItems(allFlights);
-    }
-
-    private ObservableList<Flight> getMockFlights() {
-        return FXCollections.observableArrayList(
-                new Flight(101, "LAX", "JFK", "2025-12-20 08:00", "On Time", "Domestic"),
-                new Flight(102, "JFK", "LAX", "2025-12-21 10:00", "Delayed", "Domestic"),
-                new Flight(103, "LAX", "LHR", "2025-12-22 14:00", "On Time", "International"),
-                new Flight(104, "SFO", "CDG", "2025-12-23 16:00", "On Time", "International")
-        );
     }
 
     @FXML
