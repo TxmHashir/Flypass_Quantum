@@ -1,14 +1,15 @@
 // {
 //   "version": "0.2.0",
 //   "configurations": [
+
 //     {
 //       "type": "java",
 //       "name": "Main",
 //       "request": "launch",
 //       "mainClass": "Main",
 //       "projectName": "Flypass_Quantum_d5de03b8",
-//       "vmArgs": "--module-path \"C:\\javafx-sdk-25.0.1\\lib\" --add-modules=javafx.controls,javafx.fxml"
-//       // "vmArgs": "--module-path \"C:\\Users\\Fatima\\Downloads\\openjfx-25.0.1_windows-x64_bin-sdk\\javafx-sdk-25.0.1\\lib\" --add-modules=javafx.controls,javafx.fxml"
+//       // "vmArgs": "--module-path \"C:\\javafx-sdk-25.0.1\\lib\" --add-modules=javafx.controls,javafx.fxml"
+//       "vmArgs": "--module-path \"C:\\Users\\Fatima\\Downloads\\openjfx-25.0.1_windows-x64_bin-sdk\\javafx-sdk-25.0.1\\lib\" --add-modules=javafx.controls,javafx.fxml"
 
 //     },
 //     {
@@ -17,8 +18,8 @@
 //       "request": "launch",
 //       "mainClass": "Main",
 //       "projectName": "airport",
-//       "vmArgs": "--module-path \"C:\\javafx-sdk-25.0.1\\lib\" --add-modules=javafx.controls,javafx.fxml"
-//       // "vmArgs": "--module-path \"C:\\Users\\Fatima\\Downloads\\openjfx-25.0.1_windows-x64_bin-sdk\\javafx-sdk-25.0.1\\lib\" --add-modules=javafx.controls,javafx.fxml"
+//       // "vmArgs": "--module-path \"C:\\javafx-sdk-25.0.1\\lib\" --add-modules=javafx.controls,javafx.fxml"
+//       "vmArgs": "--module-path \"C:\\Users\\Fatima\\Downloads\\openjfx-25.0.1_windows-x64_bin-sdk\\javafx-sdk-25.0.1\\lib\" --add-modules=javafx.controls,javafx.fxml"
 //     },
 //     {
 //       "type": "java",
@@ -27,8 +28,8 @@
 //       "mainClass": "Main",
 //       "projectName": "Airport",
 //       "cwd": "${workspaceFolder}",
-//       "vmArgs": "--module-path \"C:\\javafx-sdk-25.0.1\\lib\" --add-modules=javafx.controls,javafx.fxml"
-//       // "vmArgs": "--module-path \"C:\\Users\\Fatima\\Downloads\\openjfx-25.0.1_windows-x64_bin-sdk\\javafx-sdk-25.0.1\\lib\" --add-modules=javafx.controls,javafx.fxml"
+//       // "vmArgs": "--module-path \"C:\\javafx-sdk-25.0.1\\lib\" --add-modules=javafx.controls,javafx.fxml"
+//       "vmArgs": "--module-path \"C:\\Users\\Fatima\\Downloads\\openjfx-25.0.1_windows-x64_bin-sdk\\javafx-sdk-25.0.1\\lib\" --add-modules=javafx.controls,javafx.fxml"
 //     }
 //   ]
 // }
