@@ -61,31 +61,27 @@ public class AssignDutiesController extends SharedController {
     }
 
     @FXML
-    private void goBack(ActionEvent event) {
-        userDAO.updateUser(user); // Persist changes
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AdminManageUsers.fxml"));
-            Stage stage = getStageFromEvent(event);
-            double x = stage.getX();
-            double y = stage.getY();
-            Scene newScene = new Scene(loader.load());
-            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
-            
-            stage.setScene(newScene);
-            stage.setX(x);
-            stage.setY(y);
-            
-            AdminManageUsersController controller = loader.getController();
-            User admin = new UserDAO().getUserByEncryptedKey(user.getEncryptedKey());  // Retrieve original admin (or use a session if implemented)
-            if (admin == null) {
-                admin = new User();
-                admin.setRole("admin");
-            }
-            controller.setUser(admin); 
-            
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+private void goBack(ActionEvent event) {
+    userDAO.updateUser(user); // Persist changes
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AdminManageUsers.fxml"));
+        Stage stage = getStageFromEvent(event);
+        double x = stage.getX();
+        double y = stage.getY();
+        Scene newScene = new Scene(loader.load());
+        newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
+        
+        stage.setScene(newScene);
+        stage.setX(x);
+        stage.setY(y);
+        
+        AdminManageUsersController controller = loader.getController();
+        controller.setUser(this.loggedInUser);  // Updated: Use the preserved loggedInUser (admin)
+        controller.loadUsers();  // Optional: Explicitly reload to ensure fresh data
+        
+        stage.show();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
     }
 }

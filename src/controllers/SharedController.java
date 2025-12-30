@@ -8,8 +8,12 @@ import javafx.scene.control.Alert.AlertType;
 import java.io.IOException;
 public class SharedController {
 protected User user;
+protected User loggedInUser;
 public void setUser(User user) {
 this.user = user;
+}
+public void setLoggedInUser(User loggedInUser) {
+    this.loggedInUser = loggedInUser;
 }
 public void signOut(ActionEvent event) {
 // Check if USB is still inserted - use the new search method

@@ -84,6 +84,7 @@ public class AdminManageUsersController extends SharedController {
             stage.setY(y);
             
             AssignDutiesController controller = loader.getController();
+            controller.setLoggedInUser(this.user);
             controller.setUser(selected);  // Pass the selected employee
             controller.loadData();
             
