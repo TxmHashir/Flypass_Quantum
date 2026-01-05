@@ -12,7 +12,7 @@
         <VBox style="-fx-background-color: #f4f6fb; -fx-padding: 30; -fx-spacing: 20;">
             <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #0B3D91;" text="Settings Dashboard" />
             <HBox spacing="20">
-                <!-- Sidebar -->
+            
                 <VBox alignment="CENTER" prefHeight="278.0" prefWidth="144.0" spacing="12" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 2);">
                     <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #0B3D91;" text="Navigate" />
                     <Button onAction="#showContact" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 8;" text="Contact" />
@@ -21,7 +21,6 @@
                     <Button onAction="#goBack" style="-fx-background-color: transparent; -fx-text-fill: #0B3D91; -fx-border-color: #0B3D91; -fx-border-radius: 8; -fx-font-size: 13px; -fx-padding: 8 12;" text="Back" />
                 </VBox>
 
-                <!-- Content Card -->
                 <VBox spacing="12" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 2);" HBox.hgrow="ALWAYS">
                     <Label fx:id="contentTitle" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #0B3D91;" text="Help" />
                     <TextArea fx:id="contentBody" editable="false" prefRowCount="10" style="-fx-font-size: 13px; -fx-text-fill: #333333; -fx-background-radius: 10;" wrapText="true" />

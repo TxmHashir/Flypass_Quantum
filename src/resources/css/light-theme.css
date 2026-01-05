@@ -1,18 +1,14 @@
-/* Custom Alert Styling - Modern Web Look */
 .dialog-pane {
     -fx-background-color: white;
-    /* Soft border and rounded corners */
     -fx-border-color: #E0E0E0;
     -fx-border-width: 1;
     -fx-border-radius: 12;
     -fx-background-radius: 12;
-    -fx-padding: 0; /* Let internal panels handle padding */
-    
-    /* Simulate a subtle web shadow */
+    -fx-padding: 0;
+
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 20, 0, 0, 10);
 }
 
-/* Header Section */
 .dialog-pane .header-panel {
     -fx-background-color: transparent;
     -fx-padding: 25 25 10 25;
@@ -22,10 +18,9 @@
     -fx-font-family: "Segoe UI", "Roboto", "Arial";
     -fx-font-size: 18pt;
     -fx-font-weight: 700;
-    -fx-text-fill: #1A1A1A; /* Darker for better contrast */
+    -fx-text-fill: #1A1A1A; 
 }
 
-/* Content/Message Body */
 .dialog-pane .content {
     -fx-background-color: transparent;
     -fx-padding: 10 25 25 25;
@@ -33,13 +28,12 @@
 
 .dialog-pane .content.label {
     -fx-font-size: 12pt;
-    -fx-text-fill: #5F6368; /* Modern grey for readability */
+    -fx-text-fill: #5F6368;
     -fx-line-spacing: 1.5;
 }
 
-/* Button Bar (Footer) */
 .dialog-pane .button-bar {
-    -fx-background-color: #F8F9FA; /* Slightly off-white footer */
+    -fx-background-color: #F8F9FA;
     -fx-padding: 15 25;
     -fx-background-radius: 0 0 12 12;
 }
@@ -65,7 +59,6 @@
     -fx-scale-y: 0.98;
 }
 
-/* Graphic/Icon Container */
 .dialog-pane .graphic-container {
     -fx-padding: 25 0 0 25;
 }

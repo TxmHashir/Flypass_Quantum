@@ -20,11 +20,11 @@
             <HBox spacing="20">
                 <VBox spacing="10">
                     <Label text="Available Flights" />
-                    <TableView fx:id="availableTable" prefWidth="300" prefHeight="300">
+                    <TableView fx:id="availTable" prefWidth="300" prefHeight="300">
                         <columns>
                             <TableColumn fx:id="availFlightCol" prefWidth="80" text="Flight #" />
                             <TableColumn fx:id="availOriginCol" prefWidth="100" text="Origin" />
-                            <TableColumn fx:id="availDestinationCol" prefWidth="100" text="Destination" />
+                            <TableColumn fx:id="availdestCol" prefWidth="100" text="dest" />
                             <TableColumn fx:id="availTimeCol" prefWidth="150" text="Time" />
                             <TableColumn fx:id="availStatusCol" prefWidth="100" text="Status" />
                         </columns>
@@ -42,7 +42,7 @@
                         <columns>
                             <TableColumn fx:id="assignFlightCol" prefWidth="80" text="Flight #" />
                             <TableColumn fx:id="assignOriginCol" prefWidth="100" text="Origin" />
-                            <TableColumn fx:id="assignDestinationCol" prefWidth="100" text="Destination" />
+                            <TableColumn fx:id="assigndestCol" prefWidth="100" text="dest" />
                             <TableColumn fx:id="assignTimeCol" prefWidth="150" text="Time" />
                             <TableColumn fx:id="assignStatusCol" prefWidth="100" text="Status" />
                         </columns>

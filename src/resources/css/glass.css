@@ -1,5 +1,4 @@
 .glass-alert {
-    /* 0.9 opacity makes the glass 'thick' enough to hide background text */
     -fx-background-color: linear-gradient(to bottom right, 
                           rgba(216, 229, 247, 1.0), 
                           rgba(216, 229, 247, 1.0));
@@ -26,7 +25,7 @@
 }
 
 .glass-alert .button-bar {
-    -fx-background-color: rgba(216, 229, 247, 1.0); /* Subtle dark tint for the footer */
+    -fx-background-color: rgba(216, 229, 247, 1.0);
     -fx-background-radius: 0 0 20 20;
     -fx-padding: 15 20;
 }

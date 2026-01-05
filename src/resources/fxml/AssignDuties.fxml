@@ -20,10 +20,10 @@
             <HBox alignment="CENTER" spacing="20">
                 <VBox spacing="10">
                     <Label text="Available Duties" />
-                    <TableView fx:id="availableTable" prefHeight="300" prefWidth="300">
+                    <TableView fx:id="availTable" prefHeight="300" prefWidth="300">
                         <columns>
                             <TableColumn fx:id="availTimeCol" prefWidth="150" text="Time" />
-                            <TableColumn fx:id="availLocationCol" prefWidth="200" text="Location" />
+                            <TableColumn fx:id="availlocCol" prefWidth="200" text="Location" />
                             <TableColumn fx:id="availFlightCol" prefWidth="100" text="Flight #" />
                         </columns>
                     </TableView>
@@ -39,7 +39,7 @@
                     <TableView fx:id="assignedTable" prefHeight="300" prefWidth="300">
                         <columns>
                             <TableColumn fx:id="assignTimeCol" prefWidth="150" text="Time" />
-                            <TableColumn fx:id="assignLocationCol" prefWidth="200" text="Location" />
+                            <TableColumn fx:id="assignlocCol" prefWidth="200" text="Location" />
                             <TableColumn fx:id="assignFlightCol" prefWidth="100" text="Flight #" />
                         </columns>
                     </TableView>

@@ -19,7 +19,7 @@
                 <columns>
                     <TableColumn fx:id="flightCol" prefWidth="100" text="Flight #" />
                     <TableColumn fx:id="originCol" prefWidth="150" text="Origin" />
-                    <TableColumn fx:id="destinationCol" prefWidth="150" text="Destination" />
+                    <TableColumn fx:id="destCol" prefWidth="150" text="dest" />
                     <TableColumn fx:id="timeCol" prefWidth="200" text="Time" />
                     <TableColumn fx:id="statusCol" prefWidth="100" text="Status" />
                 </columns>

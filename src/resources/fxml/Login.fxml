@@ -18,12 +18,9 @@
 
         <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #0B3D91;" text="Flypass Quantum Login" />
 
-        <!-- New animation: Row of pulsing overlapping circles -->
         <StackPane alignment="CENTER">
-            <HBox fx:id="animationBox" alignment="CENTER" spacing="-10"> <!-- Negative spacing for overlap -->
-                <!-- Circles will be added dynamically in controller -->
-            </HBox>
-         <Label fx:id="instructionLabel" style="-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;" text="Tap Your Card">
+            <HBox fx:id="animationBox" alignment="CENTER" spacing="-10"></HBox>
+         <Label fx:id="instuctLabel" style="-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;" text="Tap Your Card">
     <font>
         <Font name="Fraunces 72pt SemiBold" />
     </font>

@@ -19,7 +19,7 @@
             <TableView fx:id="dutyTable" prefHeight="400" style="-fx-border-color: #E6F0FF;">
                 <columns>
                     <TableColumn fx:id="timeCol" prefWidth="150" text="Time" />
-                    <TableColumn fx:id="locationCol" prefWidth="200" text="Location" />
+                    <TableColumn fx:id="locCol" prefWidth="200" text="Location" />
                     <TableColumn fx:id="flightCol" prefWidth="100" text="Flight #" />
                 </columns>
             </TableView>

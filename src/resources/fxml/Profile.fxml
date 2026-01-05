@@ -26,7 +26,7 @@
             <VBox spacing="20" style="-fx-background-color: #F5F5F5; -fx-padding: 30;">
         <StackPane>
             <!-- Customer Profile -->
-                    <VBox fx:id="customerPane" visible="false" spacing="20">
+                    <VBox fx:id="custPane" visible="false" spacing="20">
                         <!-- My Profile Card -->
                         <VBox style="-fx-background-color: transparent; -fx-background-radius: 15; -fx-padding: 30; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" spacing="20">
                             <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #0B3D91;" text="My Profile" />
@@ -34,9 +34,9 @@
                                 <VBox spacing="15" alignment="CENTER" prefWidth="150">
                                     <StackPane prefWidth="130" prefHeight="130" alignment="CENTER">
                                         <Circle radius="65" fill="white" stroke="#dc3545" strokeWidth="3" />
-                                        <ImageView fx:id="customerImageView" fitHeight="120" fitWidth="120" preserveRatio="true" pickOnBounds="true" smooth="true" StackPane.alignment="CENTER" />
+                                        <ImageView fx:id="custImgView" fitHeight="120" fitWidth="120" preserveRatio="true" pickOnBounds="true" smooth="true" StackPane.alignment="CENTER" />
                                     </StackPane>
-                                    <Button fx:id="uploadImageButtonCustomer" onAction="#uploadProfileImage" prefWidth="130" prefHeight="35" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 13px; -fx-background-radius: 5;" text="Upload Image" />
+                                    <Button fx:id="uploadImgBtnCust" onAction="#uploadProfileImage" prefWidth="130" prefHeight="35" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 13px; -fx-background-radius: 5;" text="Upload Image" />
                                 </VBox>
                                 <VBox spacing="12" alignment="TOP_LEFT" HBox.hgrow="ALWAYS">
                                     <Label fx:id="nameLabel" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #333333;" />
@@ -59,7 +59,7 @@
                                 </columnConstraints>
                                 <VBox spacing="5">
                                     <Label style="-fx-font-size: 12px; -fx-text-fill: #888888; -fx-font-weight: bold;" text="Name" />
-                                    <Label fx:id="firstNameLabel" style="-fx-font-size: 16px; -fx-text-fill: #333333; -fx-font-weight: bold;" />
+                                    <Label fx:id="fNameLabel" style="-fx-font-size: 16px; -fx-text-fill: #333333; -fx-font-weight: bold;" />
                                 </VBox>
                                 <VBox spacing="5" GridPane.columnIndex="1">
                                     <Label style="-fx-font-size: 12px; -fx-text-fill: #888888; -fx-font-weight: bold;" text="Email" />
@@ -105,7 +105,7 @@
                                 </VBox>
                                 <VBox spacing="5" GridPane.columnIndex="2">
                                     <Label style="-fx-font-size: 12px; -fx-text-fill: #888888; -fx-font-weight: bold;" text="Postal Code" />
-                                    <Label fx:id="postalCodeLabel" style="-fx-font-size: 16px; -fx-text-fill: #333333; -fx-font-weight: bold;" />
+                                    <Label fx:id="postCodeLabel" style="-fx-font-size: 16px; -fx-text-fill: #333333; -fx-font-weight: bold;" />
                                 </VBox>
                             </GridPane>
                         </VBox>
@@ -118,7 +118,7 @@
                         </HBox>
                     </VBox>
 
-                    <!-- Staff/Pilot/Air Hostess/Admin profiles with similar structure -->
+                    <!-- profiles with similar structure -->
                     <VBox fx:id="staffPane" visible="false" spacing="20">
                         <VBox style="-fx-background-color: transparent; -fx-background-radius: 15; -fx-padding: 30; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" spacing="20">
                             <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #0B3D91;" text="My Profile" />
@@ -126,9 +126,9 @@
                                 <VBox spacing="15" alignment="CENTER" prefWidth="150">
                                     <StackPane prefWidth="130" prefHeight="130" alignment="CENTER">
                                         <Circle radius="65" fill="white" stroke="#dc3545" strokeWidth="3" />
-                                        <ImageView fx:id="staffImageView" fitHeight="120" fitWidth="120" preserveRatio="true" pickOnBounds="true" smooth="true" StackPane.alignment="CENTER" />
+                                        <ImageView fx:id="staffImgView" fitHeight="120" fitWidth="120" preserveRatio="true" pickOnBounds="true" smooth="true" StackPane.alignment="CENTER" />
                                     </StackPane>
-                                    <Button fx:id="uploadImageButtonStaff" onAction="#uploadProfileImage" prefWidth="130" prefHeight="35" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 13px; -fx-background-radius: 5;" text="Upload Image" />
+                                    <Button fx:id="uploadImgBtnStaff" onAction="#uploadProfileImage" prefWidth="130" prefHeight="35" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 13px; -fx-background-radius: 5;" text="Upload Image" />
                                 </VBox>
                                 <VBox spacing="12" alignment="TOP_LEFT" HBox.hgrow="ALWAYS">
                                     <Label fx:id="staffNameLabel" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #333333;" />
@@ -188,7 +188,7 @@
                                 </VBox>
                                 <VBox spacing="5" GridPane.columnIndex="2">
                                     <Label style="-fx-font-size: 12px; -fx-text-fill: #888888; -fx-font-weight: bold;" text="Postal Code" />
-                                    <Label fx:id="staffPostalCodeLabel" style="-fx-font-size: 16px; -fx-text-fill: #333333; -fx-font-weight: bold;" />
+                                    <Label fx:id="staffpostCodeLabel" style="-fx-font-size: 16px; -fx-text-fill: #333333; -fx-font-weight: bold;" />
                                 </VBox>
                             </GridPane>
                     </VBox>
@@ -207,9 +207,9 @@
                                 <VBox spacing="15" alignment="CENTER" prefWidth="150">
                                     <StackPane prefWidth="130" prefHeight="130" alignment="CENTER">
                                         <Circle radius="65" fill="white" stroke="#dc3545" strokeWidth="3" />
-                    <ImageView fx:id="pilotImageView" fitHeight="120" fitWidth="120" preserveRatio="true" pickOnBounds="true" smooth="true" StackPane.alignment="CENTER" />
+                    <ImageView fx:id="pilotImgView" fitHeight="120" fitWidth="120" preserveRatio="true" pickOnBounds="true" smooth="true" StackPane.alignment="CENTER" />
                                     </StackPane>
-                                    <Button fx:id="uploadImageButtonPilot" onAction="#uploadProfileImage" prefWidth="130" prefHeight="35" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 13px; -fx-background-radius: 5;" text="Upload Image" />
+                                    <Button fx:id="uploadImgBtnPilot" onAction="#uploadProfileImage" prefWidth="130" prefHeight="35" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 13px; -fx-background-radius: 5;" text="Upload Image" />
                                 </VBox>
                                 <VBox spacing="12" alignment="TOP_LEFT" HBox.hgrow="ALWAYS">
                                     <Label fx:id="pilotNameLabel" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #333333;" />
@@ -273,7 +273,7 @@
                                 </VBox>
                                 <VBox spacing="5" GridPane.columnIndex="2">
                                     <Label style="-fx-font-size: 12px; -fx-text-fill: #888888; -fx-font-weight: bold;" text="Postal Code" />
-                                    <Label fx:id="pilotPostalCodeLabel" style="-fx-font-size: 16px; -fx-text-fill: #333333; -fx-font-weight: bold;" />
+                                    <Label fx:id="pilotpostCodeLabel" style="-fx-font-size: 16px; -fx-text-fill: #333333; -fx-font-weight: bold;" />
                                 </VBox>
                             </GridPane>
                     </VBox>
@@ -285,7 +285,7 @@
                     </VBox>
 
             <!-- Air Hostess Profile -->
-                    <VBox fx:id="airHostessPane" visible="false" spacing="20">
+                    <VBox fx:id="airHostPane" visible="false" spacing="20">
                         <!-- My Profile Card -->
                         <VBox style="-fx-background-color: transparent; -fx-background-radius: 15; -fx-padding: 30; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" spacing="20">
                             <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #0B3D91;" text="My Profile" />
@@ -293,9 +293,9 @@
                                 <VBox spacing="15" alignment="CENTER" prefWidth="150">
                                     <StackPane prefWidth="130" prefHeight="130" alignment="CENTER">
                                         <Circle radius="65" fill="white" stroke="#dc3545" strokeWidth="3" />
-                                        <ImageView fx:id="airHostessImageView" fitHeight="120" fitWidth="120" preserveRatio="true" pickOnBounds="true" smooth="true" StackPane.alignment="CENTER" />
+                                        <ImageView fx:id="airHostImgView" fitHeight="120" fitWidth="120" preserveRatio="true" pickOnBounds="true" smooth="true" StackPane.alignment="CENTER" />
                                     </StackPane>
-                                    <Button fx:id="uploadImageButtonAirHostess" onAction="#uploadProfileImage" prefWidth="130" prefHeight="35" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 13px; -fx-background-radius: 5;" text="Upload Image" />
+                                    <Button fx:id="uploadImgBtnAirHost" onAction="#uploadProfileImage" prefWidth="130" prefHeight="35" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 13px; -fx-background-radius: 5;" text="Upload Image" />
                                 </VBox>
                                 <VBox spacing="12" alignment="TOP_LEFT" HBox.hgrow="ALWAYS">
                                     <Label fx:id="ahNameLabel" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #333333;" />
@@ -359,7 +359,7 @@
                                 </VBox>
                                 <VBox spacing="5" GridPane.columnIndex="2">
                                     <Label style="-fx-font-size: 12px; -fx-text-fill: #888888; -fx-font-weight: bold;" text="Postal Code" />
-                                    <Label fx:id="ahPostalCodeLabel" style="-fx-font-size: 16px; -fx-text-fill: #333333; -fx-font-weight: bold;" />
+                                    <Label fx:id="ahpostCodeLabel" style="-fx-font-size: 16px; -fx-text-fill: #333333; -fx-font-weight: bold;" />
                                 </VBox>
                             </GridPane>
                     </VBox>
@@ -378,9 +378,9 @@
                                 <VBox spacing="15" alignment="CENTER" prefWidth="150">
                                     <StackPane prefWidth="130" prefHeight="130" alignment="CENTER">
                                         <Circle radius="65" fill="white" stroke="#dc3545" strokeWidth="3" />
-                                        <ImageView fx:id="adminImageView" fitHeight="120" fitWidth="120" preserveRatio="true" pickOnBounds="true" smooth="true" StackPane.alignment="CENTER" />
+                                        <ImageView fx:id="adminImgView" fitHeight="120" fitWidth="120" preserveRatio="true" pickOnBounds="true" smooth="true" StackPane.alignment="CENTER" />
                                     </StackPane>
-                                    <Button fx:id="uploadImageButtonAdmin" onAction="#uploadProfileImage" prefWidth="130" prefHeight="35" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 5;" text="Upload Image" />
+                                    <Button fx:id="uploadImgBtnAdm" onAction="#uploadProfileImage" prefWidth="130" prefHeight="35" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 5;" text="Upload Image" />
                                 </VBox>
                                 <VBox spacing="12" alignment="TOP_LEFT" HBox.hgrow="ALWAYS">
                                     <Label fx:id="adminNameLabel" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #333333;" />
@@ -444,7 +444,7 @@
                                 </VBox>
                                 <VBox spacing="5" GridPane.columnIndex="2">
                                     <Label style="-fx-font-size: 12px; -fx-text-fill: #888888; -fx-font-weight: bold;" text="Postal Code" />
-                                    <Label fx:id="adminPostalCodeLabel" style="-fx-font-size: 16px; -fx-text-fill: #333333; -fx-font-weight: bold;" />
+                                    <Label fx:id="adminpostCodeLabel" style="-fx-font-size: 16px; -fx-text-fill: #333333; -fx-font-weight: bold;" />
                                 </VBox>
                             </GridPane>
                         </VBox>

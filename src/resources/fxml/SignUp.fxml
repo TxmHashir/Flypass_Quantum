@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<!-- New import for ImageView -->
 
 <StackPane prefHeight="550.0" prefWidth="700.0" style="-fx-background-color: #F4F4F4;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SignUpController">
     
@@ -51,7 +50,7 @@
                 <TextField fx:id="cityField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7" />
                 
                 <Label text="Postal Code:" GridPane.rowIndex="8" />
-                <TextField fx:id="postalCodeField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8" />
+                <TextField fx:id="postCodeField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8" />
                 
                 <Label text="Visa Type:" GridPane.rowIndex="9" />
                 <ComboBox fx:id="visaTypeField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="9" />
@@ -60,7 +59,7 @@
                 <TextField fx:id="visaCountryField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="10" />
                 
                 <Label text="Profile Image:" GridPane.rowIndex="11" />
-                <TextField fx:id="profileImageField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                <TextField fx:id="profileImgField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="11" />
                 <Button onAction="#chooseImage" text="Choose" GridPane.columnIndex="2" GridPane.rowIndex="11" />
             <columnConstraints>
                <ColumnConstraints />
@@ -88,8 +87,7 @@
                 <Button onAction="#handleSignUp" prefWidth="100.0" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 14px; -fx-cursor: hand;" text="Sign Up" />
             </HBox>
             
-            <!-- New: Image preview -->
-            <ImageView fx:id="previewImageView" fitHeight="150.0" fitWidth="150.0" preserveRatio="true" />
+            <ImageView fx:id="previewImgView" fitHeight="150.0" fitWidth="150.0" preserveRatio="true" />
         </VBox>
     </children>
 </StackPane>
