@@ -9,14 +9,14 @@ private String passportNumber;
 private String citizenship;
 private String visa;
 private String role;
-private String encryptedKey;
+private String encrypKey;
 private String bankName;
-private String bankAccount;
+private String bankAcc;
 private double salary = 0.0;
-private String profileImagePath = "titleicon.png"; // Default mock image (using the provided logo as mock)
+private String profImgPath = "titleicon.png";
 private String country;
 private String city;
-private String postalCode;
+private String postCode;
 // New associations
 private List<Flight> assignedFlights = new ArrayList<>();
 private List<Duty> assignedDuties = new ArrayList<>();
@@ -68,11 +68,11 @@ return role;
 public void setRole(String role) {
 this.role = role;
 }
-public String getEncryptedKey() {
-return encryptedKey;
+public String getencrypKey() {
+return encrypKey;
 }
-public void setEncryptedKey(String encryptedKey) {
-this.encryptedKey = encryptedKey;
+public void setencrypKey(String encrypKey) {
+this.encrypKey = encrypKey;
 }
 public String getBankName() {
 return bankName;
@@ -80,11 +80,11 @@ return bankName;
 public void setBankName(String bankName) {
 this.bankName = bankName;
 }
-public String getBankAccount() {
-return bankAccount;
+public String getbankAcc() {
+return bankAcc;
 }
-public void setBankAccount(String bankAccount) {
-this.bankAccount = bankAccount;
+public void setbankAcc(String bankAcc) {
+this.bankAcc = bankAcc;
 }
 public double getSalary() {
 return salary;
@@ -92,11 +92,11 @@ return salary;
 public void setSalary(double salary) {
 this.salary = salary;
 }
-public String getProfileImagePath() {
-return profileImagePath;
+public String getprofImgPath() {
+return profImgPath;
 }
-public void setProfileImagePath(String profileImagePath) {
-this.profileImagePath = profileImagePath;
+public void setprofImgPath(String profImgPath) {
+this.profImgPath = profImgPath;
 }
 public String getCountry() {
 return country;
@@ -110,11 +110,11 @@ return city;
 public void setCity(String city) {
 this.city = city;
 }
-public String getPostalCode() {
-return postalCode;
+public String getpostCode() {
+return postCode;
 }
-public void setPostalCode(String postalCode) {
-this.postalCode = postalCode;
+public void setpostCode(String postCode) {
+this.postCode = postCode;
 }
 public List<Flight> getAssignedFlights() {
 return assignedFlights;

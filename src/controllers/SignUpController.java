@@ -16,14 +16,14 @@ import java.io.PrintWriter;
 import java.util.UUID;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javax.swing.filechooser.FileSystemView;  // Added for drive type
+import javax.swing.filechooser.FileSystemView;
 
 public class SignUpController extends SharedController {
     @FXML private TextField nameField, cnicField, contactField, emailField,
-                           passportField, citizenshipField, visaCountryField, profileImageField,
-                           countryField, cityField, postalCodeField;
+                           passportField, citizenshipField, visaCountryField, profileImgField,
+                           countryField, cityField, postCodeField;
     @FXML private ComboBox<String> visaTypeField;
-    @FXML private ImageView previewImageView;  // New field for preview
+    @FXML private ImageView previewImgView;
 
     private UserDAO userDAO = new UserDAO();
 
@@ -36,7 +36,6 @@ public class SignUpController extends SharedController {
 
     @FXML
     private void handleSignUp() {
-        // Validate fields (add more validation as needed)
         if (nameField.getText().isEmpty() || cnicField.getText().isEmpty()) {
             new Alert(AlertType.WARNING, "Please fill in all required fields.").show();
             return;
@@ -51,35 +50,33 @@ public class SignUpController extends SharedController {
         newUser.setCitizenship(citizenshipField.getText());
         newUser.setCountry(countryField.getText());
         newUser.setCity(cityField.getText());
-        newUser.setPostalCode(postalCodeField.getText());
+        newUser.setpostCode(postCodeField.getText());
         String visaType = visaTypeField.getValue();
         String visaCountry = visaCountryField.getText();
         if (visaType != null && !visaCountry.isEmpty()) {
             newUser.setVisa(visaType + ", " + visaCountry);
         }
-        newUser.setRole("customer");  // Default role
-        newUser.setProfileImagePath(profileImageField.getText());
+        newUser.setRole("customer"); 
+        newUser.setprofImgPath(profileImgField.getText());
 
-        // Generate encrypted key
-        String rawKey = generateRawKey();  // e.g., UUID
-        String encryptedKey = EncryptionUtil.encryptSHA256(rawKey);
-        newUser.setEncryptedKey(encryptedKey);
+        String rawKey = generateRawKey();
+        String encrypKey = EncryptionUtil.encryptSHA256(rawKey);
+        newUser.setencrypKey(encrypKey);
 
-        // Find USB drive and save key
         File usbDrive = findUsbDrive();
         if (usbDrive != null) {
             File keyFile = new File(usbDrive, "encrypted_key.txt");
             try (PrintWriter writer = new PrintWriter(keyFile)) {
-                writer.println(encryptedKey);
-                System.out.println("Successfully saved key to: " + keyFile.getAbsolutePath());  // Added debug
+                writer.println(encrypKey);
+                System.out.println("Successfully saved key to: " + keyFile.getAbsolutePath());
                 if (userDAO.signUp(newUser)) {
                     new Alert(AlertType.INFORMATION, "Sign up successful! Key saved to USB: " + usbDrive.getAbsolutePath()).show();
-                    goBack(null);  // Return to login
+                    goBack(null);
                 } else {
                     new Alert(AlertType.ERROR, "Sign up failed.").show();
                 }
             } catch (IOException e) {
-                System.err.println("Failed to save key: " + e.getMessage());  // Added debug
+                System.err.println("Failed to save key: " + e.getMessage());
                 new Alert(AlertType.ERROR, "Failed to save key to USB: " + e.getMessage()).show();
             }
         } else {
@@ -88,7 +85,7 @@ public class SignUpController extends SharedController {
     }
 
     private String generateRawKey() {
-        return UUID.randomUUID().toString();  // Or more secure random
+        return UUID.randomUUID().toString();
     }
 
     private File findUsbDrive() {
@@ -104,7 +101,7 @@ public class SignUpController extends SharedController {
                 File root = new File(path);
                 if (root.exists() && root.canRead() && !path.startsWith(systemPrefix) && isRemovableDrive(root)) {
                     System.out.println("Found removable USB drive: " + path + " (Type: " + getDriveType(root) + ")");
-                    return root;  // Return first removable USB drive
+                    return root;
                 }
             }
         } else if (os.contains("mac")) {
@@ -112,7 +109,7 @@ public class SignUpController extends SharedController {
             if (volumesDir.exists() && volumesDir.isDirectory()) {
                 for (File vol : volumesDir.listFiles()) {
                     if (vol.isDirectory() && !new File(vol, "System").exists()) {
-                        return vol;  // First non-system volume
+                        return vol;
                     }
                 }
             }
@@ -123,7 +120,7 @@ public class SignUpController extends SharedController {
                 if (dir.exists() && dir.isDirectory()) {
                     for (File vol : dir.listFiles()) {
                         if (vol.isDirectory()) {
-                            return vol;  // First mounted volume
+                            return vol;
                         }
                     }
                 }
@@ -136,7 +133,6 @@ public class SignUpController extends SharedController {
     private static boolean isRemovableDrive(File drive) {
         FileSystemView fsv = FileSystemView.getFileSystemView();
         String desc = fsv.getSystemTypeDescription(drive);
-        // Check for "Removable Disk" or variations
         return desc != null && (desc.toLowerCase().contains("removable") ||
                                 desc.toLowerCase().contains("usb") ||
                                 desc.toLowerCase().contains("flash"));
@@ -154,8 +150,8 @@ public class SignUpController extends SharedController {
         chooser.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
         File file = chooser.showOpenDialog(null);
         if (file != null) {
-            profileImageField.setText(file.getAbsolutePath());
-            previewImageView.setImage(new Image(file.toURI().toString()));
+            profileImgField.setText(file.getAbsolutePath());
+            previewImgView.setImage(new Image(file.toURI().toString()));
         }
     }
 
@@ -169,7 +165,7 @@ public class SignUpController extends SharedController {
             double y = stage.getY();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
             Scene newScene = new Scene(loader.load());
-            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());  // Copy theme
+            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
             stage.setScene(newScene);
             stage.setX(x);
             stage.setY(y);

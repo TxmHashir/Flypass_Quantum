@@ -13,7 +13,7 @@ public class ApplyVisaController extends SharedController {
     @FXML private TextField cnicField;
     @FXML private TextField passportField;
     @FXML private TextField bankNameField;
-    @FXML private TextField bankAccountField;
+    @FXML private TextField bankAccField;
     @FXML private TextField countryField;
     @FXML private ComboBox<String> visaTypeComboBox;
     @FXML
@@ -28,7 +28,7 @@ public class ApplyVisaController extends SharedController {
             cnicField.setText(user.getCnic());
             passportField.setText(user.getPassportNumber());
             bankNameField.setText(user.getBankName());
-            bankAccountField.setText(user.getBankAccount());
+            bankAccField.setText(user.getbankAcc());
         }
     }
     @FXML
@@ -37,7 +37,7 @@ public class ApplyVisaController extends SharedController {
         String country = countryField.getText();
         // Validation
         if (visaType == null || country.isEmpty() || nameField.getText().isEmpty() || cnicField.getText().isEmpty()
-        || passportField.getText().isEmpty() || bankNameField.getText().isEmpty() || bankAccountField.getText().isEmpty()) {
+        || passportField.getText().isEmpty() || bankNameField.getText().isEmpty() || bankAccField.getText().isEmpty()) {
             Alert alert = new Alert(AlertType.ERROR, "Please fill in all required fields.");
             alert.initOwner((Stage) countryField.getScene().getWindow());
             alert.show();
@@ -48,7 +48,7 @@ public class ApplyVisaController extends SharedController {
         user.setCnic(cnicField.getText());
         user.setPassportNumber(passportField.getText());
         user.setBankName(bankNameField.getText());
-        user.setBankAccount(bankAccountField.getText());
+        user.setbankAcc(bankAccField.getText());
         user.setVisa(visaType + ", " + country);
         // Mock save
         UserDAO userDAO = new UserDAO();
@@ -65,7 +65,7 @@ public class ApplyVisaController extends SharedController {
             double x = stage.getX();
             double y = stage.getY();
             Scene newScene = new Scene(loader.load());
-            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());  // Copy theme
+            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
             stage.setScene(newScene);
             stage.setX(x);
             stage.setY(y);

@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoginController extends SharedController {
-    @FXML private HBox animationBox; // New HBox for the circles
-    @FXML private Label instructionLabel; // Label for "One Tap Your Card"
+    @FXML private HBox animationBox;
+    @FXML private Label instuctLabel;
 
     private UserDAO userDAO = new UserDAO();
     private boolean justSignedOut = false;
@@ -44,7 +44,6 @@ public class LoginController extends SharedController {
             timeline.stop();
         }
         wasPresent = false;
-        // Start polling for USB key every 5 seconds
         timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> checkAndLogin()));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
@@ -56,13 +55,13 @@ public class LoginController extends SharedController {
         }
     }
 
-    private void handleLogin(String encryptedKey) {
-        User user = userDAO.getUserByEncryptedKey(encryptedKey);
+    private void handleLogin(String encrypKey) {
+        User user = userDAO.getUserByencrypKey(encrypKey);
         if (user != null) {
             openProfile(user);
         } else {
             Platform.runLater(() -> {
-                Stage stage = (Stage) instructionLabel.getScene().getWindow();
+                Stage stage = (Stage) instuctLabel.getScene().getWindow();
                 if (stage != null) {
                     Alert alert = new Alert(AlertType.ERROR, "Invalid encrypted key from USB.");
                     alert.initOwner(stage);
@@ -75,17 +74,16 @@ public class LoginController extends SharedController {
     private void openProfile(User user) {
         Platform.runLater(() -> {
             try {
-                // Stop USB polling when logged in
                 if (timeline != null) {
                     timeline.stop();
                 }
                 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Profile.fxml"));
-                Stage stage = (Stage) instructionLabel.getScene().getWindow();
+                Stage stage = (Stage) instuctLabel.getScene().getWindow();
                 double x = stage.getX();
                 double y = stage.getY();
                 Scene newScene = new Scene(loader.load());
-                newScene.getStylesheets().addAll(stage.getScene().getStylesheets());  // Copy theme
+                newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
                 stage.setScene(newScene);
                 stage.setX(x);
                 stage.setY(y);
@@ -107,7 +105,7 @@ public class LoginController extends SharedController {
             double x = stage.getX();
             double y = stage.getY();
             Scene newScene = new Scene(loader.load());
-            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());  // Copy theme
+            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
             stage.setScene(newScene);
             stage.setX(x);
             stage.setY(y);
@@ -127,7 +125,7 @@ public class LoginController extends SharedController {
             double x = stage.getX();
             double y = stage.getY();
             Scene newScene = new Scene(loader.load());
-            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());  // Copy theme
+            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
             stage.setScene(newScene);
             stage.setX(x);
             stage.setY(y);
@@ -140,28 +138,21 @@ public class LoginController extends SharedController {
     }
 
     private void checkAndLogin() {
-        // First try the new method: search all .txt files on USB
         String key = UsbKeyFetcher.searchAllTxtFiles();
-        
-        // If not found, try the old method for backward compatibility
         if (key == null) {
             key = UsbKeyFetcher.fetchEncryptionKeyFromUsb("encryption_key.txt");
         }
         
         if (key != null && !key.trim().isEmpty()) {
-            // Try to find a user with matching encryptedKey
-            User user = userDAO.getUserByEncryptedKey(key.trim());
-            
-            // If direct match not found, try hashing the key (in case txt file contains plain password)
+            User user = userDAO.getUserByencrypKey(key.trim());
             if (user == null) {
                 try {
                     String hashedKey = EncryptionUtil.encryptSHA256(key.trim());
-                    user = userDAO.getUserByEncryptedKey(hashedKey);
+                    user = userDAO.getUserByencrypKey(hashedKey);
                     if (user != null) {
-                        key = hashedKey; // Use hashed key for login
+                        key = hashedKey;
                     }
                 } catch (Exception e) {
-                    // Ignore hashing errors
                 }
             }
             
@@ -169,10 +160,9 @@ public class LoginController extends SharedController {
                 if (!wasPresent) {
                     wasPresent = true;
                     System.out.println("Found matching user: " + user.getName() + " (" + user.getRole() + ")");
-                    handleLogin(user.getEncryptedKey());
+                    handleLogin(user.getencrypKey());
                 }
             } else {
-                // Key found but no matching user
                 if (wasPresent) {
                     wasPresent = false;
                     System.out.println("No user found for key: " + key);
@@ -185,43 +175,36 @@ public class LoginController extends SharedController {
 
     @FXML
     private void initialize() {
-        // Create 5 overlapping circles with gradient colors
         Color[] colors = {
-                Color.web("#6A5ACD", 0.8),  // Blue
-                Color.web("#ADD8E6", 0.8),  // Light blue
-                Color.web("#9370DB", 0.8),  // Purple
-                Color.web("#DDA0DD", 0.8),  // Light purple
-                Color.web("#FF69B4", 0.8)   // Pink (adjusted to match images)
+                Color.web("#6A5ACD", 0.8),  
+                Color.web("#ADD8E6", 0.8), 
+                Color.web("#9370DB", 0.8), 
+                Color.web("#DDA0DD", 0.8), 
+                Color.web("#FF69B4", 0.8)   
         };
 
         for (int i = 0; i < 5; i++) {
-            Circle circle = new Circle(30);  // Radius 30 for visible size
+            Circle circle = new Circle(30); 
             circle.setFill(colors[i]);
             circle.setStroke(Color.TRANSPARENT);
             circles.add(circle);
             animationBox.getChildren().add(circle);
-            // Overlap by setting negative spacing (handled in FXML)
         }
-
-        // Set up pulsing animations with delay for wave effect
         for (int i = 0; i < circles.size(); i++) {
             ScaleTransition st = new ScaleTransition(Duration.millis(800), circles.get(i));
             st.setByX(0.3);
             st.setByY(0.3);
             st.setCycleCount(Animation.INDEFINITE);
             st.setAutoReverse(true);
-            st.setDelay(Duration.millis(i * 200));  // Delay for sequential pulsing
+            st.setDelay(Duration.millis(i * 200));
             transitions.add(st);
             st.play();
         }
 
         wasPresent = justSignedOut ? true : false;
 
-        // Start polling for USB key
         startUsbPolling();
-
-        // Perform initial check after the window is set
-        instructionLabel.sceneProperty().addListener(new ChangeListener<Scene>() {
+        instuctLabel.sceneProperty().addListener(new ChangeListener<Scene>() {
             @Override
             public void changed(ObservableValue<? extends Scene> observable, Scene oldScene, Scene newScene) {
                 if (newScene != null) {
@@ -237,7 +220,7 @@ public class LoginController extends SharedController {
                             }
                         }
                     });
-                    instructionLabel.sceneProperty().removeListener(this);
+                    instuctLabel.sceneProperty().removeListener(this);
                 }
             }
         });

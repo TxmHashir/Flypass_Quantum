@@ -17,21 +17,20 @@ import java.time.LocalDate;
 import java.util.stream.Collectors;
 
 public class BookFlightController extends SharedController {
-    @FXML private TextField originField, destinationField, seatsField;
+    @FXML private TextField originField, destField, seatsField;
     @FXML private DatePicker datePicker;
     @FXML private TableView<Flight> flightsTable;
-    @FXML private TableColumn<Flight, Number> flightNumberCol;
-    @FXML private TableColumn<Flight, String> originCol, destinationCol, scheduleCol, statusCol;
+    @FXML private TableColumn<Flight, Number> flightNoCol;
+    @FXML private TableColumn<Flight, String> originCol, destCol, scheduleCol, statusCol;
     private ObservableList<Flight> allFlights = FXCollections.observableArrayList();
 
     @FXML
     private void initialize() {
-        flightNumberCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getFlightNumber()));
+        flightNoCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getflightNo()));
         originCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getOrigin()));
-        destinationCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDestination()));
+        destCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getdest()));
         scheduleCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getSchedule()));
         statusCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getStatus()));
-        // Load flights from DAO
         FlightDAO flightDAO = new FlightDAO();
         allFlights = flightDAO.getAllFlights();
         flightsTable.setItems(allFlights);
@@ -40,12 +39,12 @@ public class BookFlightController extends SharedController {
     @FXML
     private void searchFlights() {
         String origin = originField.getText().toLowerCase().trim();
-        String destination = destinationField.getText().toLowerCase().trim();
+        String dest = destField.getText().toLowerCase().trim();
         LocalDate date = datePicker.getValue();
 
         ObservableList<Flight> filtered = allFlights.stream()
                 .filter(f -> (origin.isEmpty() || f.getOrigin().toLowerCase().contains(origin))
-                        && (destination.isEmpty() || f.getDestination().toLowerCase().contains(destination))
+                        && (dest.isEmpty() || f.getdest().toLowerCase().contains(dest))
                         && (date == null || f.getSchedule().contains(date.toString())))
                 .collect(Collectors.toCollection(FXCollections::observableArrayList));
 
@@ -75,18 +74,17 @@ public class BookFlightController extends SharedController {
             return;
         }
 
-        // Visa check for international flights
         String type = selected.getType();
         if ("International".equals(type)) {
             String visa = user.getVisa();
-            if (visa == null || !visa.toLowerCase().contains(selected.getDestination().toLowerCase())) {
-                new Alert(AlertType.WARNING, "You need a valid visa for " + selected.getDestination() + ".").show();
+            if (visa == null || !visa.toLowerCase().contains(selected.getdest().toLowerCase())) {
+                new Alert(AlertType.WARNING, "You need a valid visa for " + selected.getdest() + ".").show();
                 return;
             }
         }
 
-        // Mock booking logic
-        Alert alert = new Alert(AlertType.INFORMATION, "Payment successful! Booked " + seats + " seats on flight " + selected.getFlightNumber() + ".");
+
+        Alert alert = new Alert(AlertType.INFORMATION, "Payment successful! Booked " + seats + " seats on flight " + selected.getflightNo() + ".");
         alert.initOwner(flightsTable.getScene().getWindow());
         alert.show();
     }
@@ -99,7 +97,7 @@ public class BookFlightController extends SharedController {
             double x = stage.getX();
             double y = stage.getY();
             Scene newScene = new Scene(loader.load());
-            newScene.getStylesheets().addAll(stage.getScene().getStylesheets()); // Copy theme
+            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
             stage.setScene(newScene);
             stage.setX(x);
             stage.setY(y);

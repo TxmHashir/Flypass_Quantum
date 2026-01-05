@@ -13,18 +13,17 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class DutyController extends SharedController {
     @FXML private TableView<Duty> dutyTable;
-    @FXML private TableColumn<Duty, String> timeCol, locationCol;
+    @FXML private TableColumn<Duty, String> timeCol, locCol;
     @FXML private TableColumn<Duty, Integer> flightCol;
 
     @FXML
     private void initialize() {
         timeCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getTime()));
-        locationCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getLocation()));
-        flightCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getFlightNumber()).asObject());
+        locCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getLocation()));
+        flightCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getflightNo()).asObject());
     }
 
     public void loadDuties() {
-        // Loads duties assigned specifically to this staff member
         dutyTable.setItems(FXCollections.observableArrayList(user.getAssignedDuties()));
     }
 
@@ -39,13 +38,11 @@ public class DutyController extends SharedController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Profile.fxml"));
             Stage stage = getStageFromEvent(event);
-            
-            // Preserve window position and size
             double x = stage.getX();
             double y = stage.getY();
             
             Scene newScene = new Scene(loader.load());
-            newScene.getStylesheets().addAll(stage.getScene().getStylesheets()); // Copy theme
+            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
             
             stage.setScene(newScene);
             stage.setX(x);

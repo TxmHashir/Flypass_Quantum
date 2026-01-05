@@ -16,7 +16,6 @@ public void setLoggedInUser(User loggedInUser) {
     this.loggedInUser = loggedInUser;
 }
 public void signOut(ActionEvent event) {
-// Check if USB is still inserted - use the new search method
 String key = UsbKeyFetcher.searchAllTxtFiles();
 if (key == null) {
 key = UsbKeyFetcher.fetchEncryptionKeyFromUsb("encrypted_key.txt");
@@ -25,22 +24,22 @@ if (key != null) {
 Alert alert = new Alert(AlertType.WARNING, "First remove your card.");
 alert.initOwner(getStageFromEvent(event));
 alert.show();
-return;  // Prevent sign out
+return;
 }
 try {
 Stage stage = getStageFromEvent(event);
 double x = stage.getX();
 double y = stage.getY();
-FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));  // Use loader for consistency
+FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
 Scene newScene = new Scene(loader.load());
-newScene.getStylesheets().addAll(stage.getScene().getStylesheets());  // Copy theme
+newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
 stage.setScene(newScene);
 stage.setX(x);
 stage.setY(y);
 stage.show();
 LoginController controller = loader.getController();
 controller.setJustSignedOut(true);
-controller.startUsbPolling();  // Restart USB polling when logged out
+controller.startUsbPolling();
 } catch (IOException e) {
 e.printStackTrace();
 }
@@ -52,7 +51,7 @@ Stage stage = getStageFromEvent(event);
 double x = stage.getX();
 double y = stage.getY();
 Scene newScene = new Scene(loader.load());
-newScene.getStylesheets().addAll(stage.getScene().getStylesheets());  // Copy theme
+newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
 stage.setScene(newScene);
 stage.setX(x);
 stage.setY(y);
