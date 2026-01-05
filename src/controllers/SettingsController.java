@@ -13,7 +13,7 @@ public class SettingsController extends SharedController {
 
     @FXML
     private void initialize() {
-        showHelp(null); // default view
+        showHelp(null); 
     }
 
     @FXML
@@ -59,7 +59,7 @@ public class SettingsController extends SharedController {
             double x = stage.getX();
             double y = stage.getY();
             Scene newScene = new Scene(loader.load());
-            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());  // Copy theme
+            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
             stage.setScene(newScene);
             stage.setX(x);
             stage.setY(y);

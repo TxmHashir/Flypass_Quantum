@@ -18,14 +18,11 @@
             <padding>
                 <Insets bottom="20" left="20" right="20" top="20" />
             </padding>
-            
-            <!-- Header -->
+
             <Label fx:id="headerLabel" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #0B3D91; -fx-alignment: center;" text="Visa for [Country]" />
             
-            <!-- Visa Type -->
             <Label fx:id="visaTypeHeader" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #0B3D91; -fx-alignment: center;" text="Type: [Visa Type]" />
-            
-            <!-- Details Grid -->
+
             <GridPane alignment="CENTER" hgap="10" maxWidth="350.0" vgap="5">
                 <Label style="-fx-font-weight: bold; -fx-text-fill: #0B3D91;" text="Full Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                 <Label fx:id="nameLabel" style="-fx-text-fill: #0B3D91;" GridPane.columnIndex="1" GridPane.rowIndex="0" />
@@ -61,9 +58,8 @@
                     <RowConstraints />
                     <RowConstraints />
                 </rowConstraints>
-            </GridPane>
-            
-            <!-- Mock MRZ -->
+            </GridPane>      
+
             <VBox alignment="CENTER" spacing="2" style="-fx-padding: 10 0 0 0;">
                 <Text fx:id="mrzLine1">
                     <font>
@@ -76,8 +72,7 @@
                     </font>
                 </Text>
             </VBox>
-            
-            <!-- Buttons (hidden during print) -->
+
             <HBox fx:id="btnBox" alignment="CENTER" spacing="15" style="-fx-padding: 20 0 0 0;">
                 <Button onAction="#goBack" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 14px;" text="Back" />
                 <Button onAction="#handlePrint" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 14px;" text="Print" />

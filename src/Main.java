@@ -1,4 +1,3 @@
-// Updated Main.java (no changes needed, but included for completeness)
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,18 +9,15 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
     
-         
-
-
         Scene scene = new Scene(loader.load());
         scene.getStylesheets().add(getClass().getResource("/css/light-theme.css").toExternalForm());
         stage.setScene(scene);
         Image image = new Image("titleicon.png");
         stage.getIcons().add(image);
         stage.setTitle("Flypass Quantum");
-        stage.setWidth(700);  // Set initial size here
+        stage.setWidth(700);
         stage.setHeight(550);
-        stage.centerOnScreen();  // Optional: Center initially to avoid corner placement
+        stage.centerOnScreen();
         stage.show();
     }
 

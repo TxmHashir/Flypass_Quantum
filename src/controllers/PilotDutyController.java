@@ -24,7 +24,6 @@ public class PilotDutyController extends SharedController {
     }
 
     public void loadDuties() {
-        // Loads duties assigned specifically to this pilot
         dutyTable.setItems(FXCollections.observableArrayList(user.getAssignedFlights()));
     }
 

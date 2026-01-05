@@ -33,7 +33,7 @@ public class AdminManageUsersController extends SharedController {
     public void loadUsers() {
         ObservableList<User> users = FXCollections.observableArrayList(
             userDAO.getAllUsers().stream()
-                .filter(u -> !"admin".equals(u.getRole())) // Exclude admins from list
+                .filter(u -> !"admin".equals(u.getRole()))
                 .collect(Collectors.toList())
         );
         usersTable.setItems(users);
@@ -85,7 +85,7 @@ public class AdminManageUsersController extends SharedController {
             
             AssignDutiesController controller = loader.getController();
             controller.setLoggedInUser(this.user);
-            controller.setUser(selected);  // Pass the selected employee
+            controller.setUser(selected);
             controller.loadData();
             
             stage.show();
@@ -109,7 +109,7 @@ public class AdminManageUsersController extends SharedController {
             stage.setY(y);
             
             ProfileController controller = loader.getController();
-            controller.setUser(user); // Preserve original admin user
+            controller.setUser(user);
             controller.initializeProfile();
             
             stage.show();

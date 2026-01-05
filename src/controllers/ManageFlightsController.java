@@ -79,7 +79,6 @@ public class ManageFlightsController extends SharedController {
         ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
 
-        // Create input fields
         TextField flightNoField = new TextField();
         flightNoField.setPromptText("Flight Number");
         TextField originField = new TextField();
@@ -97,7 +96,7 @@ public class ManageFlightsController extends SharedController {
 
         if (flight != null) {
             flightNoField.setText(String.valueOf(flight.getflightNo()));
-            flightNoField.setEditable(false); // Can't change flight number when editing
+            flightNoField.setEditable(false); 
             originField.setText(flight.getOrigin());
             destField.setText(flight.getdest());
             scheduleField.setText(flight.getSchedule());
@@ -105,7 +104,6 @@ public class ManageFlightsController extends SharedController {
             typeCombo.setValue(flight.getType());
         }
 
-        // Layout
         javafx.scene.layout.GridPane grid = new javafx.scene.layout.GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -126,7 +124,6 @@ public class ManageFlightsController extends SharedController {
 
         dialog.getDialogPane().setContent(grid);
 
-        // Convert result to Flight when save is clicked
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == saveButtonType) {
                 try {
@@ -143,14 +140,12 @@ public class ManageFlightsController extends SharedController {
                     }
 
                     if (flight == null) {
-                        // Adding new flight - check if flight number exists
                         if (flightDAO.flightNoExists(flightNo)) {
                             new Alert(AlertType.WARNING, "Flight number already exists.").show();
                             return null;
                         }
                         return new Flight(flightNo, origin, dest, schedule, status, type);
                     } else {
-                        // Editing existing flight
                         Flight edited = new Flight(flightNo, origin, dest, schedule, status, type);
                         return edited;
                     }

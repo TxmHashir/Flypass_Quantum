@@ -20,7 +20,6 @@ public class AssignFlightsController extends SharedController {
 
     @FXML
     private void initialize() {
-        // Available table setup
         availFlightCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getflightNo()).asObject());
         availOriginCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getOrigin()));
         availdestCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getdest()));
@@ -65,7 +64,7 @@ public class AssignFlightsController extends SharedController {
 
     @FXML
 private void goBack(ActionEvent event) {
-    userDAO.updateUser(user); // Persist changes
+    userDAO.updateUser(user);
     try {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AdminManageUsers.fxml"));
         Stage stage = getStageFromEvent(event);
@@ -79,8 +78,8 @@ private void goBack(ActionEvent event) {
         stage.setY(y);
         
         AdminManageUsersController controller = loader.getController();
-        controller.setUser(this.loggedInUser);  // Updated: Use the preserved loggedInUser (admin)
-        controller.loadUsers();  // Optional: Explicitly reload to ensure fresh data
+        controller.setUser(this.loggedInUser);
+        controller.loadUsers();
         
         stage.show();
     } catch (Exception e) {

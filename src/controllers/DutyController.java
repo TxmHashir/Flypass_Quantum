@@ -24,7 +24,6 @@ public class DutyController extends SharedController {
     }
 
     public void loadDuties() {
-        // Loads duties assigned specifically to this staff member
         dutyTable.setItems(FXCollections.observableArrayList(user.getAssignedDuties()));
     }
 
@@ -39,13 +38,11 @@ public class DutyController extends SharedController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Profile.fxml"));
             Stage stage = getStageFromEvent(event);
-            
-            // Preserve window position and size
             double x = stage.getX();
             double y = stage.getY();
             
             Scene newScene = new Scene(loader.load());
-            newScene.getStylesheets().addAll(stage.getScene().getStylesheets()); // Copy theme
+            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
             
             stage.setScene(newScene);
             stage.setX(x);

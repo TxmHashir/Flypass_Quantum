@@ -24,7 +24,6 @@ public class AirHostessDutyController extends SharedController {
     }
 
     public void loadDuties() {
-        // Loads duties assigned specifically to this air hostess
         dutyTable.setItems(FXCollections.observableArrayList(user.getAssignedFlights()));
     }
 

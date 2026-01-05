@@ -31,7 +31,6 @@ public class BookFlightController extends SharedController {
         destCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getdest()));
         scheduleCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getSchedule()));
         statusCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getStatus()));
-        // Load flights from DAO
         FlightDAO flightDAO = new FlightDAO();
         allFlights = flightDAO.getAllFlights();
         flightsTable.setItems(allFlights);
@@ -75,7 +74,6 @@ public class BookFlightController extends SharedController {
             return;
         }
 
-        // Visa check for international flights
         String type = selected.getType();
         if ("International".equals(type)) {
             String visa = user.getVisa();
@@ -85,7 +83,7 @@ public class BookFlightController extends SharedController {
             }
         }
 
-        // Mock booking logic
+
         Alert alert = new Alert(AlertType.INFORMATION, "Payment successful! Booked " + seats + " seats on flight " + selected.getflightNo() + ".");
         alert.initOwner(flightsTable.getScene().getWindow());
         alert.show();
@@ -99,7 +97,7 @@ public class BookFlightController extends SharedController {
             double x = stage.getX();
             double y = stage.getY();
             Scene newScene = new Scene(loader.load());
-            newScene.getStylesheets().addAll(stage.getScene().getStylesheets()); // Copy theme
+            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
             stage.setScene(newScene);
             stage.setX(x);
             stage.setY(y);

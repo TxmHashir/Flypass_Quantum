@@ -7,7 +7,6 @@ public class FlightDAO {
     private static List<Flight> flights = new ArrayList<>();
     
     static {
-        // Initialize with some default flights
         flights.add(new Flight(101, "LAX", "JFK", "2025-12-20 08:00", "On Time", "Domestic"));
         flights.add(new Flight(102, "JFK", "LAX", "2025-12-21 10:00", "Delayed", "Domestic"));
         flights.add(new Flight(103, "LAX", "LHR", "2025-12-22 14:00", "On Time", "International"));

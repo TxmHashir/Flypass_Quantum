@@ -19,9 +19,8 @@ public class UserDAO {
         customer.setCountry("United States");
         customer.setCity("New York");
         customer.setpostCode("10001");
-        customer.setprofImgPath("titleicon.png"); // Mock image
-
-        // Pilot (Assuming Flight class exists)
+        customer.setprofImgPath("titleicon.png");
+        // Pilot
         User pilot = new User();
         pilot.setName("Captain Skies");
         pilot.setRole("pilot");
@@ -35,11 +34,8 @@ public class UserDAO {
         pilot.setCity("Los Angeles");
         pilot.setpostCode("90001");
         pilot.setSalary(150000.0);
-        pilot.setprofImgPath("titleicon.png"); // Mock image
-        // The Flight class is assumed but not provided in the prompt.
-        // pilot.getAssignedFlights().add(new Flight(101, "LAX", "JFK", "2025-12-20 08:00", "On Time", "Domestic"));
-
-        // Staff (Assuming Duty class exists)
+        pilot.setprofImgPath("titleicon.png");
+        // Staff
         User staff = new User();
         staff.setName("Staff Member");
         staff.setRole("staff");
@@ -53,10 +49,7 @@ public class UserDAO {
         staff.setCity("Chicago");
         staff.setpostCode("60601");
         staff.setSalary(80000.0);
-        staff.setprofImgPath("titleicon.png"); // Mock image
-        // The Duty class is assumed but not provided in the prompt.
-        // staff.getAssignedDuties().add(new Duty("08:00-12:00", "LAX Terminal 1", 101));
-
+        staff.setprofImgPath("titleicon.png"); 
         // Admin
         User admin = new User();
         admin.setName("Admin User");
@@ -71,9 +64,8 @@ public class UserDAO {
         admin.setCity("Washington DC");
         admin.setpostCode("20001");
         admin.setSalary(120000.0);
-        admin.setprofImgPath("titleicon.png"); // Mock image
-
-        // Air Hostess (Assuming Flight class exists)
+        admin.setprofImgPath("titleicon.png");
+        // Air Hostess
         User airHostess = new User();
         airHostess.setName("Hostess Fly");
         airHostess.setRole("air_hostess");
@@ -87,17 +79,12 @@ public class UserDAO {
         airHostess.setCity("Miami");
         airHostess.setpostCode("33101");
         airHostess.setSalary(90000.0);
-        airHostess.setprofImgPath("titleicon.png"); // Mock image
-        // The Flight class is assumed but not provided in the prompt.
-        // airHostess.getAssignedFlights().add(new Flight(102, "JFK", "LAX", "2025-12-21 10:00", "Delayed", "Domestic"));
-
+        airHostess.setprofImgPath("titleicon.png"); 
         mockUsers.add(customer);
         mockUsers.add(pilot);
         mockUsers.add(staff);
         mockUsers.add(admin);
         mockUsers.add(airHostess);
-        
-        // Additional dummy employees for testing
         // More Pilots
         User pilot2 = new User();
         pilot2.setName("John Wright");
@@ -190,8 +177,6 @@ public class UserDAO {
         airHostess3.setpostCode("89101");
         airHostess3.setSalary(88000.0);
         airHostess3.setprofImgPath("titleicon.png");
-        
-        // Add all additional employees
         mockUsers.add(pilot2);
         mockUsers.add(pilot3);
         mockUsers.add(staff2);
@@ -213,7 +198,6 @@ public class UserDAO {
     }
 
     public void updateUser(User user) {
-        // Mock update: Remove old and add new
         mockUsers.removeIf(u -> u.getencrypKey().equals(user.getencrypKey()));
         mockUsers.add(user);
     }

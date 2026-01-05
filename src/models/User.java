@@ -13,7 +13,7 @@ private String encrypKey;
 private String bankName;
 private String bankAcc;
 private double salary = 0.0;
-private String profImgPath = "titleicon.png"; // Default mock image (using the provided logo as mock)
+private String profImgPath = "titleicon.png";
 private String country;
 private String city;
 private String postCode;
