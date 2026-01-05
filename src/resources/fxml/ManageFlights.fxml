@@ -19,9 +19,9 @@
             
             <TableView fx:id="flightsTable" prefHeight="400" style="-fx-border-color: #E6F0FF; -fx-background-color: white;">
                 <columns>
-                    <TableColumn fx:id="flightNumberCol" prefWidth="120" text="Flight Number" />
+                    <TableColumn fx:id="flightNoCol" prefWidth="120" text="Flight Number" />
                     <TableColumn fx:id="originCol" prefWidth="100" text="Origin" />
-                    <TableColumn fx:id="destinationCol" prefWidth="100" text="Destination" />
+                    <TableColumn fx:id="destCol" prefWidth="100" text="dest" />
                     <TableColumn fx:id="scheduleCol" prefWidth="180" text="Schedule" />
                     <TableColumn fx:id="statusCol" prefWidth="120" text="Status" />
                     <TableColumn fx:id="typeCol" prefWidth="120" text="Type" />

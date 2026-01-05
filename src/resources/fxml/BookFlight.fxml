@@ -24,8 +24,8 @@
             <GridPane hgap="10" vgap="10">
                 <Label style="-fx-text-fill: #0B3D91;" text="Origin:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                 <TextField fx:id="originField" promptText="Origin" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                <Label style="-fx-text-fill: #0B3D91;" text="Destination:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                <TextField fx:id="destinationField" promptText="Destination" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Label style="-fx-text-fill: #0B3D91;" text="dest:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <TextField fx:id="destField" promptText="dest" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                 <Label style="-fx-text-fill: #0B3D91;" text="Date:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                 <DatePicker fx:id="datePicker" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                 <Label style="-fx-text-fill: #0B3D91;" text="Number of Seats:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
@@ -43,9 +43,9 @@
             </GridPane>
             <TableView fx:id="flightsTable" prefHeight="300" style="-fx-border-color: #E6F0FF;">
                 <columns>
-                    <TableColumn fx:id="flightNumberCol" prefWidth="100" text="Flight #" />
+                    <TableColumn fx:id="flightNoCol" prefWidth="100" text="Flight #" />
                     <TableColumn fx:id="originCol" prefWidth="150" text="Origin" />
-                    <TableColumn fx:id="destinationCol" prefWidth="150" text="Destination" />
+                    <TableColumn fx:id="destCol" prefWidth="150" text="dest" />
                     <TableColumn fx:id="scheduleCol" prefWidth="200" text="Schedule" />
                     <TableColumn fx:id="statusCol" prefWidth="100" text="Status" />
                 </columns>

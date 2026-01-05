@@ -8,20 +8,20 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class CheckInController extends SharedController {
-    @FXML private TextField flightNumberField, passengerCnicField;
+    @FXML private TextField flightNoField, psgCnicFIeld;
 
     @FXML
     private void handleCheckIn() {
-        String flightNum = flightNumberField.getText().trim();
-        String cnic = passengerCnicField.getText().trim();
+        String flightNum = flightNoField.getText().trim();
+        String cnic = psgCnicFIeld.getText().trim();
         if (flightNum.isEmpty() || cnic.isEmpty()) {
             new Alert(AlertType.WARNING, "Please fill in all fields.").show();
             return;
         }
         // Mock check-in logic
         new Alert(AlertType.INFORMATION, "Passenger with CNIC " + cnic + " checked in for flight " + flightNum + " (mock).").show();
-        flightNumberField.clear();
-        passengerCnicField.clear();
+        flightNoField.clear();
+        psgCnicFIeld.clear();
     }
 
     @FXML

@@ -16,31 +16,31 @@ import javafx.scene.shape.Circle;
 import javafx.scene.layout.StackPane;
 import java.io.File;
 public class ProfileController extends SharedController {
-@FXML private VBox customerPane, staffPane, pilotPane, adminPane, airHostessPane;
-@FXML private ImageView customerImageView, staffImageView, pilotImageView, airHostessImageView, adminImageView;
-@FXML private Button uploadImageButtonCustomer, uploadImageButtonStaff, uploadImageButtonAdmin, uploadImageButtonPilot, uploadImageButtonAirHostess;
+@FXML private VBox custPane, staffPane, pilotPane, adminPane, airHostPane;
+@FXML private ImageView custImgView, staffImgView, pilotImgView, airHostImgView, adminImgView;
+@FXML private Button uploadImgBtnCust, uploadImgBtnStaff, uploadImgBtnAdm, uploadImgBtnPilot, uploadImgBtnAirHost;
 // Customer Labels
-@FXML private Label nameLabel, firstNameLabel, lastNameLabel, cnicLabel, emailLabel, contactLabel, passportLabel, citizenshipLabel, visaStatusLabel, roleLabel, locationLabel, dobLabel, userRoleLabel, salaryLabel;
-@FXML private Label countryLabel, cityLabel, postalCodeLabel;
+@FXML private Label nameLabel, fNameLabel, lNameLabel, cnicLabel, emailLabel, contactLabel, passportLabel, citizenshipLabel, visaStatusLabel, roleLabel, locationLabel, dobLabel, userRoleLabel, salaryLabel;
+@FXML private Label countryLabel, cityLabel, postCodeLabel;
 // Pilot Labels
 @FXML private Label pilotNameLabel, pilotNameLabel2, pilotCnicLabel, pilotEmailLabel, pilotContactLabel, pilotPassportLabel, pilotCitizenshipLabel, pilotVisaLabel, pilotVisaStatusLabel, pilotRoleLabel, pilotRoleLabel2, pilotSalaryLabel;
-@FXML private Label pilotCountryLabel, pilotCityLabel, pilotPostalCodeLabel;
+@FXML private Label pilotCountryLabel, pilotCityLabel, pilotpostCodeLabel;
 // Staff Labels
 @FXML private Label staffNameLabel, staffNameLabel2, staffCnicLabel, staffEmailLabel, staffContactLabel, staffPassportLabel, staffCitizenshipLabel, staffVisaLabel, staffVisaStatusLabel, staffRoleLabel, staffRoleDisplayLabel, staffSalaryLabel;
-@FXML private Label staffCountryLabel, staffCityLabel, staffPostalCodeLabel;
+@FXML private Label staffCountryLabel, staffCityLabel, staffpostCodeLabel;
 // Air Hostess Labels
 @FXML private Label ahNameLabel, ahNameLabel2, ahCnicLabel, ahEmailLabel, ahContactLabel, ahPassportLabel, ahCitizenshipLabel, ahVisaLabel, ahVisaStatusLabel, ahRoleLabel, ahRoleLabel2, ahSalaryLabel;
-@FXML private Label ahCountryLabel, ahCityLabel, ahPostalCodeLabel;
+@FXML private Label ahCountryLabel, ahCityLabel, ahpostCodeLabel;
 // Admin Labels
 @FXML private Label adminNameLabel, adminNameLabel2, adminCnicLabel, adminEmailLabel, adminContactLabel, adminPassportLabel, adminCitizenshipLabel, adminVisaLabel, adminVisaStatusLabel, adminRoleLabel, adminRoleLabel2, adminSalaryLabel;
-@FXML private Label adminCountryLabel, adminCityLabel, adminPostalCodeLabel;
+@FXML private Label adminCountryLabel, adminCityLabel, adminpostCodeLabel;
 public void initializeProfile() {
 if (user == null) return;
 hideAllPanes();
 loadProfileImage();
 switch (user.getRole().toLowerCase()) {
 case "customer":
-customerPane.setVisible(true);
+custPane.setVisible(true);
 populateCustomerProfile();
 break;
 case "pilot":
@@ -52,7 +52,7 @@ staffPane.setVisible(true);
 populateStaffProfile();
 break;
 case "airhostess":
-airHostessPane.setVisible(true);
+airHostPane.setVisible(true);
 populateAirHostessProfile();
 break;
 case "admin":
@@ -64,10 +64,10 @@ new Alert(AlertType.ERROR, "Unknown role.").show();
 }
 }
 private void hideAllPanes() {
-customerPane.setVisible(false);
+custPane.setVisible(false);
 pilotPane.setVisible(false);
 staffPane.setVisible(false);
-airHostessPane.setVisible(false);
+airHostPane.setVisible(false);
 adminPane.setVisible(false);
 }
 
@@ -75,18 +75,18 @@ private ImageView getActiveImageView() {
 if (user == null || user.getRole() == null) return null;
 String role = user.getRole().toLowerCase();
 switch (role) {
-case "customer": return customerImageView;
-case "pilot": return pilotImageView;
-case "staff": return staffImageView;
+case "customer": return custImgView;
+case "pilot": return pilotImgView;
+case "staff": return staffImgView;
 case "airhostess":
-case "air_hostess": return airHostessImageView;
-case "admin": return adminImageView;
-default: return customerImageView;
+case "air_hostess": return airHostImgView;
+case "admin": return adminImgView;
+default: return custImgView;
 }
 }
 private void loadProfileImage() {
 try {
-String imagePath = user.getProfileImagePath();
+String imagePath = user.getprofImgPath();
 Image image = null;
 ImageView targetView = getActiveImageView();
 if (targetView == null) return;
@@ -111,37 +111,37 @@ image = new Image(imagePath != null ? imagePath : "titleicon.png", 120, 120, tru
 applyImageSettings(targetView, image);
 // Show upload button if image is default or failed to load
 boolean showButton = imagePath == null || imagePath.isEmpty() || imagePath.equals("titleicon.png") || image.isError();
-if (uploadImageButtonCustomer != null) {
-uploadImageButtonCustomer.setVisible(showButton);
+if (uploadImgBtnCust != null) {
+uploadImgBtnCust.setVisible(showButton);
 }
-if (uploadImageButtonStaff != null) {
-uploadImageButtonStaff.setVisible(showButton);
+if (uploadImgBtnStaff != null) {
+uploadImgBtnStaff.setVisible(showButton);
 }
-if (uploadImageButtonAdmin != null) {
-uploadImageButtonAdmin.setVisible(showButton);
+if (uploadImgBtnAdm != null) {
+uploadImgBtnAdm.setVisible(showButton);
 }
-if (uploadImageButtonPilot != null) {
-uploadImageButtonPilot.setVisible(showButton);
+if (uploadImgBtnPilot != null) {
+uploadImgBtnPilot.setVisible(showButton);
 }
-if (uploadImageButtonAirHostess != null) {
-uploadImageButtonAirHostess.setVisible(showButton);
+if (uploadImgBtnAirHost != null) {
+uploadImgBtnAirHost.setVisible(showButton);
 }
 } catch (Exception e) {
 System.err.println("Failed to load profile image: " + e.getMessage());
-if (uploadImageButtonCustomer != null) {
-uploadImageButtonCustomer.setVisible(true);
+if (uploadImgBtnCust != null) {
+uploadImgBtnCust.setVisible(true);
 }
-if (uploadImageButtonStaff != null) {
-uploadImageButtonStaff.setVisible(true);
+if (uploadImgBtnStaff != null) {
+uploadImgBtnStaff.setVisible(true);
 }
-if (uploadImageButtonAdmin != null) {
-uploadImageButtonAdmin.setVisible(true);
+if (uploadImgBtnAdm != null) {
+uploadImgBtnAdm.setVisible(true);
 }
-if (uploadImageButtonPilot != null) {
-uploadImageButtonPilot.setVisible(true);
+if (uploadImgBtnPilot != null) {
+uploadImgBtnPilot.setVisible(true);
 }
-if (uploadImageButtonAirHostess != null) {
-uploadImageButtonAirHostess.setVisible(true);
+if (uploadImgBtnAirHost != null) {
+uploadImgBtnAirHost.setVisible(true);
 }
 }
 }
@@ -149,7 +149,7 @@ private void populateCustomerProfile() {
 String fullName = user.getName() != null ? user.getName() : "N/A";
 nameLabel.setText(fullName);
 // For the Personal Information section, show full name
-firstNameLabel.setText(fullName);
+fNameLabel.setText(fullName);
 roleLabel.setText(user.getRole() != null ? user.getRole().toUpperCase() : "CUSTOMER");
 // Location from address
 String location = "";
@@ -177,7 +177,7 @@ salaryLabel.setText("N/A");
 // Address fields
 countryLabel.setText(user.getCountry() != null ? user.getCountry() : "N/A");
 cityLabel.setText(user.getCity() != null ? user.getCity() : "N/A");
-postalCodeLabel.setText(user.getPostalCode() != null ? user.getPostalCode() : "N/A");
+postCodeLabel.setText(user.getpostCode() != null ? user.getpostCode() : "N/A");
 }
 private void populatePilotProfile() {
 String fullName = user.getName() != null ? user.getName() : "N/A";
@@ -212,8 +212,8 @@ pilotCountryLabel.setText(user.getCountry() != null ? user.getCountry() : "N/A")
 if (pilotCityLabel != null) {
 pilotCityLabel.setText(user.getCity() != null ? user.getCity() : "N/A");
 }
-if (pilotPostalCodeLabel != null) {
-pilotPostalCodeLabel.setText(user.getPostalCode() != null ? user.getPostalCode() : "N/A");
+if (pilotpostCodeLabel != null) {
+pilotpostCodeLabel.setText(user.getpostCode() != null ? user.getpostCode() : "N/A");
 }
 }
 private void populateStaffProfile() {
@@ -233,7 +233,7 @@ staffCnicLabel.setText(user.getCnic() != null ? user.getCnic() : "N/A");
 // Address fields
 staffCountryLabel.setText(user.getCountry() != null ? user.getCountry() : "N/A");
 staffCityLabel.setText(user.getCity() != null ? user.getCity() : "N/A");
-staffPostalCodeLabel.setText(user.getPostalCode() != null ? user.getPostalCode() : "N/A");
+staffpostCodeLabel.setText(user.getpostCode() != null ? user.getpostCode() : "N/A");
 }
 private void populateAirHostessProfile() {
 String fullName = user.getName() != null ? user.getName() : "N/A";
@@ -269,8 +269,8 @@ ahCountryLabel.setText(user.getCountry() != null ? user.getCountry() : "N/A");
 if (ahCityLabel != null) {
 ahCityLabel.setText(user.getCity() != null ? user.getCity() : "N/A");
 }
-if (ahPostalCodeLabel != null) {
-ahPostalCodeLabel.setText(user.getPostalCode() != null ? user.getPostalCode() : "N/A");
+if (ahpostCodeLabel != null) {
+ahpostCodeLabel.setText(user.getpostCode() != null ? user.getpostCode() : "N/A");
 }
 }
 private void applyImageSettings(ImageView targetView, Image img) {
@@ -339,8 +339,8 @@ adminCountryLabel.setText(user.getCountry() != null ? user.getCountry() : "N/A")
 if (adminCityLabel != null) {
 adminCityLabel.setText(user.getCity() != null ? user.getCity() : "N/A");
 }
-if (adminPostalCodeLabel != null) {
-adminPostalCodeLabel.setText(user.getPostalCode() != null ? user.getPostalCode() : "N/A");
+if (adminpostCodeLabel != null) {
+adminpostCodeLabel.setText(user.getpostCode() != null ? user.getpostCode() : "N/A");
 }
 }
 // --- Navigation Handlers (Customer) ---
@@ -457,7 +457,7 @@ if (selectedFile != null) {
 try {
 String imagePath = selectedFile.getAbsolutePath();
 System.out.println("Selected image path: " + imagePath);
-user.setProfileImagePath(imagePath);
+user.setprofImgPath(imagePath);
 // Update the image in the view - convert to URI for loading
 String imageUri = selectedFile.toURI().toString();
 System.out.println("Loading image from URI: " + imageUri);
@@ -485,20 +485,20 @@ throw new Exception("Failed to load image: " + errorMsg);
  // Set immediately
  applyImageSettings(targetView, newImage);
 // Hide the upload buttons since we now have an image
-if (uploadImageButtonCustomer != null) {
-uploadImageButtonCustomer.setVisible(false);
+if (uploadImgBtnCust != null) {
+uploadImgBtnCust.setVisible(false);
 }
-if (uploadImageButtonStaff != null) {
-uploadImageButtonStaff.setVisible(false);
+if (uploadImgBtnStaff != null) {
+uploadImgBtnStaff.setVisible(false);
 }
-if (uploadImageButtonAdmin != null) {
-uploadImageButtonAdmin.setVisible(false);
+if (uploadImgBtnAdm != null) {
+uploadImgBtnAdm.setVisible(false);
 }
-if (uploadImageButtonPilot != null) {
-uploadImageButtonPilot.setVisible(false);
+if (uploadImgBtnPilot != null) {
+uploadImgBtnPilot.setVisible(false);
 }
-if (uploadImageButtonAirHostess != null) {
-uploadImageButtonAirHostess.setVisible(false);
+if (uploadImgBtnAirHost != null) {
+uploadImgBtnAirHost.setVisible(false);
 }
 // Save the user update
 UserDAO userDAO = new UserDAO();

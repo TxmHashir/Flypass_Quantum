@@ -19,9 +19,9 @@ import java.util.Random;
 
 public class ViewVisaController extends SharedController {
     @FXML private VBox visaDetailsPane;
-    @FXML private HBox buttonBox;
+    @FXML private HBox btnBox;
     @FXML private Label headerLabel, visaTypeHeader, nameLabel, cnicLabel, passportLabel, citizenshipLabel,
-                       issueDateLabel, expiryDateLabel, visaNumberLabel;
+                       issueDateLabel, expDateLabel, visaNoLabel;
     @FXML private Text mrzLine1, mrzLine2;
 
     public void initializeVisaDetails() {
@@ -43,10 +43,10 @@ public class ViewVisaController extends SharedController {
                 // Mock dates and visa number
                 LocalDate now = LocalDate.now();
                 issueDateLabel.setText(now.format(DateTimeFormatter.ofPattern("dd MMM yyyy")));
-                expiryDateLabel.setText(now.plusYears(1).format(DateTimeFormatter.ofPattern("dd MMM yyyy")));
+                expDateLabel.setText(now.plusYears(1).format(DateTimeFormatter.ofPattern("dd MMM yyyy")));
                 
                 // Mock visa number
-                visaNumberLabel.setText("Visa No: V" + new Random().nextInt(1000000));
+                visaNoLabel.setText("Visa No: V" + new Random().nextInt(1000000));
                 
                 // Mock MRZ
                 mrzLine1.setText("V<" + country.toUpperCase() + "<" + visaType.toUpperCase() + "<<" + user.getName().toUpperCase().replace(" ", "<") + "<<<<<<<<<<<<<<<<<<<");
@@ -60,7 +60,7 @@ public class ViewVisaController extends SharedController {
         PrinterJob job = PrinterJob.createPrinterJob();
         if (job != null && job.showPrintDialog(getStageFromEvent(event))) {
             // Hide buttons during print
-            buttonBox.setVisible(false);
+            btnBox.setVisible(false);
             
             // Force layout update
             visaDetailsPane.layout();
@@ -82,7 +82,7 @@ public class ViewVisaController extends SharedController {
             visaDetailsPane.getTransforms().remove(printScale);
             
             // Show buttons back
-            buttonBox.setVisible(true);
+            btnBox.setVisible(true);
             
             if (success) {
                 job.endJob();

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class UsbKeyFetcher {
     /**
      * Searches all USB drives recursively for .txt files and returns the first matching encrypted key.
-     * Each .txt file should contain an encrypted key that matches a user's encryptedKey.
+     * Each .txt file should contain an encrypted key that matches a user's encrypKey.
      */
     public static String fetchEncryptionKeyFromUsb(String targetFileName) {
         // For backward compatibility, still try the old method first

@@ -13,14 +13,14 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class DutyController extends SharedController {
     @FXML private TableView<Duty> dutyTable;
-    @FXML private TableColumn<Duty, String> timeCol, locationCol;
+    @FXML private TableColumn<Duty, String> timeCol, locCol;
     @FXML private TableColumn<Duty, Integer> flightCol;
 
     @FXML
     private void initialize() {
         timeCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getTime()));
-        locationCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getLocation()));
-        flightCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getFlightNumber()).asObject());
+        locCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getLocation()));
+        flightCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getflightNo()).asObject());
     }
 
     public void loadDuties() {

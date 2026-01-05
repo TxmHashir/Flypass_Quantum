@@ -23,7 +23,7 @@
             <HBox fx:id="animationBox" alignment="CENTER" spacing="-10"> <!-- Negative spacing for overlap -->
                 <!-- Circles will be added dynamically in controller -->
             </HBox>
-         <Label fx:id="instructionLabel" style="-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;" text="Tap Your Card">
+         <Label fx:id="instuctLabel" style="-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;" text="Tap Your Card">
     <font>
         <Font name="Fraunces 72pt SemiBold" />
     </font>

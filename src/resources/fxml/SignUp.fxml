@@ -51,7 +51,7 @@
                 <TextField fx:id="cityField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7" />
                 
                 <Label text="Postal Code:" GridPane.rowIndex="8" />
-                <TextField fx:id="postalCodeField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8" />
+                <TextField fx:id="postCodeField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8" />
                 
                 <Label text="Visa Type:" GridPane.rowIndex="9" />
                 <ComboBox fx:id="visaTypeField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="9" />
@@ -60,7 +60,7 @@
                 <TextField fx:id="visaCountryField" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="10" />
                 
                 <Label text="Profile Image:" GridPane.rowIndex="11" />
-                <TextField fx:id="profileImageField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                <TextField fx:id="profileImgField" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="11" />
                 <Button onAction="#chooseImage" text="Choose" GridPane.columnIndex="2" GridPane.rowIndex="11" />
             <columnConstraints>
                <ColumnConstraints />
@@ -89,7 +89,7 @@
             </HBox>
             
             <!-- New: Image preview -->
-            <ImageView fx:id="previewImageView" fitHeight="150.0" fitWidth="150.0" preserveRatio="true" />
+            <ImageView fx:id="previewImgView" fitHeight="150.0" fitWidth="150.0" preserveRatio="true" />
         </VBox>
     </children>
 </StackPane>

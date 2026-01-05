@@ -29,7 +29,7 @@
                 <Label style="-fx-text-fill: #0B3D91;" text="Bank Name:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
                 <TextField fx:id="bankNameField" promptText="Bank Name" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                 <Label style="-fx-text-fill: #0B3D91;" text="Bank Account No:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-                <TextField fx:id="bankAccountField" promptText="Bank Account No" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <TextField fx:id="bankAccField" promptText="Bank Account No" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                 <Label style="-fx-text-fill: #0B3D91;" text="Visa Type:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
                 <ComboBox fx:id="visaTypeComboBox" promptText="Select Visa Type" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                 <Label style="-fx-text-fill: #0B3D91;" text="Country:" GridPane.columnIndex="0" GridPane.rowIndex="6" />

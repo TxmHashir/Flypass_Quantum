@@ -12,13 +12,13 @@ import javafx.scene.control.TableColumn;
 public class PilotDutyController extends SharedController {
     @FXML private TableView<Flight> dutyTable;
     @FXML private TableColumn<Flight, Integer> flightCol;
-    @FXML private TableColumn<Flight, String> originCol, destinationCol, timeCol, statusCol;
+    @FXML private TableColumn<Flight, String> originCol, destCol, timeCol, statusCol;
 
     @FXML
     private void initialize() {
-        flightCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getFlightNumber()).asObject());
+        flightCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getflightNo()).asObject());
         originCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getOrigin()));
-        destinationCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDestination()));
+        destCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getdest()));
         timeCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getSchedule()));
         statusCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getStatus()));
     }

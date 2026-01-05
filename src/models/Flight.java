@@ -1,30 +1,30 @@
 public class Flight {
-    private int flightNumber;
+    private int flightNo;
     private String origin;
-    private String destination;
+    private String dest;
     private String schedule;
     private String status;
     private String type;
 
-    public Flight(int flightNumber, String origin, String destination, String schedule, String status, String type) {
-        this.flightNumber = flightNumber;
+    public Flight(int flightNo, String origin, String dest, String schedule, String status, String type) {
+        this.flightNo = flightNo;
         this.origin = origin;
-        this.destination = destination;
+        this.dest = dest;
         this.schedule = schedule;
         this.status = status;
         this.type = type;
     }
 
-    public int getFlightNumber() {
-        return flightNumber;
+    public int getflightNo() {
+        return flightNo;
     }
 
     public String getOrigin() {
         return origin;
     }
 
-    public String getDestination() {
-        return destination;
+    public String getdest() {
+        return dest;
     }
 
     public String getSchedule() {
@@ -39,16 +39,16 @@ public class Flight {
         return type;
     }
 
-    public void setFlightNumber(int flightNumber) {
-        this.flightNumber = flightNumber;
+    public void setflightNo(int flightNo) {
+        this.flightNo = flightNo;
     }
 
     public void setOrigin(String origin) {
         this.origin = origin;
     }
 
-    public void setDestination(String destination) {
-        this.destination = destination;
+    public void setdest(String dest) {
+        this.dest = dest;
     }
 
     public void setSchedule(String schedule) {

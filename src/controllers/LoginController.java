@@ -25,7 +25,7 @@ import java.util.List;
 
 public class LoginController extends SharedController {
     @FXML private HBox animationBox; // New HBox for the circles
-    @FXML private Label instructionLabel; // Label for "One Tap Your Card"
+    @FXML private Label instuctLabel; // Label for "One Tap Your Card"
 
     private UserDAO userDAO = new UserDAO();
     private boolean justSignedOut = false;
@@ -56,13 +56,13 @@ public class LoginController extends SharedController {
         }
     }
 
-    private void handleLogin(String encryptedKey) {
-        User user = userDAO.getUserByEncryptedKey(encryptedKey);
+    private void handleLogin(String encrypKey) {
+        User user = userDAO.getUserByencrypKey(encrypKey);
         if (user != null) {
             openProfile(user);
         } else {
             Platform.runLater(() -> {
-                Stage stage = (Stage) instructionLabel.getScene().getWindow();
+                Stage stage = (Stage) instuctLabel.getScene().getWindow();
                 if (stage != null) {
                     Alert alert = new Alert(AlertType.ERROR, "Invalid encrypted key from USB.");
                     alert.initOwner(stage);
@@ -81,7 +81,7 @@ public class LoginController extends SharedController {
                 }
                 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Profile.fxml"));
-                Stage stage = (Stage) instructionLabel.getScene().getWindow();
+                Stage stage = (Stage) instuctLabel.getScene().getWindow();
                 double x = stage.getX();
                 double y = stage.getY();
                 Scene newScene = new Scene(loader.load());
@@ -149,14 +149,14 @@ public class LoginController extends SharedController {
         }
         
         if (key != null && !key.trim().isEmpty()) {
-            // Try to find a user with matching encryptedKey
-            User user = userDAO.getUserByEncryptedKey(key.trim());
+            // Try to find a user with matching encrypKey
+            User user = userDAO.getUserByencrypKey(key.trim());
             
             // If direct match not found, try hashing the key (in case txt file contains plain password)
             if (user == null) {
                 try {
                     String hashedKey = EncryptionUtil.encryptSHA256(key.trim());
-                    user = userDAO.getUserByEncryptedKey(hashedKey);
+                    user = userDAO.getUserByencrypKey(hashedKey);
                     if (user != null) {
                         key = hashedKey; // Use hashed key for login
                     }
@@ -169,7 +169,7 @@ public class LoginController extends SharedController {
                 if (!wasPresent) {
                     wasPresent = true;
                     System.out.println("Found matching user: " + user.getName() + " (" + user.getRole() + ")");
-                    handleLogin(user.getEncryptedKey());
+                    handleLogin(user.getencrypKey());
                 }
             } else {
                 // Key found but no matching user
@@ -221,7 +221,7 @@ public class LoginController extends SharedController {
         startUsbPolling();
 
         // Perform initial check after the window is set
-        instructionLabel.sceneProperty().addListener(new ChangeListener<Scene>() {
+        instuctLabel.sceneProperty().addListener(new ChangeListener<Scene>() {
             @Override
             public void changed(ObservableValue<? extends Scene> observable, Scene oldScene, Scene newScene) {
                 if (newScene != null) {
@@ -237,7 +237,7 @@ public class LoginController extends SharedController {
                             }
                         }
                     });
-                    instructionLabel.sceneProperty().removeListener(this);
+                    instuctLabel.sceneProperty().removeListener(this);
                 }
             }
         });

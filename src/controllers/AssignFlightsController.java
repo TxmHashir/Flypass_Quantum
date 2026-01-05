@@ -11,32 +11,32 @@ import javafx.scene.control.TableView;
 import java.util.stream.Collectors;
 
 public class AssignFlightsController extends SharedController {
-    @FXML private TableView<Flight> availableTable, assignedTable;
+    @FXML private TableView<Flight> availTable, assignedTable;
     @FXML private TableColumn<Flight, Integer> availFlightCol, assignFlightCol;
-    @FXML private TableColumn<Flight, String> availOriginCol, availDestinationCol, availTimeCol, availStatusCol;
-    @FXML private TableColumn<Flight, String> assignOriginCol, assignDestinationCol, assignTimeCol, assignStatusCol;
+    @FXML private TableColumn<Flight, String> availOriginCol, availdestCol, availTimeCol, availStatusCol;
+    @FXML private TableColumn<Flight, String> assignOriginCol, assigndestCol, assignTimeCol, assignStatusCol;
     
     private UserDAO userDAO = new UserDAO();
 
     @FXML
     private void initialize() {
         // Available table setup
-        availFlightCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getFlightNumber()).asObject());
+        availFlightCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getflightNo()).asObject());
         availOriginCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getOrigin()));
-        availDestinationCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDestination()));
+        availdestCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getdest()));
         availTimeCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getSchedule()));
         availStatusCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getStatus()));
 
         // Assigned table setup
-        assignFlightCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getFlightNumber()).asObject());
+        assignFlightCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getflightNo()).asObject());
         assignOriginCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getOrigin()));
-        assignDestinationCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDestination()));
+        assigndestCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getdest()));
         assignTimeCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getSchedule()));
         assignStatusCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getStatus()));
     }
 
     public void loadData() {
-        availableTable.setItems(FXCollections.observableArrayList(
+        availTable.setItems(FXCollections.observableArrayList(
             MockData.getAllFlights().stream()
                 .filter(f -> !user.getAssignedFlights().contains(f))
                 .collect(Collectors.toList())
@@ -47,7 +47,7 @@ public class AssignFlightsController extends SharedController {
 
     @FXML
     private void assignFlight() {
-        Flight selected = availableTable.getSelectionModel().getSelectedItem();
+        Flight selected = availTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
             user.getAssignedFlights().add(selected);
             loadData();

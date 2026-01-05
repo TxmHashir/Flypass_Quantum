@@ -43,10 +43,10 @@
                 <Label fx:id="issueDateLabel" style="-fx-text-fill: #0B3D91;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                 
                 <Label style="-fx-font-weight: bold; -fx-text-fill: #0B3D91;" text="Date of Expiry:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-                <Label fx:id="expiryDateLabel" style="-fx-text-fill: #0B3D91;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                <Label fx:id="expDateLabel" style="-fx-text-fill: #0B3D91;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                 
                 <Label style="-fx-font-weight: bold; -fx-text-fill: #0B3D91;" text="Visa No.:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
-                <Label fx:id="visaNumberLabel" style="-fx-text-fill: #0B3D91;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                <Label fx:id="visaNoLabel" style="-fx-text-fill: #0B3D91;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                 
                 <columnConstraints>
                     <ColumnConstraints halignment="CENTER" minWidth="150" />
@@ -78,7 +78,7 @@
             </VBox>
             
             <!-- Buttons (hidden during print) -->
-            <HBox fx:id="buttonBox" alignment="CENTER" spacing="15" style="-fx-padding: 20 0 0 0;">
+            <HBox fx:id="btnBox" alignment="CENTER" spacing="15" style="-fx-padding: 20 0 0 0;">
                 <Button onAction="#goBack" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 14px;" text="Back" />
                 <Button onAction="#handlePrint" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 14px;" text="Print" />
             </HBox>

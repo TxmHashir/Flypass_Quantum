@@ -1,11 +1,11 @@
 public class Duty {
 private String time;
 private String location;
-private int flightNumber;
-public Duty(String time, String location, int flightNumber) {
+private int flightNo;
+public Duty(String time, String location, int flightNo) {
 this.time = time;
 this.location = location;
-this.flightNumber = flightNumber;
+this.flightNo = flightNo;
 }
 public String getTime() {
 return time;
@@ -13,7 +13,7 @@ return time;
 public String getLocation() {
 return location;
 }
-public int getFlightNumber() {
-return flightNumber;
+public int getflightNo() {
+return flightNo;
 }
 }

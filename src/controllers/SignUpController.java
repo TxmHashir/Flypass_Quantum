@@ -20,10 +20,10 @@ import javax.swing.filechooser.FileSystemView;  // Added for drive type
 
 public class SignUpController extends SharedController {
     @FXML private TextField nameField, cnicField, contactField, emailField,
-                           passportField, citizenshipField, visaCountryField, profileImageField,
-                           countryField, cityField, postalCodeField;
+                           passportField, citizenshipField, visaCountryField, profileImgField,
+                           countryField, cityField, postCodeField;
     @FXML private ComboBox<String> visaTypeField;
-    @FXML private ImageView previewImageView;  // New field for preview
+    @FXML private ImageView previewImgView;  // New field for preview
 
     private UserDAO userDAO = new UserDAO();
 
@@ -51,26 +51,26 @@ public class SignUpController extends SharedController {
         newUser.setCitizenship(citizenshipField.getText());
         newUser.setCountry(countryField.getText());
         newUser.setCity(cityField.getText());
-        newUser.setPostalCode(postalCodeField.getText());
+        newUser.setpostCode(postCodeField.getText());
         String visaType = visaTypeField.getValue();
         String visaCountry = visaCountryField.getText();
         if (visaType != null && !visaCountry.isEmpty()) {
             newUser.setVisa(visaType + ", " + visaCountry);
         }
         newUser.setRole("customer");  // Default role
-        newUser.setProfileImagePath(profileImageField.getText());
+        newUser.setprofImgPath(profileImgField.getText());
 
         // Generate encrypted key
         String rawKey = generateRawKey();  // e.g., UUID
-        String encryptedKey = EncryptionUtil.encryptSHA256(rawKey);
-        newUser.setEncryptedKey(encryptedKey);
+        String encrypKey = EncryptionUtil.encryptSHA256(rawKey);
+        newUser.setencrypKey(encrypKey);
 
         // Find USB drive and save key
         File usbDrive = findUsbDrive();
         if (usbDrive != null) {
             File keyFile = new File(usbDrive, "encrypted_key.txt");
             try (PrintWriter writer = new PrintWriter(keyFile)) {
-                writer.println(encryptedKey);
+                writer.println(encrypKey);
                 System.out.println("Successfully saved key to: " + keyFile.getAbsolutePath());  // Added debug
                 if (userDAO.signUp(newUser)) {
                     new Alert(AlertType.INFORMATION, "Sign up successful! Key saved to USB: " + usbDrive.getAbsolutePath()).show();
@@ -154,8 +154,8 @@ public class SignUpController extends SharedController {
         chooser.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
         File file = chooser.showOpenDialog(null);
         if (file != null) {
-            profileImageField.setText(file.getAbsolutePath());
-            previewImageView.setImage(new Image(file.toURI().toString()));
+            profileImgField.setText(file.getAbsolutePath());
+            previewImgView.setImage(new Image(file.toURI().toString()));
         }
     }
 

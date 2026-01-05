@@ -11,10 +11,10 @@ import javafx.scene.control.TableView;
 import java.util.stream.Collectors;
 
 public class AssignDutiesController extends SharedController {
-    @FXML private TableView<Duty> availableTable, assignedTable;
-    @FXML private TableColumn<Duty, String> availTimeCol, availLocationCol;
+    @FXML private TableView<Duty> availTable, assignedTable;
+    @FXML private TableColumn<Duty, String> availTimeCol, availlocCol;
     @FXML private TableColumn<Duty, Integer> availFlightCol;
-    @FXML private TableColumn<Duty, String> assignTimeCol, assignLocationCol;
+    @FXML private TableColumn<Duty, String> assignTimeCol, assignlocCol;
     @FXML private TableColumn<Duty, Integer> assignFlightCol;
     
     private UserDAO userDAO = new UserDAO();
@@ -23,17 +23,17 @@ public class AssignDutiesController extends SharedController {
     private void initialize() {
         // Available table
         availTimeCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getTime()));
-        availLocationCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getLocation()));
-        availFlightCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getFlightNumber()).asObject());
+        availlocCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getLocation()));
+        availFlightCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getflightNo()).asObject());
 
         // Assigned table
         assignTimeCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getTime()));
-        assignLocationCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getLocation()));
-        assignFlightCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getFlightNumber()).asObject());
+        assignlocCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getLocation()));
+        assignFlightCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getflightNo()).asObject());
     }
 
     public void loadData() {
-        availableTable.setItems(FXCollections.observableArrayList(
+        availTable.setItems(FXCollections.observableArrayList(
             MockData.getAllDuties().stream()
                 .filter(d -> !user.getAssignedDuties().contains(d))
                 .collect(Collectors.toList())
@@ -44,7 +44,7 @@ public class AssignDutiesController extends SharedController {
 
     @FXML
     private void addDuty() {
-        Duty selected = availableTable.getSelectionModel().getSelectedItem();
+        Duty selected = availTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
             user.getAssignedDuties().add(selected);
             loadData();

@@ -10,7 +10,7 @@ public class UserDAO {
         User customer = new User();
         customer.setName("Alice Tester");
         customer.setRole("customer");
-        customer.setEncryptedKey("cust123");
+        customer.setencrypKey("cust123");
         customer.setEmail("alice@example.com");
         customer.setCnic("12345-0000000-1");
         customer.setContact("+1-555-0123");
@@ -18,14 +18,14 @@ public class UserDAO {
         customer.setCitizenship("United States");
         customer.setCountry("United States");
         customer.setCity("New York");
-        customer.setPostalCode("10001");
-        customer.setProfileImagePath("titleicon.png"); // Mock image
+        customer.setpostCode("10001");
+        customer.setprofImgPath("titleicon.png"); // Mock image
 
         // Pilot (Assuming Flight class exists)
         User pilot = new User();
         pilot.setName("Captain Skies");
         pilot.setRole("pilot");
-        pilot.setEncryptedKey("pilot123");
+        pilot.setencrypKey("pilot123");
         pilot.setEmail("captain@example.com");
         pilot.setCnic("12345-0000000-2");
         pilot.setContact("+1-555-0124");
@@ -33,9 +33,9 @@ public class UserDAO {
         pilot.setCitizenship("United States");
         pilot.setCountry("United States");
         pilot.setCity("Los Angeles");
-        pilot.setPostalCode("90001");
+        pilot.setpostCode("90001");
         pilot.setSalary(150000.0);
-        pilot.setProfileImagePath("titleicon.png"); // Mock image
+        pilot.setprofImgPath("titleicon.png"); // Mock image
         // The Flight class is assumed but not provided in the prompt.
         // pilot.getAssignedFlights().add(new Flight(101, "LAX", "JFK", "2025-12-20 08:00", "On Time", "Domestic"));
 
@@ -43,7 +43,7 @@ public class UserDAO {
         User staff = new User();
         staff.setName("Staff Member");
         staff.setRole("staff");
-        staff.setEncryptedKey("staff123");
+        staff.setencrypKey("staff123");
         staff.setEmail("staff@example.com");
         staff.setCnic("12345-0000000-3");
         staff.setContact("+1-555-0125");
@@ -51,9 +51,9 @@ public class UserDAO {
         staff.setCitizenship("United States");
         staff.setCountry("United States");
         staff.setCity("Chicago");
-        staff.setPostalCode("60601");
+        staff.setpostCode("60601");
         staff.setSalary(80000.0);
-        staff.setProfileImagePath("titleicon.png"); // Mock image
+        staff.setprofImgPath("titleicon.png"); // Mock image
         // The Duty class is assumed but not provided in the prompt.
         // staff.getAssignedDuties().add(new Duty("08:00-12:00", "LAX Terminal 1", 101));
 
@@ -61,7 +61,7 @@ public class UserDAO {
         User admin = new User();
         admin.setName("Admin User");
         admin.setRole("admin");
-        admin.setEncryptedKey("admin123");
+        admin.setencrypKey("admin123");
         admin.setEmail("admin@example.com");
         admin.setCnic("12345-0000000-4");
         admin.setContact("+1-555-0126");
@@ -69,15 +69,15 @@ public class UserDAO {
         admin.setCitizenship("United States");
         admin.setCountry("United States");
         admin.setCity("Washington DC");
-        admin.setPostalCode("20001");
+        admin.setpostCode("20001");
         admin.setSalary(120000.0);
-        admin.setProfileImagePath("titleicon.png"); // Mock image
+        admin.setprofImgPath("titleicon.png"); // Mock image
 
         // Air Hostess (Assuming Flight class exists)
         User airHostess = new User();
         airHostess.setName("Hostess Fly");
         airHostess.setRole("air_hostess");
-        airHostess.setEncryptedKey("hostess123");
+        airHostess.setencrypKey("hostess123");
         airHostess.setEmail("hostess@example.com");
         airHostess.setCnic("12345-0000000-5");
         airHostess.setContact("+1-555-0127");
@@ -85,9 +85,9 @@ public class UserDAO {
         airHostess.setCitizenship("United States");
         airHostess.setCountry("United States");
         airHostess.setCity("Miami");
-        airHostess.setPostalCode("33101");
+        airHostess.setpostCode("33101");
         airHostess.setSalary(90000.0);
-        airHostess.setProfileImagePath("titleicon.png"); // Mock image
+        airHostess.setprofImgPath("titleicon.png"); // Mock image
         // The Flight class is assumed but not provided in the prompt.
         // airHostess.getAssignedFlights().add(new Flight(102, "JFK", "LAX", "2025-12-21 10:00", "Delayed", "Domestic"));
 
@@ -102,7 +102,7 @@ public class UserDAO {
         User pilot2 = new User();
         pilot2.setName("John Wright");
         pilot2.setRole("pilot");
-        pilot2.setEncryptedKey("pilot456");
+        pilot2.setencrypKey("pilot456");
         pilot2.setEmail("john.wright@example.com");
         pilot2.setCnic("12345-0000000-6");
         pilot2.setContact("+1-555-0201");
@@ -110,14 +110,14 @@ public class UserDAO {
         pilot2.setCitizenship("United States");
         pilot2.setCountry("United States");
         pilot2.setCity("Seattle");
-        pilot2.setPostalCode("98101");
+        pilot2.setpostCode("98101");
         pilot2.setSalary(160000.0);
-        pilot2.setProfileImagePath("titleicon.png");
+        pilot2.setprofImgPath("titleicon.png");
         
         User pilot3 = new User();
         pilot3.setName("Sarah Johnson");
         pilot3.setRole("pilot");
-        pilot3.setEncryptedKey("pilot789");
+        pilot3.setencrypKey("pilot789");
         pilot3.setEmail("sarah.j@example.com");
         pilot3.setCnic("12345-0000000-7");
         pilot3.setContact("+1-555-0202");
@@ -125,15 +125,15 @@ public class UserDAO {
         pilot3.setCitizenship("United States");
         pilot3.setCountry("United States");
         pilot3.setCity("Denver");
-        pilot3.setPostalCode("80201");
+        pilot3.setpostCode("80201");
         pilot3.setSalary(155000.0);
-        pilot3.setProfileImagePath("titleicon.png");
+        pilot3.setprofImgPath("titleicon.png");
         
         // More Staff
         User staff2 = new User();
         staff2.setName("Mike Davis");
         staff2.setRole("staff");
-        staff2.setEncryptedKey("staff456");
+        staff2.setencrypKey("staff456");
         staff2.setEmail("mike.davis@example.com");
         staff2.setCnic("12345-0000000-8");
         staff2.setContact("+1-555-0203");
@@ -141,14 +141,14 @@ public class UserDAO {
         staff2.setCitizenship("United States");
         staff2.setCountry("United States");
         staff2.setCity("Boston");
-        staff2.setPostalCode("02101");
+        staff2.setpostCode("02101");
         staff2.setSalary(85000.0);
-        staff2.setProfileImagePath("titleicon.png");
+        staff2.setprofImgPath("titleicon.png");
         
         User staff3 = new User();
         staff3.setName("Emily Brown");
         staff3.setRole("staff");
-        staff3.setEncryptedKey("staff789");
+        staff3.setencrypKey("staff789");
         staff3.setEmail("emily.brown@example.com");
         staff3.setCnic("12345-0000000-9");
         staff3.setContact("+1-555-0204");
@@ -156,15 +156,15 @@ public class UserDAO {
         staff3.setCitizenship("United States");
         staff3.setCountry("United States");
         staff3.setCity("Atlanta");
-        staff3.setPostalCode("30301");
+        staff3.setpostCode("30301");
         staff3.setSalary(82000.0);
-        staff3.setProfileImagePath("titleicon.png");
+        staff3.setprofImgPath("titleicon.png");
         
         // More Air Hostess
         User airHostess2 = new User();
         airHostess2.setName("Lisa Anderson");
         airHostess2.setRole("air_hostess");
-        airHostess2.setEncryptedKey("hostess456");
+        airHostess2.setencrypKey("hostess456");
         airHostess2.setEmail("lisa.a@example.com");
         airHostess2.setCnic("12345-0000000-10");
         airHostess2.setContact("+1-555-0205");
@@ -172,14 +172,14 @@ public class UserDAO {
         airHostess2.setCitizenship("United States");
         airHostess2.setCountry("United States");
         airHostess2.setCity("Phoenix");
-        airHostess2.setPostalCode("85001");
+        airHostess2.setpostCode("85001");
         airHostess2.setSalary(95000.0);
-        airHostess2.setProfileImagePath("titleicon.png");
+        airHostess2.setprofImgPath("titleicon.png");
         
         User airHostess3 = new User();
         airHostess3.setName("Jessica Miller");
         airHostess3.setRole("air_hostess");
-        airHostess3.setEncryptedKey("hostess789");
+        airHostess3.setencrypKey("hostess789");
         airHostess3.setEmail("jessica.m@example.com");
         airHostess3.setCnic("12345-0000000-11");
         airHostess3.setContact("+1-555-0206");
@@ -187,9 +187,9 @@ public class UserDAO {
         airHostess3.setCitizenship("United States");
         airHostess3.setCountry("United States");
         airHostess3.setCity("Las Vegas");
-        airHostess3.setPostalCode("89101");
+        airHostess3.setpostCode("89101");
         airHostess3.setSalary(88000.0);
-        airHostess3.setProfileImagePath("titleicon.png");
+        airHostess3.setprofImgPath("titleicon.png");
         
         // Add all additional employees
         mockUsers.add(pilot2);
@@ -200,9 +200,9 @@ public class UserDAO {
         mockUsers.add(airHostess3);
     }
 
-    public User getUserByEncryptedKey(String key) {
+    public User getUserByencrypKey(String key) {
         return mockUsers.stream()
-                .filter(u -> u.getEncryptedKey().equals(key))
+                .filter(u -> u.getencrypKey().equals(key))
                 .findFirst()
                 .orElse(null);
     }
@@ -214,7 +214,7 @@ public class UserDAO {
 
     public void updateUser(User user) {
         // Mock update: Remove old and add new
-        mockUsers.removeIf(u -> u.getEncryptedKey().equals(user.getEncryptedKey()));
+        mockUsers.removeIf(u -> u.getencrypKey().equals(user.getencrypKey()));
         mockUsers.add(user);
     }
 

@@ -12,17 +12,17 @@ import java.util.Optional;
 
 public class ManageFlightsController extends SharedController {
     @FXML private TableView<Flight> flightsTable;
-    @FXML private TableColumn<Flight, Number> flightNumberCol;
-    @FXML private TableColumn<Flight, String> originCol, destinationCol, scheduleCol, statusCol, typeCol;
+    @FXML private TableColumn<Flight, Number> flightNoCol;
+    @FXML private TableColumn<Flight, String> originCol, destCol, scheduleCol, statusCol, typeCol;
     
     private FlightDAO flightDAO = new FlightDAO();
     private ObservableList<Flight> flightsList;
 
     @FXML
     private void initialize() {
-        flightNumberCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getFlightNumber()));
+        flightNoCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getflightNo()));
         originCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getOrigin()));
-        destinationCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDestination()));
+        destCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getdest()));
         scheduleCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getSchedule()));
         statusCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getStatus()));
         typeCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getType()));
@@ -60,12 +60,12 @@ public class ManageFlightsController extends SharedController {
         
         Alert confirm = new Alert(AlertType.CONFIRMATION);
         confirm.setTitle("Delete Flight");
-        confirm.setHeaderText("Delete Flight " + selected.getFlightNumber());
+        confirm.setHeaderText("Delete Flight " + selected.getflightNo());
         confirm.setContentText("Are you sure you want to delete this flight?");
         
         Optional<ButtonType> result = confirm.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            flightDAO.deleteFlight(selected.getFlightNumber());
+            flightDAO.deleteFlight(selected.getflightNo());
             loadFlights();
             new Alert(AlertType.INFORMATION, "Flight deleted successfully.").show();
         }
@@ -80,12 +80,12 @@ public class ManageFlightsController extends SharedController {
         dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
 
         // Create input fields
-        TextField flightNumberField = new TextField();
-        flightNumberField.setPromptText("Flight Number");
+        TextField flightNoField = new TextField();
+        flightNoField.setPromptText("Flight Number");
         TextField originField = new TextField();
         originField.setPromptText("Origin (e.g., LAX)");
-        TextField destinationField = new TextField();
-        destinationField.setPromptText("Destination (e.g., JFK)");
+        TextField destField = new TextField();
+        destField.setPromptText("dest (e.g., JFK)");
         TextField scheduleField = new TextField();
         scheduleField.setPromptText("Schedule (e.g., 2025-12-20 08:00)");
         ComboBox<String> statusCombo = new ComboBox<>();
@@ -96,10 +96,10 @@ public class ManageFlightsController extends SharedController {
         typeCombo.setValue("Domestic");
 
         if (flight != null) {
-            flightNumberField.setText(String.valueOf(flight.getFlightNumber()));
-            flightNumberField.setEditable(false); // Can't change flight number when editing
+            flightNoField.setText(String.valueOf(flight.getflightNo()));
+            flightNoField.setEditable(false); // Can't change flight number when editing
             originField.setText(flight.getOrigin());
-            destinationField.setText(flight.getDestination());
+            destField.setText(flight.getdest());
             scheduleField.setText(flight.getSchedule());
             statusCombo.setValue(flight.getStatus());
             typeCombo.setValue(flight.getType());
@@ -112,11 +112,11 @@ public class ManageFlightsController extends SharedController {
         grid.setPadding(new javafx.geometry.Insets(20, 150, 10, 10));
 
         grid.add(new Label("Flight Number:"), 0, 0);
-        grid.add(flightNumberField, 1, 0);
+        grid.add(flightNoField, 1, 0);
         grid.add(new Label("Origin:"), 0, 1);
         grid.add(originField, 1, 1);
-        grid.add(new Label("Destination:"), 0, 2);
-        grid.add(destinationField, 1, 2);
+        grid.add(new Label("dest:"), 0, 2);
+        grid.add(destField, 1, 2);
         grid.add(new Label("Schedule:"), 0, 3);
         grid.add(scheduleField, 1, 3);
         grid.add(new Label("Status:"), 0, 4);
@@ -130,28 +130,28 @@ public class ManageFlightsController extends SharedController {
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == saveButtonType) {
                 try {
-                    int flightNumber = Integer.parseInt(flightNumberField.getText().trim());
+                    int flightNo = Integer.parseInt(flightNoField.getText().trim());
                     String origin = originField.getText().trim();
-                    String destination = destinationField.getText().trim();
+                    String dest = destField.getText().trim();
                     String schedule = scheduleField.getText().trim();
                     String status = statusCombo.getValue();
                     String type = typeCombo.getValue();
 
-                    if (origin.isEmpty() || destination.isEmpty() || schedule.isEmpty()) {
+                    if (origin.isEmpty() || dest.isEmpty() || schedule.isEmpty()) {
                         new Alert(AlertType.WARNING, "Please fill in all fields.").show();
                         return null;
                     }
 
                     if (flight == null) {
                         // Adding new flight - check if flight number exists
-                        if (flightDAO.flightNumberExists(flightNumber)) {
+                        if (flightDAO.flightNoExists(flightNo)) {
                             new Alert(AlertType.WARNING, "Flight number already exists.").show();
                             return null;
                         }
-                        return new Flight(flightNumber, origin, destination, schedule, status, type);
+                        return new Flight(flightNo, origin, dest, schedule, status, type);
                     } else {
                         // Editing existing flight
-                        Flight edited = new Flight(flightNumber, origin, destination, schedule, status, type);
+                        Flight edited = new Flight(flightNo, origin, dest, schedule, status, type);
                         return edited;
                     }
                 } catch (NumberFormatException e) {

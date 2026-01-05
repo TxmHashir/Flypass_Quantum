@@ -8,18 +8,18 @@ import javafx.scene.Scene;
 public class ForgetPasswordController extends SharedController {
     @FXML private TextField cnicField;
     @FXML private TextField emailField;
-    @FXML private Label messageLabel;
+    @FXML private Label msgLabel;
     @FXML
     private void handleRecoverPassword() {
         String cnic = cnicField.getText().trim();
         String email = emailField.getText().trim();
         if(cnic.isEmpty() || email.isEmpty()) {
-            messageLabel.setText("Please enter both CNIC and Email.");
-            messageLabel.setStyle("-fx-text-fill: red;");
+            msgLabel.setText("Please enter both CNIC and Email.");
+            msgLabel.setStyle("-fx-text-fill: red;");
             return;
         }
-        messageLabel.setText("A recovery key has been sent to " + email + " (mock).");
-        messageLabel.setStyle("-fx-text-fill: green;");
+        msgLabel.setText("A recovery key has been sent to " + email + " (mock).");
+        msgLabel.setStyle("-fx-text-fill: green;");
         cnicField.clear();
         emailField.clear();
     }
