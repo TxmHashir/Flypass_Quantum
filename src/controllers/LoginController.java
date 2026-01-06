@@ -1,4 +1,3 @@
-// Updated LoginController.java with new animation
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.ScaleTransition;
@@ -40,136 +39,43 @@ public class LoginController extends SharedController {
     }
     
     public void startUsbPolling() {
-        if (timeline != null) {
-            timeline.stop();
-        }
-        wasPresent = false;
-        timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> checkAndLogin()));
+        timeline = new Timeline(new KeyFrame(Duration.millis(1000), e -> checkAndLogin()));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
-    
-    public void stopUsbPolling() {
-        if (timeline != null) {
-            timeline.stop();
-        }
-    }
-
-    private void handleLogin(String encrypKey) {
-        User user = userDAO.getUserByencrypKey(encrypKey);
-        if (user != null) {
-            openProfile(user);
-        } else {
-            Platform.runLater(() -> {
-                Stage stage = (Stage) instuctLabel.getScene().getWindow();
-                if (stage != null) {
-                    Alert alert = new Alert(AlertType.ERROR, "Invalid encrypted key from USB.");
-                    alert.initOwner(stage);
-                    alert.show();
-                }
-            });
-        }
-    }
-
-    private void openProfile(User user) {
-        Platform.runLater(() -> {
-            try {
-                if (timeline != null) {
-                    timeline.stop();
-                }
-                
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Profile.fxml"));
-                Stage stage = (Stage) instuctLabel.getScene().getWindow();
-                double x = stage.getX();
-                double y = stage.getY();
-                Scene newScene = new Scene(loader.load());
-                newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
-                stage.setScene(newScene);
-                stage.setX(x);
-                stage.setY(y);
-                ProfileController controller = loader.getController();
-                controller.setUser(user);
-                controller.initializeProfile();
-                stage.show();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-    }
-    
-    @FXML
-    private void goToSignUp(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SignUp.fxml"));
-            Stage stage = getStageFromEvent(event);
-            double x = stage.getX();
-            double y = stage.getY();
-            Scene newScene = new Scene(loader.load());
-            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
-            stage.setScene(newScene);
-            stage.setX(x);
-            stage.setY(y);
-            SignUpController controller = loader.getController();
-            controller.setUser(user);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void goToForgetPassword(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ForgetPassword.fxml"));
-            Stage stage = getStageFromEvent(event);
-            double x = stage.getX();
-            double y = stage.getY();
-            Scene newScene = new Scene(loader.load());
-            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
-            stage.setScene(newScene);
-            stage.setX(x);
-            stage.setY(y);
-            ForgetPasswordController controller = loader.getController();
-            controller.setUser(user);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     private void checkAndLogin() {
-        String key = UsbKeyFetcher.searchAllTxtFiles();
-        if (key == null) {
-            key = UsbKeyFetcher.fetchEncryptionKeyFromUsb("encryption_key.txt");
-        }
-        
-        if (key != null && !key.trim().isEmpty()) {
-            User user = userDAO.getUserByencrypKey(key.trim());
-            if (user == null) {
-                try {
-                    String hashedKey = EncryptionUtil.encryptSHA256(key.trim());
-                    user = userDAO.getUserByencrypKey(hashedKey);
-                    if (user != null) {
-                        key = hashedKey;
-                    }
-                } catch (Exception e) {
+        String key = UsbKeyFetcher.fetchEncryptionKeyFromUsb("encrypted_key.txt");
+        if (key != null) {
+            if (!wasPresent) {
+                User user = userDAO.getUserByEncrypKey(key);
+                if (user != null) {
+                    loginUser(user);
+                } else {
+                    new Alert(AlertType.ERROR, "User not found.").show();
                 }
-            }
-            
-            if (user != null) {
-                if (!wasPresent) {
-                    wasPresent = true;
-                    System.out.println("Found matching user: " + user.getName() + " (" + user.getRole() + ")");
-                    handleLogin(user.getencrypKey());
-                }
-            } else {
-                if (wasPresent) {
-                    wasPresent = false;
-                    System.out.println("No user found for key: " + key);
-                }
+                wasPresent = true;
             }
         } else {
             wasPresent = false;
+        }
+    }
+
+    private void loginUser(User user) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Profile.fxml"));
+            Stage stage = (Stage) instuctLabel.getScene().getWindow();
+            Scene newScene = new Scene(loader.load());
+            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
+            stage.setScene(newScene);
+
+            ProfileController controller = loader.getController();
+            controller.setUser(user);
+            controller.initializeProfile();
+
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -224,5 +130,41 @@ public class LoginController extends SharedController {
                 }
             }
         });
+    }
+
+    @FXML
+    private void goToSignUp(ActionEvent event) {
+        try {
+            Stage stage = getStageFromEvent(event);
+            double x = stage.getX();
+            double y = stage.getY();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SignUp.fxml"));
+            Scene newScene = new Scene(loader.load());
+            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
+            stage.setScene(newScene);
+            stage.setX(x);
+            stage.setY(y);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void goToForgetPassword(ActionEvent event) {
+        try {
+            Stage stage = getStageFromEvent(event);
+            double x = stage.getX();
+            double y = stage.getY();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ForgetPassword.fxml"));
+            Scene newScene = new Scene(loader.load());
+            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
+            stage.setScene(newScene);
+            stage.setX(x);
+            stage.setY(y);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

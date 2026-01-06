@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.TableColumn;
@@ -18,6 +19,7 @@ public class AssignDutiesController extends SharedController {
     @FXML private TableColumn<Duty, Integer> assignFlightCol;
     
     private UserDAO userDAO = new UserDAO();
+    private DutyDAO dutyDAO = new DutyDAO();
 
     @FXML
     private void initialize() {
@@ -32,14 +34,18 @@ public class AssignDutiesController extends SharedController {
         assignFlightCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getflightNo()).asObject());
     }
 
-    public void loadData() {
-        availTable.setItems(FXCollections.observableArrayList(
-            MockData.getAllDuties().stream()
-                .filter(d -> !user.getAssignedDuties().contains(d))
-                .collect(Collectors.toList())
-        ));
+    public void setUser(User user) {
+        this.user = user;
+        loadData();
+    }
 
-        assignedTable.setItems(FXCollections.observableArrayList(user.getAssignedDuties()));
+    public void loadData() {
+        ObservableList<Duty> available = dutyDAO.getAllDuties().stream()
+            .filter(d -> !this.user.getAssignedDuties().contains(d))
+            .collect(Collectors.toCollection(FXCollections::observableArrayList));
+        availTable.setItems(available);
+
+        assignedTable.setItems(FXCollections.observableArrayList(this.user.getAssignedDuties()));
     }
 
     @FXML
@@ -61,27 +67,27 @@ public class AssignDutiesController extends SharedController {
     }
 
     @FXML
-private void goBack(ActionEvent event) {
-    userDAO.updateUser(user);
-    try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AdminManageUsers.fxml"));
-        Stage stage = getStageFromEvent(event);
-        double x = stage.getX();
-        double y = stage.getY();
-        Scene newScene = new Scene(loader.load());
-        newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
-        
-        stage.setScene(newScene);
-        stage.setX(x);
-        stage.setY(y);
-        
-        AdminManageUsersController controller = loader.getController();
-        controller.setUser(this.loggedInUser);
-        controller.loadUsers();
-        
-        stage.show();
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
+    private void goBack(ActionEvent event) {
+        userDAO.updateUser(user);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AdminManageUsers.fxml"));
+            Stage stage = getStageFromEvent(event);
+            double x = stage.getX();
+            double y = stage.getY();
+            Scene newScene = new Scene(loader.load());
+            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
+            
+            stage.setScene(newScene);
+            stage.setX(x);
+            stage.setY(y);
+            
+            AdminManageUsersController controller = loader.getController();
+            controller.setUser(this.loggedInUser);
+            controller.loadUsers();
+            
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

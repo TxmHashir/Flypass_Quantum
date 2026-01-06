@@ -4,10 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List; // Added missing import
 
 /**
- * Data Access Object (DAO) for the 'flights' table.
+ * Data Access Object (DAO) for the 'flight' table.
  * Handles database operations for Flight entities.
  */
 public class FlightDAO {
@@ -16,11 +15,11 @@ public class FlightDAO {
     
     /**
      * Retrieves all flights from the database, wrapped in a JavaFX ObservableList.
-     * * @return An ObservableList of all Flight objects.
+     * @return An ObservableList of all Flight objects.
      */
     public ObservableList<Flight> getAllFlights() {
         ObservableList<Flight> flights = FXCollections.observableArrayList();
-        String sql = "SELECT * FROM flights";
+        String sql = "SELECT * FROM flight";
         
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -38,15 +37,14 @@ public class FlightDAO {
 
     /**
      * Retrieves a single Flight by its flight number.
-     * * @param flightNo The primary key of the flight.
-     * * @return The Flight object, or null if not found.
+     * @param flightNo The flight number of the flight.
+     * @return The Flight object, or null if not found.
      */
-    public Flight getFlightByNumber(int flightNo) {
-        String sql = "SELECT * FROM flights WHERE flight_no = ?";
-        
+    public Flight getFlightByNo(int flightNo) {
+        String sql = "SELECT * FROM flight WHERE flight_no = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
+
             pstmt.setInt(1, flightNo);
             
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -61,37 +59,14 @@ public class FlightDAO {
         return null;
     }
 
-    /**
-     * Checks if a flight number already exists in the database.
-     * * @param flightNo The flight number to check.
-     * * @return true if the flight number exists, false otherwise.
-     */
-    public boolean flightNoExists(int flightNo) {
-        String sql = "SELECT 1 FROM flights WHERE flight_no = ?"; // Efficient check
-        
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            pstmt.setInt(1, flightNo);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                return rs.next();
-            }
-        } catch (SQLException e) {
-            System.err.println("Error checking flight number existence: " + e.getMessage());
-            e.printStackTrace();
-            return false;
-        }
-    }
-
     // --- CREATE Operation ---
 
     /**
-     * Adds a new flight record to the database.
-     * * @param flight The Flight object to insert.
+     * Adds a new Flight to the database.
+     * @param flight The Flight object to add.
      */
     public void addFlight(Flight flight) {
-        String sql = "INSERT INTO flights (flight_no, origin, dest, schedule, status, type) " +
-                     "VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO flight (flight_no, origin, destination, schedule, status, type) VALUES (?, ?, ?, ?, ?, ?)";
         
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -108,29 +83,17 @@ public class FlightDAO {
     // --- UPDATE Operation ---
 
     /**
-     * Updates an existing flight record based on its flight number.
-     * * @param flight The Flight object with new data and the existing flight_no.
+     * Updates an existing Flight in the database.
+     * @param flight The Flight object with updated fields (identified by flight_no).
      */
     public void updateFlight(Flight flight) {
-        String sql = "UPDATE flights SET origin = ?, dest = ?, schedule = ?, status = ?, type = ? " +
-                     "WHERE flight_no = ?";
+        String sql = "UPDATE flight SET origin = ?, destination = ?, schedule = ?, status = ?, type = ? WHERE flight_no = ?";
         
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
-            // Set all fields except the WHERE clause
-            // Note: The original implementation of setFlightPreparedStatement has 6 parameters.
-            // We need to adjust the parameter setting for the UPDATE query structure (5 fields + 1 WHERE).
-            
-            pstmt.setString(1, flight.getOrigin());
-            pstmt.setString(2, flight.getdest());
-            pstmt.setString(3, flight.getSchedule());
-            pstmt.setString(4, flight.getStatus());
-            pstmt.setString(5, flight.getType());
-            
-            // The parameter for the WHERE clause
-            pstmt.setInt(6, flight.getflightNo()); 
-            
+            setFlightPreparedStatement(pstmt, flight);
+            pstmt.setInt(6, flight.getflightNo()); // For WHERE clause
             pstmt.executeUpdate();
             
         } catch (SQLException e) {
@@ -142,11 +105,11 @@ public class FlightDAO {
     // --- DELETE Operation ---
 
     /**
-     * Deletes a flight record based on its flight number.
-     * * @param flightNo The flight number of the record to delete.
+     * Deletes a Flight from the database by its flight number.
+     * @param flightNo The flight number of the flight to delete.
      */
     public void deleteFlight(int flightNo) {
-        String sql = "DELETE FROM flights WHERE flight_no = ?";
+        String sql = "DELETE FROM flight WHERE flight_no = ?";
         
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -170,7 +133,7 @@ public class FlightDAO {
         return new Flight(
             rs.getInt("flight_no"),
             rs.getString("origin"),
-            rs.getString("dest"),
+            rs.getString("destination"),
             rs.getString("schedule"),
             rs.getString("status"),
             rs.getString("type")

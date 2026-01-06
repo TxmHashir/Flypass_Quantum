@@ -19,10 +19,10 @@
             
             <TableView fx:id="flightsTable" prefHeight="400" style="-fx-border-color: #E6F0FF; -fx-background-color: white;">
                 <columns>
-                    <TableColumn fx:id="flightNoCol" prefWidth="120" text="Flight Number" />
-                    <TableColumn fx:id="originCol" prefWidth="100" text="Origin" />
-                    <TableColumn fx:id="destCol" prefWidth="100" text="dest" />
-                    <TableColumn fx:id="scheduleCol" prefWidth="180" text="Schedule" />
+                    <TableColumn fx:id="flightNoCol" prefWidth="100" text="Flight #" />
+                    <TableColumn fx:id="originCol" prefWidth="150" text="Origin" />
+                    <TableColumn fx:id="destCol" prefWidth="150" text="Destination" />
+                    <TableColumn fx:id="scheduleCol" prefWidth="200" text="Schedule" />
                     <TableColumn fx:id="statusCol" prefWidth="120" text="Status" />
                     <TableColumn fx:id="typeCol" prefWidth="120" text="Type" />
                 </columns>
@@ -37,4 +37,3 @@
         </VBox>
     </center>
 </BorderPane>
-

@@ -1,6 +1,5 @@
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.print.PageLayout;
 import javafx.print.PrinterJob;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -33,46 +32,41 @@ public class ViewVisaController extends SharedController {
                 String country = parts[1].trim();
                 
                 headerLabel.setText(country.toUpperCase() + " VISA");
-                visaTypeHeader.setText("Type: " + visaType);
+                visaTypeHeader.setText(visaType.toUpperCase() + " VISA");
+                nameLabel.setText(user.getName());
+                cnicLabel.setText(user.getCnic());
+                passportLabel.setText(user.getPassportNumber());
+                citizenshipLabel.setText(user.getCitizenship());
                 
-                nameLabel.setText(user.getName() != null ? user.getName() : "N/A");
-                cnicLabel.setText(user.getCnic() != null ? user.getCnic() : "N/A");
-                passportLabel.setText(user.getPassportNumber() != null ? user.getPassportNumber() : "N/A");
-                citizenshipLabel.setText(user.getCitizenship() != null ? user.getCitizenship() : "N/A");
+                LocalDate issueDate = LocalDate.now();
+                LocalDate expDate = issueDate.plusMonths(6); // Mock 6 months validity
+                issueDateLabel.setText(issueDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy")));
+                expDateLabel.setText(expDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy")));
                 
-                LocalDate now = LocalDate.now();
-                issueDateLabel.setText(now.format(DateTimeFormatter.ofPattern("dd MMM yyyy")));
-                expDateLabel.setText(now.plusYears(1).format(DateTimeFormatter.ofPattern("dd MMM yyyy")));
+                visaNoLabel.setText("VISA-" + new Random().nextInt(1000000));
                 
-                visaNoLabel.setText("Visa No: V" + new Random().nextInt(1000000));
-                
-                mrzLine1.setText("V<" + country.toUpperCase() + "<" + visaType.toUpperCase() + "<<" + user.getName().toUpperCase().replace(" ", "<") + "<<<<<<<<<<<<<<<<<<<");
-                mrzLine2.setText(user.getPassportNumber() + "<<" + country.toUpperCase() + "<" + now.format(DateTimeFormatter.ofPattern("yyMMdd")) + "<<<<<<<<<<<<<<<<<<<");
+                // Mock MRZ
+                mrzLine1.setText("V<" + country.toUpperCase() + "<" + visaType.toUpperCase() + "<" + user.getName().replace(" ", "<") + "<");
+                mrzLine2.setText(user.getPassportNumber() + "<" + user.getCnic() + "<" + issueDate.format(DateTimeFormatter.ofPattern("yyMMdd")) + "<<");
+            } else {
+                new Alert(AlertType.ERROR, "Invalid visa format.").show();
             }
+        } else {
+            new Alert(AlertType.WARNING, "No visa applied yet.").show();
+            goBack(null);
         }
     }
 
     @FXML
-    private void handlePrint(ActionEvent event) {
+    private void handlePrint() {
         PrinterJob job = PrinterJob.createPrinterJob();
-        if (job != null && job.showPrintDialog(getStageFromEvent(event))) {
+        if (job != null) {
             btnBox.setVisible(false);
             
-            visaDetailsPane.layout();
-            
-            PageLayout pageLayout = job.getJobSettings().getPageLayout();
-            
-            double nodeWidth = visaDetailsPane.getBoundsInLocal().getWidth();
-            double nodeHeight = visaDetailsPane.getBoundsInLocal().getHeight();
-            
-            double scaleX = pageLayout.getPrintableWidth() / nodeWidth;
-            double scaleY = pageLayout.getPrintableHeight() / nodeHeight;
-            double scale = Math.min(scaleX, scaleY);
-            
-            Scale printScale = new Scale(scale, scale);
+            Scale printScale = new Scale(0.8, 0.8);
             visaDetailsPane.getTransforms().add(printScale);
             
-            boolean success = job.printPage(pageLayout, visaDetailsPane);
+            boolean success = job.printPage(visaDetailsPane);
             
             visaDetailsPane.getTransforms().remove(printScale);
             

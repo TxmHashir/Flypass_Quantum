@@ -38,8 +38,8 @@ public class SettingsController extends SharedController {
     @FXML
     public void showFaq(ActionEvent event) {
         setContent("FAQ",
-                "Q: How do I change my profile image?\n" +
-                "A: Go to Profile and use the Upload Image button.\n\n" +
+                "Q: How do I upload a profile image?\n" +
+                "A: From the Profile page, use the Upload Image button.\n\n" +
                 "Q: My USB key isn’t detected.\n" +
                 "A: Reconnect the drive and ensure the key file exists.\n\n" +
                 "Q: How do I switch accounts?\n" +

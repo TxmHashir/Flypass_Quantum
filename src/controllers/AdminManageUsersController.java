@@ -33,7 +33,7 @@ public class AdminManageUsersController extends SharedController {
     public void loadUsers() {
         ObservableList<User> users = FXCollections.observableArrayList(
             userDAO.getAllUsers().stream()
-                .filter(u -> !"admin".equals(u.getRole()))
+                .filter(u -> u.getRole().equals("pilot") || u.getRole().equals("admin")) // Only pilots and admins
                 .collect(Collectors.toList())
         );
         usersTable.setItems(users);
@@ -42,55 +42,80 @@ public class AdminManageUsersController extends SharedController {
     @FXML
     private void editSalary() {
         User selected = usersTable.getSelectionModel().getSelectedItem();
-        if (selected == null) {
-            new Alert(AlertType.WARNING, "Select a user first.").show();
-            return;
+        if (selected != null) {
+            TextInputDialog dialog = new TextInputDialog(String.valueOf(selected.getSalary()));
+            dialog.setTitle("Edit Salary");
+            dialog.setHeaderText("Edit salary for " + selected.getName());
+            dialog.setContentText("New Salary:");
+
+            Optional<String> result = dialog.showAndWait();
+            result.ifPresent(salaryStr -> {
+                try {
+                    double newSalary = Double.parseDouble(salaryStr);
+                    selected.setSalary(newSalary);
+                    userDAO.updateUser(selected);
+                    loadUsers();
+                    new Alert(AlertType.INFORMATION, "Salary updated!").show();
+                } catch (NumberFormatException e) {
+                    new Alert(AlertType.ERROR, "Invalid salary value.").show();
+                }
+            });
         }
-        TextInputDialog dialog = new TextInputDialog(String.valueOf(selected.getSalary()));
-        dialog.setTitle("Edit Salary");
-        dialog.setHeaderText("Edit salary for " + selected.getName());
-        dialog.setContentText("New Salary:");
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(salaryStr -> {
-            try {
-                double salary = Double.parseDouble(salaryStr);
-                selected.setSalary(salary);
-                userDAO.updateUser(selected);
-                usersTable.refresh();
-                new Alert(AlertType.INFORMATION, "Salary updated.").show();
-            } catch (NumberFormatException e) {
-                new Alert(AlertType.ERROR, "Invalid salary.").show();
-            }
-        });
     }
 
     @FXML
     private void assignDuties() {
         User selected = usersTable.getSelectionModel().getSelectedItem();
-        if (selected == null) {
-            new Alert(AlertType.WARNING, "Select a user first.").show();
-            return;
+        if (selected != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AssignDuties.fxml"));
+                Stage stage = (Stage) usersTable.getScene().getWindow();
+                double x = stage.getX();
+                double y = stage.getY();
+                Scene newScene = new Scene(loader.load());
+                newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
+                
+                stage.setScene(newScene);
+                stage.setX(x);
+                stage.setY(y);
+                
+                AssignDutiesController controller = loader.getController();
+                controller.setLoggedInUser(this.user);
+                controller.setUser(selected);
+                controller.loadData();
+                
+                stage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AssignDuties.fxml"));
-            Stage stage = (Stage) usersTable.getScene().getWindow();
-            double x = stage.getX();
-            double y = stage.getY();
-            Scene newScene = new Scene(loader.load());
-            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
-            
-            stage.setScene(newScene);
-            stage.setX(x);
-            stage.setY(y);
-            
-            AssignDutiesController controller = loader.getController();
-            controller.setLoggedInUser(this.user);
-            controller.setUser(selected);
-            controller.loadData();
-            
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
+    }
+
+    @FXML
+    private void assignFlights() {
+        User selected = usersTable.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AssignFlights.fxml"));
+                Stage stage = (Stage) usersTable.getScene().getWindow();
+                double x = stage.getX();
+                double y = stage.getY();
+                Scene newScene = new Scene(loader.load());
+                newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
+                
+                stage.setScene(newScene);
+                stage.setX(x);
+                stage.setY(y);
+                
+                AssignFlightsController controller = loader.getController();
+                controller.setLoggedInUser(this.user);
+                controller.setUser(selected);
+                controller.loadData();
+                
+                stage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

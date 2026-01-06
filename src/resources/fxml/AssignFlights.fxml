@@ -24,7 +24,7 @@
                         <columns>
                             <TableColumn fx:id="availFlightCol" prefWidth="80" text="Flight #" />
                             <TableColumn fx:id="availOriginCol" prefWidth="100" text="Origin" />
-                            <TableColumn fx:id="availdestCol" prefWidth="100" text="dest" />
+                            <TableColumn fx:id="availdestCol" prefWidth="100" text="Destination" />
                             <TableColumn fx:id="availTimeCol" prefWidth="150" text="Time" />
                             <TableColumn fx:id="availStatusCol" prefWidth="100" text="Status" />
                         </columns>
@@ -32,8 +32,8 @@
                 </VBox>
 
                 <VBox alignment="CENTER" spacing="10">
-                    <Button onAction="#addFlight" text="&gt;&gt;" style="-fx-background-color: #0B3D91; -fx-text-fill: white;" />
-                    <Button onAction="#removeFlight" text="&lt;&lt;" style="-fx-background-color: #0B3D91; -fx-text-fill: white;" />
+                    <Button onAction="#addFlight" text=">>" style="-fx-background-color: #0B3D91; -fx-text-fill: white;" />
+                    <Button onAction="#removeFlight" text="<<" style="-fx-background-color: #0B3D91; -fx-text-fill: white;" />
                 </VBox>
 
                 <VBox spacing="10">
@@ -42,7 +42,7 @@
                         <columns>
                             <TableColumn fx:id="assignFlightCol" prefWidth="80" text="Flight #" />
                             <TableColumn fx:id="assignOriginCol" prefWidth="100" text="Origin" />
-                            <TableColumn fx:id="assigndestCol" prefWidth="100" text="dest" />
+                            <TableColumn fx:id="assigndestCol" prefWidth="100" text="Destination" />
                             <TableColumn fx:id="assignTimeCol" prefWidth="150" text="Time" />
                             <TableColumn fx:id="assignStatusCol" prefWidth="100" text="Status" />
                         </columns>

@@ -31,9 +31,12 @@ public class BookFlightController extends SharedController {
         destCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getdest()));
         scheduleCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getSchedule()));
         statusCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getStatus()));
+        loadAllFlights();
+    }
+
+    private void loadAllFlights() {
         FlightDAO flightDAO = new FlightDAO();
-        allFlights = flightDAO.getAllFlights();
-        flightsTable.setItems(allFlights);
+        allFlights.addAll(flightDAO.getAllFlights());
     }
 
     @FXML
@@ -43,39 +46,36 @@ public class BookFlightController extends SharedController {
         LocalDate date = datePicker.getValue();
 
         ObservableList<Flight> filtered = allFlights.stream()
-                .filter(f -> (origin.isEmpty() || f.getOrigin().toLowerCase().contains(origin))
-                        && (dest.isEmpty() || f.getdest().toLowerCase().contains(dest))
-                        && (date == null || f.getSchedule().contains(date.toString())))
-                .collect(Collectors.toCollection(FXCollections::observableArrayList));
-
-        flightsTable.setItems(filtered);
+            .filter(f -> (origin.isEmpty() || f.getOrigin().toLowerCase().contains(origin)) &&
+                         (dest.isEmpty() || f.getdest().toLowerCase().contains(dest)) &&
+                         (date == null || f.getSchedule().contains(date.toString())))
+            .collect(Collectors.toCollection(() -> FXCollections.observableArrayList()));
+            flightsTable.setItems(filtered);
     }
 
     @FXML
     private void confirmBooking() {
         Flight selected = flightsTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            new Alert(AlertType.WARNING, "Please select a flight to book.").show();
+            new Alert(AlertType.WARNING, "Select a flight.").show();
             return;
         }
         String seatsStr = seatsField.getText().trim();
         if (seatsStr.isEmpty()) {
-            new Alert(AlertType.WARNING, "Please enter the number of seats.").show();
+            new Alert(AlertType.WARNING, "Enter number of seats.").show();
             return;
         }
         int seats;
         try {
             seats = Integer.parseInt(seatsStr);
-            if (seats <= 0) {
-                throw new NumberFormatException();
-            }
+            if (seats <= 0) throw new NumberFormatException();
         } catch (NumberFormatException e) {
-            new Alert(AlertType.WARNING, "Invalid number of seats.").show();
+            new Alert(AlertType.ERROR, "Invalid number of seats.").show();
             return;
         }
 
-        String type = selected.getType();
-        if ("International".equals(type)) {
+        // Check visa for international flights
+        if ("International".equals(selected.getType())) {
             String visa = user.getVisa();
             if (visa == null || !visa.toLowerCase().contains(selected.getdest().toLowerCase())) {
                 new Alert(AlertType.WARNING, "You need a valid visa for " + selected.getdest() + ".").show();

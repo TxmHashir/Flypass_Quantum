@@ -34,23 +34,18 @@ public class ApplyVisaController extends SharedController {
     @FXML
     private void applyVisa() {
         String visaType = visaTypeComboBox.getValue();
-        String country = countryField.getText();
-        // Validation
-        if (visaType == null || country.isEmpty() || nameField.getText().isEmpty() || cnicField.getText().isEmpty()
-        || passportField.getText().isEmpty() || bankNameField.getText().isEmpty() || bankAccField.getText().isEmpty()) {
-            Alert alert = new Alert(AlertType.ERROR, "Please fill in all required fields.");
-            alert.initOwner((Stage) countryField.getScene().getWindow());
-            alert.show();
+        String country = countryField.getText().trim();
+        if (visaType == null || country.isEmpty()) {
+            new Alert(AlertType.WARNING, "Select visa type and enter country.").show();
             return;
         }
-        // Processing logic
         user.setName(nameField.getText());
         user.setCnic(cnicField.getText());
         user.setPassportNumber(passportField.getText());
         user.setBankName(bankNameField.getText());
         user.setbankAcc(bankAccField.getText());
         user.setVisa(visaType + ", " + country);
-        // Mock save
+        // Save
         UserDAO userDAO = new UserDAO();
         userDAO.updateUser(user);
         Alert success = new Alert(AlertType.INFORMATION, "Visa applied successfully!");

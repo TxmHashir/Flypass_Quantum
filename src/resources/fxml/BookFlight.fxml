@@ -24,39 +24,43 @@
             <GridPane hgap="10" vgap="10">
                 <Label style="-fx-text-fill: #0B3D91;" text="Origin:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                 <TextField fx:id="originField" promptText="Origin" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                <Label style="-fx-text-fill: #0B3D91;" text="dest:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                <TextField fx:id="destField" promptText="dest" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                
+                <Label style="-fx-text-fill: #0B3D91;" text="Destination:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <TextField fx:id="destField" promptText="Destination" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                
                 <Label style="-fx-text-fill: #0B3D91;" text="Date:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                 <DatePicker fx:id="datePicker" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                <Label style="-fx-text-fill: #0B3D91;" text="Number of Seats:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                
+                <Label style="-fx-text-fill: #0B3D91;" text="Seats:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
                 <TextField fx:id="seatsField" promptText="Number of Seats" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <columnConstraints>
-               <ColumnConstraints />
-               <ColumnConstraints />
-            </columnConstraints>
-            <rowConstraints>
-               <RowConstraints />
-               <RowConstraints />
-               <RowConstraints />
-               <RowConstraints />
-            </rowConstraints>
+                
+                <columnConstraints>
+                    <ColumnConstraints />
+                    <ColumnConstraints />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                </rowConstraints>
             </GridPane>
+            
             <TableView fx:id="flightsTable" prefHeight="300" style="-fx-border-color: #E6F0FF;">
                 <columns>
                     <TableColumn fx:id="flightNoCol" prefWidth="100" text="Flight #" />
                     <TableColumn fx:id="originCol" prefWidth="150" text="Origin" />
-                    <TableColumn fx:id="destCol" prefWidth="150" text="dest" />
+                    <TableColumn fx:id="destCol" prefWidth="150" text="Destination" />
                     <TableColumn fx:id="scheduleCol" prefWidth="200" text="Schedule" />
                     <TableColumn fx:id="statusCol" prefWidth="100" text="Status" />
                 </columns>
             </TableView>
-         <HBox alignment="CENTER" maxHeight="30.0" prefHeight="30.0" prefWidth="630.0" spacing="20.0">
-            <children>
-                  <Button alignment="TOP_LEFT" onAction="#goBack" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 14px;" text="Back" />
-                  <Button onAction="#searchFlights" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 14px;" text="Search Flights" />
-                  <Button onAction="#confirmBooking" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 14px;" text="Confirm Booking &amp; Pay" />
-            </children>
-         </HBox>
+            
+            <HBox alignment="CENTER" spacing="15">
+                <Button onAction="#goBack" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 14px;" text="Back" />
+                <Button onAction="#searchFlights" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 14px;" text="Search Flights" />
+                <Button onAction="#confirmBooking" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 14px;" text="Confirm Booking & Pay" />
+            </HBox>
         </VBox>
     </center>
 </BorderPane>

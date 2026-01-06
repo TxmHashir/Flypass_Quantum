@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.TableColumn;
@@ -17,6 +18,7 @@ public class AssignFlightsController extends SharedController {
     @FXML private TableColumn<Flight, String> assignOriginCol, assigndestCol, assignTimeCol, assignStatusCol;
     
     private UserDAO userDAO = new UserDAO();
+    private FlightDAO flightDAO = new FlightDAO();
 
     @FXML
     private void initialize() {
@@ -26,7 +28,6 @@ public class AssignFlightsController extends SharedController {
         availTimeCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getSchedule()));
         availStatusCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getStatus()));
 
-        // Assigned table setup
         assignFlightCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getflightNo()).asObject());
         assignOriginCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getOrigin()));
         assigndestCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getdest()));
@@ -34,18 +35,22 @@ public class AssignFlightsController extends SharedController {
         assignStatusCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getStatus()));
     }
 
+    public void setUser(User user) {
+        this.user = user;
+        loadData();
+    }
+
     public void loadData() {
-        availTable.setItems(FXCollections.observableArrayList(
-            MockData.getAllFlights().stream()
-                .filter(f -> !user.getAssignedFlights().contains(f))
-                .collect(Collectors.toList())
-        ));
+        ObservableList<Flight> available = flightDAO.getAllFlights().stream()
+            .filter(f -> !user.getAssignedFlights().contains(f))
+            .collect(Collectors.toCollection(FXCollections::observableArrayList));
+        availTable.setItems(available);
 
         assignedTable.setItems(FXCollections.observableArrayList(user.getAssignedFlights()));
     }
 
     @FXML
-    private void assignFlight() {
+    private void addFlight() {
         Flight selected = availTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
             user.getAssignedFlights().add(selected);
@@ -63,27 +68,27 @@ public class AssignFlightsController extends SharedController {
     }
 
     @FXML
-private void goBack(ActionEvent event) {
-    userDAO.updateUser(user);
-    try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AdminManageUsers.fxml"));
-        Stage stage = getStageFromEvent(event);
-        double x = stage.getX();
-        double y = stage.getY();
-        Scene newScene = new Scene(loader.load());
-        newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
-        
-        stage.setScene(newScene);
-        stage.setX(x);
-        stage.setY(y);
-        
-        AdminManageUsersController controller = loader.getController();
-        controller.setUser(this.loggedInUser);
-        controller.loadUsers();
-        
-        stage.show();
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
+    private void goBack(ActionEvent event) {
+        userDAO.updateUser(user);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AdminManageUsers.fxml"));
+            Stage stage = getStageFromEvent(event);
+            double x = stage.getX();
+            double y = stage.getY();
+            Scene newScene = new Scene(loader.load());
+            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
+            
+            stage.setScene(newScene);
+            stage.setX(x);
+            stage.setY(y);
+            
+            AdminManageUsersController controller = loader.getController();
+            controller.setUser(this.loggedInUser);
+            controller.loadUsers();
+            
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

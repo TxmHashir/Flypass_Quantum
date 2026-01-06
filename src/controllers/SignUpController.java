@@ -16,7 +16,7 @@ import java.io.PrintWriter;
 import java.util.UUID;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javax.swing.filechooser.FileSystemView;
+import java.util.List;
 
 public class SignUpController extends SharedController {
     @FXML private TextField nameField, cnicField, contactField, emailField,
@@ -36,112 +36,65 @@ public class SignUpController extends SharedController {
 
     @FXML
     private void handleSignUp() {
-        if (nameField.getText().isEmpty() || cnicField.getText().isEmpty()) {
-            new Alert(AlertType.WARNING, "Please fill in all required fields.").show();
+        String name = nameField.getText().trim();
+        String cnic = cnicField.getText().trim();
+        String contact = contactField.getText().trim();
+        String email = emailField.getText().trim();
+        String passport = passportField.getText().trim();
+        String citizenship = citizenshipField.getText().trim();
+        String visaType = visaTypeField.getValue();
+        String visaCountry = visaCountryField.getText().trim();
+        String profileImg = profileImgField.getText().trim();
+        String country = countryField.getText().trim();
+        String city = cityField.getText().trim();
+        String postCode = postCodeField.getText().trim();
+
+        if (name.isEmpty() || cnic.isEmpty() || email.isEmpty()) {
+            new Alert(AlertType.ERROR, "Please fill in all required fields.").show();
             return;
         }
 
+        String visa = (visaType != null && !visaCountry.isEmpty()) ? visaType + ", " + visaCountry : null;
+
         User newUser = new User();
-        newUser.setName(nameField.getText());
-        newUser.setCnic(cnicField.getText());
-        newUser.setEmail(emailField.getText());
-        newUser.setContact(contactField.getText());
-        newUser.setPassportNumber(passportField.getText());
-        newUser.setCitizenship(citizenshipField.getText());
-        newUser.setCountry(countryField.getText());
-        newUser.setCity(cityField.getText());
-        newUser.setpostCode(postCodeField.getText());
-        String visaType = visaTypeField.getValue();
-        String visaCountry = visaCountryField.getText();
-        if (visaType != null && !visaCountry.isEmpty()) {
-            newUser.setVisa(visaType + ", " + visaCountry);
-        }
-        newUser.setRole("customer"); 
-        newUser.setprofImgPath(profileImgField.getText());
+        newUser.setName(name);
+        newUser.setCnic(cnic);
+        newUser.setEmail(email);
+        newUser.setContact(contact);
+        newUser.setPassportNumber(passport);
+        newUser.setCitizenship(citizenship);
+        newUser.setVisa(visa);
+        newUser.setRole("customer"); // Default to customer; adjust if needed
+        newUser.setencrypKey(generateEncrypKey());
+        newUser.setprofImgPath(profileImg.isEmpty() ? "titleicon.png" : profileImg);
+        newUser.setCountry(country);
+        newUser.setCity(city);
+        newUser.setpostCode(postCode);
 
-        String rawKey = generateRawKey();
-        String encrypKey = EncryptionUtil.encryptSHA256(rawKey);
-        newUser.setencrypKey(encrypKey);
+        userDAO.addUser(newUser);
 
-        File usbDrive = findUsbDrive();
-        if (usbDrive != null) {
-            File keyFile = new File(usbDrive, "encrypted_key.txt");
-            try (PrintWriter writer = new PrintWriter(keyFile)) {
-                writer.println(encrypKey);
-                System.out.println("Successfully saved key to: " + keyFile.getAbsolutePath());
-                if (userDAO.signUp(newUser)) {
-                    new Alert(AlertType.INFORMATION, "Sign up successful! Key saved to USB: " + usbDrive.getAbsolutePath()).show();
-                    goBack(null);
-                } else {
-                    new Alert(AlertType.ERROR, "Sign up failed.").show();
-                }
-            } catch (IOException e) {
-                System.err.println("Failed to save key: " + e.getMessage());
-                new Alert(AlertType.ERROR, "Failed to save key to USB: " + e.getMessage()).show();
-            }
-        } else {
-            new Alert(AlertType.WARNING, "Insert a removable USB drive to save your key.").show();
-        }
+        // Write encrypKey to USB
+        writeKeyToUsb(newUser.getencrypKey());
+
+        new Alert(AlertType.INFORMATION, "Sign up successful! Your encryption key is saved on USB.").show();
+        goBack(null);
     }
 
-    private String generateRawKey() {
+    private String generateEncrypKey() {
         return UUID.randomUUID().toString();
     }
 
-    private File findUsbDrive() {
-        String os = System.getProperty("os.name").toLowerCase();
-        
-        if (os.contains("win")) {
-            String systemDrive = System.getenv("SystemDrive");
-            if (systemDrive == null) systemDrive = "C:";
-            String systemPrefix = systemDrive.substring(0, 2) + "\\";
-            
-            for (char c = 'A'; c <= 'Z'; c++) {
-                String path = c + ":\\";
-                File root = new File(path);
-                if (root.exists() && root.canRead() && !path.startsWith(systemPrefix) && isRemovableDrive(root)) {
-                    System.out.println("Found removable USB drive: " + path + " (Type: " + getDriveType(root) + ")");
-                    return root;
-                }
-            }
-        } else if (os.contains("mac")) {
-            File volumesDir = new File("/Volumes/");
-            if (volumesDir.exists() && volumesDir.isDirectory()) {
-                for (File vol : volumesDir.listFiles()) {
-                    if (vol.isDirectory() && !new File(vol, "System").exists()) {
-                        return vol;
-                    }
-                }
-            }
-        } else if (os.contains("nix") || os.contains("nux") || os.contains("aix")) {
-            String[] mountPoints = {"/media/", "/mnt/"};
-            for (String mp : mountPoints) {
-                File dir = new File(mp);
-                if (dir.exists() && dir.isDirectory()) {
-                    for (File vol : dir.listFiles()) {
-                        if (vol.isDirectory()) {
-                            return vol;
-                        }
-                    }
-                }
+    private void writeKeyToUsb(String key) {
+        List<File> usbDrives = UsbKeyFetcher.getUsbDrives(System.getProperty("os.name").toLowerCase());
+        if (!usbDrives.isEmpty()) {
+            File usbDrive = usbDrives.get(0); // Use first USB
+            File keyFile = new File(usbDrive, "encrypted_key.txt");
+            try (PrintWriter writer = new PrintWriter(keyFile)) {
+                writer.println(key);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-        System.out.println("No removable USB drive found.");
-        return null;
-    }
-
-    private static boolean isRemovableDrive(File drive) {
-        FileSystemView fsv = FileSystemView.getFileSystemView();
-        String desc = fsv.getSystemTypeDescription(drive);
-        return desc != null && (desc.toLowerCase().contains("removable") ||
-                                desc.toLowerCase().contains("usb") ||
-                                desc.toLowerCase().contains("flash"));
-    }
-
-    private static String getDriveType(File drive) {
-        FileSystemView fsv = FileSystemView.getFileSystemView();
-        String desc = fsv.getSystemTypeDescription(drive);
-        return desc != null ? desc : "Unknown";
     }
 
     @FXML
