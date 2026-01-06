@@ -1,212 +1,293 @@
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Data Access Object (DAO) for the 'users' table.
+ * Handles database operations for User entities.
+ */
 public class UserDAO {
-    private static List<User> mockUsers = new ArrayList<>();
+    
+    // --- READ Operations ---
 
-    static {
-        // Pre-populating with dummy values
-        // Customer
-        User customer = new User();
-        customer.setName("Alice Tester");
-        customer.setRole("customer");
-        customer.setencrypKey("cust123");
-        customer.setEmail("alice@example.com");
-        customer.setCnic("12345-0000000-1");
-        customer.setContact("+1-555-0123");
-        customer.setPassportNumber("P1234567");
-        customer.setCitizenship("United States");
-        customer.setCountry("United States");
-        customer.setCity("New York");
-        customer.setpostCode("10001");
-        customer.setprofImgPath("titleicon.png");
-        // Pilot
-        User pilot = new User();
-        pilot.setName("Captain Skies");
-        pilot.setRole("pilot");
-        pilot.setencrypKey("pilot123");
-        pilot.setEmail("captain@example.com");
-        pilot.setCnic("12345-0000000-2");
-        pilot.setContact("+1-555-0124");
-        pilot.setPassportNumber("P1234568");
-        pilot.setCitizenship("United States");
-        pilot.setCountry("United States");
-        pilot.setCity("Los Angeles");
-        pilot.setpostCode("90001");
-        pilot.setSalary(150000.0);
-        pilot.setprofImgPath("titleicon.png");
-        // Staff
-        User staff = new User();
-        staff.setName("Staff Member");
-        staff.setRole("staff");
-        staff.setencrypKey("staff123");
-        staff.setEmail("staff@example.com");
-        staff.setCnic("12345-0000000-3");
-        staff.setContact("+1-555-0125");
-        staff.setPassportNumber("P1234569");
-        staff.setCitizenship("United States");
-        staff.setCountry("United States");
-        staff.setCity("Chicago");
-        staff.setpostCode("60601");
-        staff.setSalary(80000.0);
-        staff.setprofImgPath("titleicon.png"); 
-        // Admin
-        User admin = new User();
-        admin.setName("Admin User");
-        admin.setRole("admin");
-        admin.setencrypKey("admin123");
-        admin.setEmail("admin@example.com");
-        admin.setCnic("12345-0000000-4");
-        admin.setContact("+1-555-0126");
-        admin.setPassportNumber("P1234570");
-        admin.setCitizenship("United States");
-        admin.setCountry("United States");
-        admin.setCity("Washington DC");
-        admin.setpostCode("20001");
-        admin.setSalary(120000.0);
-        admin.setprofImgPath("titleicon.png");
-        // Air Hostess
-        User airHostess = new User();
-        airHostess.setName("Hostess Fly");
-        airHostess.setRole("air_hostess");
-        airHostess.setencrypKey("hostess123");
-        airHostess.setEmail("hostess@example.com");
-        airHostess.setCnic("12345-0000000-5");
-        airHostess.setContact("+1-555-0127");
-        airHostess.setPassportNumber("P1234571");
-        airHostess.setCitizenship("United States");
-        airHostess.setCountry("United States");
-        airHostess.setCity("Miami");
-        airHostess.setpostCode("33101");
-        airHostess.setSalary(90000.0);
-        airHostess.setprofImgPath("titleicon.png"); 
-        mockUsers.add(customer);
-        mockUsers.add(pilot);
-        mockUsers.add(staff);
-        mockUsers.add(admin);
-        mockUsers.add(airHostess);
-        // More Pilots
-        User pilot2 = new User();
-        pilot2.setName("John Wright");
-        pilot2.setRole("pilot");
-        pilot2.setencrypKey("pilot456");
-        pilot2.setEmail("john.wright@example.com");
-        pilot2.setCnic("12345-0000000-6");
-        pilot2.setContact("+1-555-0201");
-        pilot2.setPassportNumber("P1234572");
-        pilot2.setCitizenship("United States");
-        pilot2.setCountry("United States");
-        pilot2.setCity("Seattle");
-        pilot2.setpostCode("98101");
-        pilot2.setSalary(160000.0);
-        pilot2.setprofImgPath("titleicon.png");
-        
-        User pilot3 = new User();
-        pilot3.setName("Sarah Johnson");
-        pilot3.setRole("pilot");
-        pilot3.setencrypKey("pilot789");
-        pilot3.setEmail("sarah.j@example.com");
-        pilot3.setCnic("12345-0000000-7");
-        pilot3.setContact("+1-555-0202");
-        pilot3.setPassportNumber("P1234573");
-        pilot3.setCitizenship("United States");
-        pilot3.setCountry("United States");
-        pilot3.setCity("Denver");
-        pilot3.setpostCode("80201");
-        pilot3.setSalary(155000.0);
-        pilot3.setprofImgPath("titleicon.png");
-        
-        // More Staff
-        User staff2 = new User();
-        staff2.setName("Mike Davis");
-        staff2.setRole("staff");
-        staff2.setencrypKey("staff456");
-        staff2.setEmail("mike.davis@example.com");
-        staff2.setCnic("12345-0000000-8");
-        staff2.setContact("+1-555-0203");
-        staff2.setPassportNumber("P1234574");
-        staff2.setCitizenship("United States");
-        staff2.setCountry("United States");
-        staff2.setCity("Boston");
-        staff2.setpostCode("02101");
-        staff2.setSalary(85000.0);
-        staff2.setprofImgPath("titleicon.png");
-        
-        User staff3 = new User();
-        staff3.setName("Emily Brown");
-        staff3.setRole("staff");
-        staff3.setencrypKey("staff789");
-        staff3.setEmail("emily.brown@example.com");
-        staff3.setCnic("12345-0000000-9");
-        staff3.setContact("+1-555-0204");
-        staff3.setPassportNumber("P1234575");
-        staff3.setCitizenship("United States");
-        staff3.setCountry("United States");
-        staff3.setCity("Atlanta");
-        staff3.setpostCode("30301");
-        staff3.setSalary(82000.0);
-        staff3.setprofImgPath("titleicon.png");
-        
-        // More Air Hostess
-        User airHostess2 = new User();
-        airHostess2.setName("Lisa Anderson");
-        airHostess2.setRole("air_hostess");
-        airHostess2.setencrypKey("hostess456");
-        airHostess2.setEmail("lisa.a@example.com");
-        airHostess2.setCnic("12345-0000000-10");
-        airHostess2.setContact("+1-555-0205");
-        airHostess2.setPassportNumber("P1234576");
-        airHostess2.setCitizenship("United States");
-        airHostess2.setCountry("United States");
-        airHostess2.setCity("Phoenix");
-        airHostess2.setpostCode("85001");
-        airHostess2.setSalary(95000.0);
-        airHostess2.setprofImgPath("titleicon.png");
-        
-        User airHostess3 = new User();
-        airHostess3.setName("Jessica Miller");
-        airHostess3.setRole("air_hostess");
-        airHostess3.setencrypKey("hostess789");
-        airHostess3.setEmail("jessica.m@example.com");
-        airHostess3.setCnic("12345-0000000-11");
-        airHostess3.setContact("+1-555-0206");
-        airHostess3.setPassportNumber("P1234577");
-        airHostess3.setCitizenship("United States");
-        airHostess3.setCountry("United States");
-        airHostess3.setCity("Las Vegas");
-        airHostess3.setpostCode("89101");
-        airHostess3.setSalary(88000.0);
-        airHostess3.setprofImgPath("titleicon.png");
-        mockUsers.add(pilot2);
-        mockUsers.add(pilot3);
-        mockUsers.add(staff2);
-        mockUsers.add(staff3);
-        mockUsers.add(airHostess2);
-        mockUsers.add(airHostess3);
+    /**
+     * Retrieves a single User by their unique encryption key.
+     * * @param key The unique encryp_key of the user.
+     * * @return The populated User object, or null if not found.
+     */
+    public User getUserByEncrypKey(String key) {
+        String sql = "SELECT * FROM users WHERE encryp_key = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, key);
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return mapResultSetToUser(rs);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error getting user by key: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public User getUserByencrypKey(String key) {
-        return mockUsers.stream()
-                .filter(u -> u.getencrypKey().equals(key))
-                .findFirst()
-                .orElse(null);
-    }
-
-    public boolean signUp(User user) {
-        mockUsers.add(user);
-        return true;
-    }
-
-    public void updateUser(User user) {
-        mockUsers.removeIf(u -> u.getencrypKey().equals(user.getencrypKey()));
-        mockUsers.add(user);
-    }
-
+    /**
+     * Retrieves all users from the database.
+     * * @return A list of all User objects.
+     */
     public List<User> getAllUsers() {
-        return new ArrayList<>(mockUsers);
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM users";
+        
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                users.add(mapResultSetToUser(rs));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error getting all users: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return users;
     }
 
+    // --- CREATE Operation ---
+
+    /**
+     * Inserts a new user record into the database (User Sign Up).
+     * * @param user The User object containing data to insert.
+     * * @return true if sign-up was successful, false otherwise.
+     */
+    public boolean signUp(User user) {
+        // Note: The 'id' column is auto-incremented and excluded from the insert list.
+        String sql = "INSERT INTO users (name, cnic, email, contact, passport_number, citizenship, visa, role, encryp_key, " +
+                     "bank_name, bank_acc, salary, prof_img_path, country, city, post_code) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            // Set all parameters using the helper method.
+            // (isUpdate=false means the encryp_key is the last parameter set)
+            setUserPreparedStatement(pstmt, user, false);
+            pstmt.executeUpdate();
+            return true;
+            
+        } catch (SQLException e) {
+            System.err.println("Error during user sign-up: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // --- UPDATE Operation ---
+
+    /**
+     * Updates an existing user record based on the unique encryp_key.
+     * The ID, role, and encryp_key are typically not updated here.
+     * * @param user The User object with the new data.
+     */
+    public void updateUser(User user) {
+        String sql = "UPDATE users SET name = ?, cnic = ?, email = ?, contact = ?, passport_number = ?, citizenship = ?, " +
+                     "visa = ?, role = ?, bank_name = ?, bank_acc = ?, salary = ?, prof_img_path = ?, " +
+                     "country = ?, city = ?, post_code = ? WHERE encryp_key = ?";
+        
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            // Set all parameters.
+            // (isUpdate=true means the encryp_key is set as the WHERE clause parameter)
+            setUserPreparedStatement(pstmt, user, true); 
+            pstmt.executeUpdate();
+            
+        } catch (SQLException e) {
+            System.err.println("Error updating user: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    // --- DELETE Operation ---
+
+    /**
+     * Deletes a user record based on the unique encryp_key.
+     * * @param user The User object to delete (only needs the encryp_key).
+     */
     public void deleteUser(User user) {
-        mockUsers.remove(user);
+        String sql = "DELETE FROM users WHERE encryp_key = ?";
+        
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, user.getencrypKey());
+            pstmt.executeUpdate();
+            
+        } catch (SQLException e) {
+            System.err.println("Error deleting user: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    // --- Private Mapping and Relationship Helpers ---
+
+    /**
+     * Helper to map a database ResultSet row to a fully populated User object, 
+     * including assigned flights and duties.
+     */
+    private User mapResultSetToUser(ResultSet rs) throws SQLException {
+        User user = new User();
+        // Set basic user attributes
+        user.setName(rs.getString("name"));
+        user.setCnic(rs.getString("cnic"));
+        user.setEmail(rs.getString("email"));
+        user.setContact(rs.getString("contact"));
+        user.setPassportNumber(rs.getString("passport_number"));
+        user.setCitizenship(rs.getString("citizenship"));
+        user.setVisa(rs.getString("visa"));
+        user.setRole(rs.getString("role"));
+        user.setencrypKey(rs.getString("encryp_key"));
+        user.setBankName(rs.getString("bank_name"));
+        user.setbankAcc(rs.getString("bank_acc"));
+        user.setSalary(rs.getDouble("salary"));
+        user.setprofImgPath(rs.getString("prof_img_path"));
+        user.setCountry(rs.getString("country"));
+        user.setCity(rs.getString("city"));
+        user.setpostCode(rs.getString("post_code"));
+
+        // Load assigned flights and duties using separate JOIN queries
+        int userId = rs.getInt("id"); // Retrieve the user's primary key (ID)
+        user.getAssignedFlights().addAll(getAssignedFlights(userId));
+        user.getAssignedDuties().addAll(getAssignedDuties(userId));
+        
+        return user;
+    }
+
+    /**
+     * Retrieves all flights assigned to a specific user using the 'user_flights' junction table.
+     */
+    private List<Flight> getAssignedFlights(int userId) {
+        List<Flight> flights = new ArrayList<>();
+        // Uses a JOIN to fetch flight details linked by user_id
+        String sql = "SELECT f.* FROM flights f " +
+                     "JOIN user_flights uf ON f.flight_no = uf.flight_no " +
+                     "WHERE uf.user_id = ?";
+        
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, userId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    flights.add(mapResultSetToFlight(rs));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error getting assigned flights: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return flights;
+    }
+
+    /**
+     * Retrieves all duties assigned to a specific user using the 'user_duties' junction table.
+     */
+    private List<Duty> getAssignedDuties(int userId) {
+        List<Duty> duties = new ArrayList<>();
+        // Uses a JOIN to fetch duty details linked by user_id
+        String sql = "SELECT d.* FROM duties d " +
+                     "JOIN user_duties ud ON d.id = ud.duty_id " +
+                     "WHERE ud.user_id = ?";
+        
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, userId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    duties.add(mapResultSetToDuty(rs));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error getting assigned duties: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return duties;
+    }
+
+    /**
+     * Helper to set all parameters for a User PreparedStatement (used by signUp and updateUser).
+     * * @param isUpdate If true, sets the encryp_key as the last parameter for the WHERE clause.
+     */
+    private void setUserPreparedStatement(PreparedStatement pstmt, User user, boolean isUpdate) throws SQLException {
+        int i = 1;
+        pstmt.setString(i++, user.getName());
+        pstmt.setString(i++, user.getCnic());
+        pstmt.setString(i++, user.getEmail());
+        pstmt.setString(i++, user.getContact());
+        pstmt.setString(i++, user.getPassportNumber());
+        pstmt.setString(i++, user.getCitizenship());
+        pstmt.setString(i++, user.getVisa());
+        pstmt.setString(i++, user.getRole());
+        
+        // Note: The original code had encryp_key here for insert, but the SQL query 
+        // in signUp has it later (position 9). Adjusting the original logic to match the SQL structure.
+        if (!isUpdate) { // For INSERT, encryp_key is position 9 in the original SQL.
+             pstmt.setString(i++, user.getencrypKey()); // This is parameter 9
+        }
+        
+        pstmt.setString(i++, user.getBankName()); // Parameter 10/9
+        pstmt.setString(i++, user.getbankAcc()); // Parameter 11/10
+        pstmt.setDouble(i++, user.getSalary()); // Parameter 12/11
+        pstmt.setString(i++, user.getprofImgPath()); // Parameter 13/12
+        pstmt.setString(i++, user.getCountry()); // Parameter 14/13
+        pstmt.setString(i++, user.getCity()); // Parameter 15/14
+        pstmt.setString(i++, user.getpostCode()); // Parameter 16/15
+        
+        if (isUpdate) { // For UPDATE, encryp_key is set for the WHERE clause (last parameter)
+            pstmt.setString(i, user.getencrypKey()); // Parameter 16
+        } else {
+             // Re-setting the encryp_key here to align with the original signUp SQL logic
+             // which has 16 parameters in total.
+             // Original: encryp_key is the 9th column in the SQL, but the helper sets it 16th if not updated.
+             // ***Correction***: The original logic was flawed in the helper method. 
+             // Fixing the parameter setting to match the `signUp` SQL structure.
+             // Assuming the `signUp` SQL structure provided is correct (16 params, encryp_key is 9th).
+        }
+        // Note: The logic in the original setUserPreparedStatement helper was inconsistent with the SQL.
+        // The refined code above (using i++) attempts to fix this parameter count issue.
+    }
+
+    /**
+     * Maps a ResultSet row to a Flight object. (Required because UserDAO fetches related Flights)
+     */
+    private Flight mapResultSetToFlight(ResultSet rs) throws SQLException {
+        // Assumes a Flight class constructor exists
+        return new Flight(
+            rs.getInt("flight_no"),
+            rs.getString("origin"),
+            rs.getString("dest"),
+            rs.getString("schedule"),
+            rs.getString("status"),
+            rs.getString("type")
+        );
+    }
+
+    /**
+     * Maps a ResultSet row to a Duty object. (Required because UserDAO fetches related Duties)
+     */
+    private Duty mapResultSetToDuty(ResultSet rs) throws SQLException {
+        // Assumes a Duty class constructor exists
+        return new Duty(
+            rs.getString("time"),
+            rs.getString("location"),
+            rs.getInt("flight_no")
+        );
     }
 }
