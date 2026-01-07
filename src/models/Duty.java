@@ -15,7 +15,7 @@ return id;
 public String getTime() {
 return time;
 }
-public String getLocation() {
+public String getLoc() {
 return location;
 }
 public int getflightNo() {

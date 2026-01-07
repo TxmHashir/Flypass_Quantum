@@ -37,7 +37,7 @@ public class AirHostessDutyController extends SharedController {
             
             ProfileController controller = loader.getController();
             controller.setUser(user);
-            controller.initializeProfile();
+            controller.iniProfile();
             
             stage.show();
         } catch (Exception e) { 

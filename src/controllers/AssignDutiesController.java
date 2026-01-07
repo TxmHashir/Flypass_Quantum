@@ -25,12 +25,12 @@ public class AssignDutiesController extends SharedController {
     private void initialize() {
         // Available table
         availTimeCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getTime()));
-        availlocCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getLocation()));
+        availlocCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getLoc()));
         availFlightCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getflightNo()).asObject());
 
         // Assigned table
         assignTimeCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getTime()));
-        assignlocCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getLocation()));
+        assignlocCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getLoc()));
         assignFlightCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getflightNo()).asObject());
     }
 

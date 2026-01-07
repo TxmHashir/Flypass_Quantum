@@ -42,13 +42,13 @@ public class LoginController extends SharedController {
     }
     
     public void startUsbPolling() {
-        timeline = new Timeline(new KeyFrame(Duration.millis(1000), e -> checkAndLogin()));
+        timeline = new Timeline(new KeyFrame(Duration.millis(1000), e -> checkNLogin()));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
 
-    private void checkAndLogin() {
-        String key = UsbKeyFetcher.fetchEncryptionKeyFromUsb("encrypted_key.txt");
+    private void checkNLogin() {
+        String key = UsbKeyFetcher.fetchEncrypKeyFrmUSB("encrypted_key.txt");
         if (key != null) {
             if (!wasPresent) {
                 User user = userDAO.getUserByEncrypKey(key);
@@ -74,7 +74,7 @@ public class LoginController extends SharedController {
 
             ProfileController controller = loader.getController();
             controller.setUser(user);
-            controller.initializeProfile();
+            controller.iniProfile();
 
             stage.show();
         } catch (Exception e) {
@@ -122,7 +122,7 @@ public class LoginController extends SharedController {
                         public void changed(ObservableValue<? extends Window> wobservable, Window oldWindow, Window newWindow) {
                             if (newWindow != null) {
                                 Platform.runLater(() -> {
-                                    checkAndLogin();
+                                    checkNLogin();
                                     
                                 });
                                 newScene.windowProperty().removeListener(this);

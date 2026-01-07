@@ -10,7 +10,7 @@ public class ForgetPasswordController extends SharedController {
     @FXML private TextField emailField;
     @FXML private Label msgLabel;
     @FXML
-    private void handleRecoverPassword() {
+    private void handleRecoverPass() {
         String cnic = cnicField.getText().trim();
         String email = emailField.getText().trim();
         if(cnic.isEmpty() || email.isEmpty()) {

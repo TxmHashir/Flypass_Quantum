@@ -24,13 +24,13 @@ public class AssignFlightsController extends SharedController {
     private void initialize() {
         availFlightCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getflightNo()).asObject());
         availOriginCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getOrigin()));
-        availdestCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getdest()));
+        availdestCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDest()));
         availTimeCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getSchedule()));
         availStatusCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getStatus()));
 
         assignFlightCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getflightNo()).asObject());
         assignOriginCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getOrigin()));
-        assigndestCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getdest()));
+        assigndestCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDest()));
         assignTimeCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getSchedule()));
         assignStatusCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getStatus()));
     }

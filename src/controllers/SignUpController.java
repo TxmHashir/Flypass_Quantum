@@ -46,7 +46,7 @@ public class SignUpController extends SharedController {
         newUser.setCnic(cnicField.getText());
         newUser.setEmail(emailField.getText());
         newUser.setContact(contactField.getText());
-        newUser.setPassportNumber(passportField.getText());
+        newUser.setPassportNo(passportField.getText());
         newUser.setCitizenship(citizenshipField.getText());
         newUser.setCountry(countryField.getText());
         newUser.setCity(cityField.getText());
@@ -59,8 +59,8 @@ public class SignUpController extends SharedController {
         newUser.setRole("customer"); 
         newUser.setprofImgPath(profileImgField.getText());
 
-        String rawKey = generateRawKey();
-        String encrypKey = EncryptionUtil.encryptSHA256(rawKey);
+        String rawKey = genRawKey();
+        String encrypKey = EncryptionUtil.encryptSHA6(rawKey);
         newUser.setencrypKey(encrypKey);
 
         File usbDrive = findUsbDrive();
@@ -84,7 +84,7 @@ public class SignUpController extends SharedController {
         }
     }
 
-    private String generateRawKey() {
+    private String genRawKey() {
         return UUID.randomUUID().toString();
     }
 
@@ -145,7 +145,7 @@ public class SignUpController extends SharedController {
     }
 
     @FXML
-    private void chooseImage() {
+    private void chooseImg() {
         FileChooser chooser = new FileChooser();
         chooser.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
         File file = chooser.showOpenDialog(null);

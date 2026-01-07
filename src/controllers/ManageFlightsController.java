@@ -30,7 +30,7 @@ public class ManageFlightsController extends SharedController {
     private void initialize() {
         flightNoCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getflightNo()).asObject());
         originCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getOrigin()));
-        destCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getdest()));
+        destCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDest()));
         scheduleCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getSchedule()));
         statusCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getStatus()));
         typeCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getType()));
@@ -104,7 +104,7 @@ public class ManageFlightsController extends SharedController {
             flightNoField.setText(String.valueOf(existing.getflightNo()));
             flightNoField.setDisable(true);  // Flight no typically not editable
             originField.setText(existing.getOrigin());
-            destField.setText(existing.getdest());
+            destField.setText(existing.getDest());
             scheduleField.setText(existing.getSchedule());
             statusField.setText(existing.getStatus());
             typeField.setText(existing.getType());
@@ -176,7 +176,7 @@ public class ManageFlightsController extends SharedController {
 
             ProfileController controller = loader.getController();
             controller.setUser(user);
-            controller.initializeProfile();
+            controller.iniProfile();
 
             stage.show();
         } catch (Exception e) {

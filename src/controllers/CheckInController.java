@@ -38,7 +38,7 @@ public class CheckInController extends SharedController {
             stage.setY(y);
             ProfileController controller = loader.getController();
             controller.setUser(user);
-            controller.initializeProfile();
+            controller.iniProfile();
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

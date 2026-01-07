@@ -26,7 +26,7 @@ public class ApplyVisaController extends SharedController {
         if (user != null) {
             nameField.setText(user.getName());
             cnicField.setText(user.getCnic());
-            passportField.setText(user.getPassportNumber());
+            passportField.setText(user.getPassportNo());
             bankNameField.setText(user.getBankName());
             bankAccField.setText(user.getbankAcc());
         }
@@ -41,7 +41,7 @@ public class ApplyVisaController extends SharedController {
         }
         user.setName(nameField.getText());
         user.setCnic(cnicField.getText());
-        user.setPassportNumber(passportField.getText());
+        user.setPassportNo(passportField.getText());
         user.setBankName(bankNameField.getText());
         user.setbankAcc(bankAccField.getText());
         user.setVisa(visaType + ", " + country);
@@ -66,7 +66,7 @@ public class ApplyVisaController extends SharedController {
             stage.setY(y);
             ProfileController controller = loader.getController();
             controller.setUser(user);
-            controller.initializeProfile();
+            controller.iniProfile();
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

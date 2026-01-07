@@ -19,7 +19,7 @@ public class DutyController extends SharedController {
     @FXML
     private void initialize() {
         timeCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getTime()));
-        locCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getLocation()));
+        locCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getLoc()));
         flightCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getflightNo()).asObject());
     }
 
@@ -50,7 +50,7 @@ public class DutyController extends SharedController {
             
             ProfileController controller = loader.getController();
             controller.setUser(user);
-            controller.initializeProfile();
+            controller.iniProfile();
             
             stage.show();
         } catch (Exception e) {

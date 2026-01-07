@@ -56,7 +56,7 @@
                 <Label text="Profile Image:" GridPane.columnIndex="0" GridPane.rowIndex="9" />
                 <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="9">
                     <TextField fx:id="profileImgField" promptText="Image Path" />
-                    <Button onAction="#chooseImage" text="Choose" />
+                    <Button onAction="#chooseImg" text="Choose" />
                 </HBox>
                 
                 <Label text="Country:" GridPane.columnIndex="0" GridPane.rowIndex="10" />

@@ -21,7 +21,7 @@ public class DutyDAO {
         ObservableList<Duty> duties = FXCollections.observableArrayList();
         String sql = "SELECT * FROM duty";
         
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = DBConnection.getConn();
              PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
             
@@ -42,7 +42,7 @@ public class DutyDAO {
      */
     public Duty getDutyById(int id) {
         String sql = "SELECT * FROM duty WHERE id = ?";
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = DBConnection.getConn();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setInt(1, id);
@@ -68,7 +68,7 @@ public class DutyDAO {
     public void addDuty(Duty duty) {
         String sql = "INSERT INTO duty (time, location, flight_no) VALUES (?, ?, ?)";
         
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = DBConnection.getConn();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             setDutyPreparedStatement(pstmt, duty);
@@ -89,7 +89,7 @@ public class DutyDAO {
     public void updateDuty(Duty duty) {
         String sql = "UPDATE duty SET time = ?, location = ?, flight_no = ? WHERE id = ?";
         
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = DBConnection.getConn();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             setDutyPreparedStatement(pstmt, duty);
@@ -111,7 +111,7 @@ public class DutyDAO {
     public void deleteDuty(int id) {
         String sql = "DELETE FROM duty WHERE id = ?";
         
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = DBConnection.getConn();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             pstmt.setInt(1, id);
@@ -143,7 +143,7 @@ public class DutyDAO {
      */
     private void setDutyPreparedStatement(PreparedStatement pstmt, Duty duty) throws SQLException {
         pstmt.setString(1, duty.getTime());
-        pstmt.setString(2, duty.getLocation());
+        pstmt.setString(2, duty.getLoc());
         pstmt.setInt(3, duty.getflightNo());
     }
 }

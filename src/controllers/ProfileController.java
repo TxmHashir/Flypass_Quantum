@@ -24,7 +24,7 @@ import javafx.scene.control.Button; // Already there, but ensure
 
 public class ProfileController extends SharedController {
     @FXML private VBox customerPane, staffPane, pilotPane, adminPane, airHostessPane;
-    @FXML private ImageView customerImageView, staffImageView, pilotImageView, airHostessImageView, adminImageView;
+    @FXML private ImageView custImgView, staffImageView, pilotImageView, airHostessImageView, adminImageView;
     @FXML private Button uploadImageButtonCustomer, uploadImageButtonStaff, uploadImageButtonAdmin, uploadImageButtonPilot, uploadImageButtonAirHostess;
     // Customer
     @FXML private Label nameLabel, firstNameLabel, lNameLabel, cnicLabel, emailLabel, contactLabel, passportLabel, citizenshipLabel, visaStatusLabel, roleLabel, locationLabel, dobLabel, userRoleLabel, salaryLabel;
@@ -42,10 +42,10 @@ public class ProfileController extends SharedController {
     @FXML private Label adminNameLabel, adminNameLabel2, adminCnicLabel, adminEmailLabel, adminContactLabel, adminPassportLabel, adminCitizenshipLabel, adminVisaLabel, adminVisaStatusLabel, adminRoleLabel, adminRoleLabel2, adminSalaryLabel;
     @FXML private Label adminCountryLabel, adminCityLabel, adminPostalCodeLabel;
 
-    public void initializeProfile() {
+    public void iniProfile() {
         if (user == null) return;
         hideAllPanes();
-        loadProfileImage();
+        loadProfileImg();
         switch (user.getRole().toLowerCase()) {
             case "customer":
                 customerPane.setVisible(true);
@@ -80,24 +80,24 @@ public class ProfileController extends SharedController {
         adminPane.setVisible(false);
     }
 
-    private ImageView getActiveImageView() {
+    private ImageView getActiveImgView() {
     if (user == null || user.getRole() == null) return null;
     String role = user.getRole().toLowerCase();
     switch (role) {
-    case "customer": return customerImageView;
+    case "customer": return custImgView;
     case "pilot": return pilotImageView;
     case "staff": return staffImageView;
     case "airhostess":
     case "air_hostess": return airHostessImageView;
     case "admin": return adminImageView;
-    default: return customerImageView;
+    default: return custImgView;
     }
     }
-    private void loadProfileImage() {
+    private void loadProfileImg() {
     try {
     String imagePath = user.getprofImgPath();
     Image image = null;
-    ImageView targetView = getActiveImageView();
+    ImageView targetView = getActiveImgView();
     if (targetView == null) return;
     if (imagePath != null && (imagePath.startsWith("/") || imagePath.contains(":"))) {
     try {
@@ -113,7 +113,7 @@ public class ProfileController extends SharedController {
     } else {
     image = new Image(imagePath != null ? imagePath : "titleicon.png", 120, 120, true, true);
     }
-    applyImageSettings(targetView, image);
+    applyImgSettings(targetView, image);
     boolean showButton = imagePath == null || imagePath.isEmpty() || imagePath.equals("titleicon.png") || image.isError();
     if (uploadImageButtonCustomer != null) {
     uploadImageButtonCustomer.setVisible(showButton);
@@ -270,7 +270,7 @@ public class ProfileController extends SharedController {
     ahPostalCodeLabel.setText(user.getpostCode() != null ? user.getpostCode() : "N/A");
     }
     }
-    private void applyImageSettings(ImageView targetView, Image img) {
+    private void applyImgSettings(ImageView targetView, Image img) {
         if (targetView == null || img == null) return;
         targetView.setVisible(true);
         targetView.setOpacity(1.0);
@@ -357,7 +357,7 @@ public class ProfileController extends SharedController {
     navigateTo("/fxml/CheckIn.fxml", event);
     }
     @FXML
-    private void checkInPassenger(ActionEvent event) {
+    private void checkInPsngr(ActionEvent event) {
     navigateTo("/fxml/CheckIn.fxml", event);
     }
     @FXML
@@ -403,10 +403,10 @@ public class ProfileController extends SharedController {
             // Specific initialization based on FXML
             if (fxmlPath.equals("/fxml/ViewVisa.fxml")) {
                 ViewVisaController visaController = loader.getController();
-                visaController.initializeVisaDetails(); // Added this call to populate the visa details
+                visaController.iniVisaDetails(); // Added this call to populate the visa details
             } else if (fxmlPath.equals("/fxml/Profile.fxml")) {
                 ProfileController profileController = loader.getController();
-                profileController.initializeProfile();
+                profileController.iniProfile();
             } else if (fxmlPath.equals("/fxml/DutySchedule.fxml")) {
                 DutyController dutyController = loader.getController();
                 dutyController.loadDuties();
@@ -449,7 +449,7 @@ public class ProfileController extends SharedController {
     }
     }
     @FXML
-    private void uploadProfileImage(ActionEvent event) {
+    private void uploadProfileImg(ActionEvent event) {
     FileChooser fileChooser = new FileChooser();
     fileChooser.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp"));
     Stage stage = getStageFromEvent(event);
@@ -473,12 +473,12 @@ public class ProfileController extends SharedController {
     System.err.println("Image loading error: " + errorMsg);
     throw new Exception("Failed to load image: " + errorMsg);
     }
-     ImageView targetView = getActiveImageView();
+     ImageView targetView = getActiveImgView();
      if (targetView == null) {
      System.err.println("No active ImageView for role!");
      throw new Exception("Profile ImageView is not initialized for this role");
      }
-     applyImageSettings(targetView, newImage);
+     applyImgSettings(targetView, newImage);
     if (uploadImageButtonCustomer != null) {
     uploadImageButtonCustomer.setVisible(false);
     }

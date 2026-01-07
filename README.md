@@ -3,7 +3,7 @@
 Educational JavaFX application demonstrating a full-stack airline management system with database integration, role-based access, and USB authentication. Models users, flights, duties using OOP principles.
 
 <div align="center">
-    <img src="./UML.png" alt="UML" width="70%">
+    <img src="uml.png" alt="UML" width="70%">
 </div>
 
 ## Project Overview

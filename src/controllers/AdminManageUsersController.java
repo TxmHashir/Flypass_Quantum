@@ -40,7 +40,7 @@ public class AdminManageUsersController extends SharedController {
     }
 
     @FXML
-    private void editSalary() {
+    private void editSal() {
         User selected = usersTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
             new Alert(AlertType.WARNING, "Please select a user.").show();
@@ -144,7 +144,7 @@ public class AdminManageUsersController extends SharedController {
             
             ProfileController controller = loader.getController();
             controller.setUser(user);
-            controller.initializeProfile();
+            controller.iniProfile();
             
             stage.show();
         } catch (Exception e) {

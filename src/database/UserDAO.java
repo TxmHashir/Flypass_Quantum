@@ -20,7 +20,7 @@ public class UserDAO {
      */
     public User getUserByEncrypKey(String key) {
         String sql = "SELECT * FROM user WHERE encryp_key = ?";
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = DBConnection.getConn();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, key);
@@ -45,7 +45,7 @@ public class UserDAO {
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM user";
         
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = DBConnection.getConn();
              PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
             
@@ -69,7 +69,7 @@ public class UserDAO {
         String sql = "INSERT INTO user (name, cnic, email, contact, passport_number, citizenship, visa, role, encryp_key, bank_name, bank_acc, salary, prof_img_path, country, city, post_code, dob) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = DBConnection.getConn();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             setUserPreparedStatement(pstmt, user);
@@ -91,7 +91,7 @@ public class UserDAO {
         String sql = "UPDATE user SET name = ?, cnic = ?, email = ?, contact = ?, passport_number = ?, citizenship = ?, visa = ?, role = ?, encryp_key = ?, " +
                      "bank_name = ?, bank_acc = ?, salary = ?, prof_img_path = ?, country = ?, city = ?, post_code = ?, dob = ? WHERE encryp_key = ?";
         
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = DBConnection.getConn();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             setUserPreparedStatement(pstmt, user);
@@ -113,7 +113,7 @@ public class UserDAO {
     public void deleteUserByEncrypKey(String key) {
         String sql = "DELETE FROM user WHERE encryp_key = ?";
         
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = DBConnection.getConn();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             pstmt.setString(1, key);
@@ -136,7 +136,7 @@ public class UserDAO {
         user.setCnic(rs.getString("cnic"));
         user.setEmail(rs.getString("email"));
         user.setContact(rs.getString("contact"));
-        user.setPassportNumber(rs.getString("passport_number"));
+        user.setPassportNo(rs.getString("passport_number"));
         user.setCitizenship(rs.getString("citizenship"));
         user.setVisa(rs.getString("visa"));
         user.setRole(rs.getString("role"));
@@ -167,7 +167,7 @@ public class UserDAO {
                      "INNER JOIN user_flight uf ON f.flight_no = uf.flight_no " +
                      "WHERE uf.user_id = ?";
         
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = DBConnection.getConn();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             pstmt.setInt(1, userId);
@@ -192,7 +192,7 @@ public class UserDAO {
                      "INNER JOIN user_duty ud ON d.id = ud.duty_id " +
                      "WHERE ud.user_id = ?";
         
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = DBConnection.getConn();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             pstmt.setInt(1, userId);
@@ -215,7 +215,7 @@ public class UserDAO {
                      "country, city, post_code, dob" +
                      ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = DBConnection.getConn();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             int i = 1;
@@ -223,7 +223,7 @@ public class UserDAO {
             pstmt.setString(i++, user.getCnic());
             pstmt.setString(i++, user.getEmail());
             pstmt.setString(i++, user.getContact());
-            pstmt.setString(i++, user.getPassportNumber());
+            pstmt.setString(i++, user.getPassportNo());
             pstmt.setString(i++, user.getCitizenship());
             pstmt.setString(i++, user.getVisa());
             pstmt.setString(i++, user.getRole());
@@ -256,7 +256,7 @@ public class UserDAO {
         pstmt.setString(i++, user.getCnic());
         pstmt.setString(i++, user.getEmail());
         pstmt.setString(i++, user.getContact());
-        pstmt.setString(i++, user.getPassportNumber());
+        pstmt.setString(i++, user.getPassportNo());
         pstmt.setString(i++, user.getCitizenship());
         pstmt.setString(i++, user.getVisa());
         pstmt.setString(i++, user.getRole());

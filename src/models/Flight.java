@@ -20,7 +20,7 @@ public class Flight {
     public double getPrice() {  
         return price;
     }
-    
+
     public void setPrice(double price) {  
         this.price = price;
     }
@@ -33,7 +33,7 @@ public class Flight {
         return origin;
     }
 
-    public String getdest() {
+    public String getDest() {
         return dest;
     }
 

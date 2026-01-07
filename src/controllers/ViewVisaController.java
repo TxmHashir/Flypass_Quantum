@@ -23,7 +23,7 @@ public class ViewVisaController extends SharedController {
                        issueDateLabel, expDateLabel, visaNoLabel;
     @FXML private Text mrzLine1, mrzLine2;
 
-    public void initializeVisaDetails() {
+    public void iniVisaDetails() {
         String visa = user.getVisa();
         if (visa != null && !visa.isEmpty()) {
             String[] parts = visa.split(", ");
@@ -35,7 +35,7 @@ public class ViewVisaController extends SharedController {
                 visaTypeHeader.setText(visaType.toUpperCase() + " VISA");
                 nameLabel.setText(user.getName());
                 cnicLabel.setText(user.getCnic());
-                passportLabel.setText(user.getPassportNumber());
+                passportLabel.setText(user.getPassportNo());
                 citizenshipLabel.setText(user.getCitizenship());
                 
                 LocalDate issueDate = LocalDate.now();
@@ -47,7 +47,7 @@ public class ViewVisaController extends SharedController {
                 
                 // Mock MRZ
                 mrzLine1.setText("V<" + country.toUpperCase() + "<" + visaType.toUpperCase() + "<" + user.getName().replace(" ", "<") + "<");
-                mrzLine2.setText(user.getPassportNumber() + "<" + user.getCnic() + "<" + issueDate.format(DateTimeFormatter.ofPattern("yyMMdd")) + "<<");
+                mrzLine2.setText(user.getPassportNo() + "<" + user.getCnic() + "<" + issueDate.format(DateTimeFormatter.ofPattern("yyMMdd")) + "<<");
             } else {
                 new Alert(AlertType.ERROR, "Invalid visa format.").show();
             }
@@ -99,7 +99,7 @@ public class ViewVisaController extends SharedController {
             stage.setY(y);
             ProfileController controller = loader.getController();
             controller.setUser(user);
-            controller.initializeProfile();
+            controller.iniProfile();
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

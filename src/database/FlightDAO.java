@@ -21,7 +21,7 @@ public class FlightDAO {
         ObservableList<Flight> flights = FXCollections.observableArrayList();
         String sql = "SELECT * FROM flight";
         
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = DBConnection.getConn();
              PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
             
@@ -42,7 +42,7 @@ public class FlightDAO {
      */
     public Flight getFlightByNo(int flightNo) {
         String sql = "SELECT * FROM flight WHERE flight_no = ?";
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = DBConnection.getConn();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setInt(1, flightNo);
@@ -69,7 +69,7 @@ public class FlightDAO {
         String sql = "INSERT INTO flight (flight_no, origin, destination, schedule, status, type, price) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?)";
         
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = DBConnection.getConn();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             setFlightPreparedStatement(pstmt, flight);
@@ -90,11 +90,11 @@ public class FlightDAO {
    public void updateFlight(Flight flight) {
     String sql = "UPDATE flight SET origin = ?, destination = ?, schedule = ?, status = ?, type = ?, price = ? WHERE flight_no = ?"; // Fix: Add price
     
-    try (Connection conn = DBConnection.getConnection();
+    try (Connection conn = DBConnection.getConn();
          PreparedStatement pstmt = conn.prepareStatement(sql)) {
         
         pstmt.setString(1, flight.getOrigin());
-        pstmt.setString(2, flight.getdest());
+        pstmt.setString(2, flight.getDest());
         pstmt.setString(3, flight.getSchedule());
         pstmt.setString(4, flight.getStatus());
         pstmt.setString(5, flight.getType());
@@ -117,7 +117,7 @@ public class FlightDAO {
     public void deleteFlight(int flightNo) {
         String sql = "DELETE FROM flight WHERE flight_no = ?";
         
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = DBConnection.getConn();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             pstmt.setInt(1, flightNo);
@@ -154,7 +154,7 @@ public class FlightDAO {
         // This helper is correctly used by addFlight (6 parameters)
         pstmt.setInt(1, flight.getflightNo());
         pstmt.setString(2, flight.getOrigin());
-        pstmt.setString(3, flight.getdest());
+        pstmt.setString(3, flight.getDest());
         pstmt.setString(4, flight.getSchedule());
         pstmt.setString(5, flight.getStatus());
         pstmt.setString(6, flight.getType());

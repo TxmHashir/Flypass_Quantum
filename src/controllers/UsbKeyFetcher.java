@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class UsbKeyFetcher {
-    public static String fetchEncryptionKeyFromUsb(String targetFileName) {
-        String key = fetchFromSpecificFile(targetFileName);
+    public static String fetchEncrypKeyFrmUSB(String targetFileName) {
+        String key = fetchFromFile(targetFileName);
         if (key != null) {
             return key;
         }
@@ -111,7 +111,7 @@ public class UsbKeyFetcher {
         }
     }
 
-    private static String fetchFromSpecificFile(String targetFileName) {
+    private static String fetchFromFile(String targetFileName) {
         List<File> usbDrives = getUsbDrives(System.getProperty("os.name").toLowerCase());
         
         for (File usbDrive : usbDrives) {

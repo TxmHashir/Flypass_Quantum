@@ -9,14 +9,14 @@ public class DBConnection {
     private static final String USER = "root"; 
     private static final String PASS = ""; 
 
-    public static Connection getConnection() {
+    public static Connection getConn() {
         Connection conn = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
 
-            initializeDatabase(conn); 
+            iniDB(conn); 
             
         } catch (SQLException e) {
             System.err.println("Error connecting to database: " + e.getMessage());
@@ -28,7 +28,7 @@ public class DBConnection {
         return conn;
     }
 
-    private static void initializeDatabase(Connection conn) {
+    private static void iniDB(Connection conn) {
         String[] sqlStatements = {
             //user
             "CREATE TABLE IF NOT EXISTS user (" +

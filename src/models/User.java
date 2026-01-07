@@ -46,10 +46,10 @@ return contact;
 public void setContact(String contact) {
 this.contact = contact;
 }
-public String getPassportNumber() {
+public String getPassportNo() {
 return passportNumber;
 }
-public void setPassportNumber(String passportNumber) {
+public void setPassportNo(String passportNumber) {
 this.passportNumber = passportNumber;
 }
 public String getCitizenship() {

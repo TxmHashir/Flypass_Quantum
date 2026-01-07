@@ -18,7 +18,7 @@ public class PilotDutyController extends SharedController {
     private void initialize() {
         flightCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getflightNo()).asObject());
         originCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getOrigin()));
-        destCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getdest()));
+        destCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDest()));
         timeCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getSchedule()));
         statusCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getStatus()));
     }
@@ -37,7 +37,7 @@ public class PilotDutyController extends SharedController {
             
             ProfileController controller = loader.getController();
             controller.setUser(user);
-            controller.initializeProfile();
+            controller.iniProfile();
             
             stage.show();
         } catch (Exception e) { 

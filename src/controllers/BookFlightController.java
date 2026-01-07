@@ -33,7 +33,7 @@ public class BookFlightController extends SharedController {
         priceCol.setCellValueFactory(c -> new SimpleDoubleProperty(c.getValue().getPrice()).asObject());
         flightNoCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getflightNo()));
         originCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getOrigin()));
-        destCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getdest()));
+        destCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDest()));
         scheduleCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getSchedule()));
         statusCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getStatus()));
         loadAllFlights();
@@ -52,7 +52,7 @@ public class BookFlightController extends SharedController {
 
         ObservableList<Flight> filtered = allFlights.stream()
             .filter(f -> (origin.isEmpty() || f.getOrigin().toLowerCase().contains(origin)) &&
-                         (dest.isEmpty() || f.getdest().toLowerCase().contains(dest)) &&
+                         (dest.isEmpty() || f.getDest().toLowerCase().contains(dest)) &&
                          (date == null || f.getSchedule().contains(date.toString())))
             .collect(Collectors.toCollection(() -> FXCollections.observableArrayList()));
             flightsTable.setItems(filtered);
@@ -91,9 +91,9 @@ private void confirmBooking() {
     // Visa check (existing)
     String visa = user.getVisa() == null ? "" : user.getVisa();
     if (selected.getType().equals("International") && 
-        !visa.toLowerCase().contains(selected.getdest().toLowerCase())) {
+        !visa.toLowerCase().contains(selected.getDest().toLowerCase())) {
         new Alert(AlertType.WARNING, 
-            "You need a valid visa for " + selected.getdest() + ".").show();
+            "You need a valid visa for " + selected.getDest() + ".").show();
         return;
     }
 
@@ -152,7 +152,7 @@ private void confirmBooking() {
             stage.setY(y);
             ProfileController controller = loader.getController();
             controller.setUser(user);
-            controller.initializeProfile();
+            controller.iniProfile();
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

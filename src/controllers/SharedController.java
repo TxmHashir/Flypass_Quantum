@@ -34,7 +34,7 @@ public class SharedController {
     public void signOut(ActionEvent event) {
         String key = UsbKeyFetcher.searchAllTxtFiles();
         if (key == null) {
-            key = UsbKeyFetcher.fetchEncryptionKeyFromUsb("encrypted_key.txt");
+            key = UsbKeyFetcher.fetchEncrypKeyFrmUSB("encrypted_key.txt");
         }
         if (key != null) {
             Alert alert = new Alert(AlertType.WARNING, "First remove your card.");
