@@ -1,52 +1,67 @@
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Optional;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
-import javafx.collections.FXCollections;
 
 public class ManageFlightsController extends SharedController {
     @FXML private TableView<Flight> flightsTable;
-    @FXML private TableColumn<Flight, Number> flightNoCol;
+    @FXML private TableColumn<Flight, Integer> flightNoCol;  // Changed from Number to Integer to fix type mismatch
     @FXML private TableColumn<Flight, String> originCol, destCol, scheduleCol, statusCol, typeCol;
-    
-    private FlightDAO flightDAO = new FlightDAO();
-    private ObservableList<Flight> flightsList;
+    @FXML private TableColumn<Flight, Double> priceCol;
+
+    private FlightDAO flightDAO = new FlightDAO();  // Correct DAO; no unused userDAO here
 
     @FXML
     private void initialize() {
-        flightNoCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getflightNo()));
+        flightNoCol.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getflightNo()).asObject());
         originCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getOrigin()));
         destCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getdest()));
         scheduleCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getSchedule()));
         statusCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getStatus()));
         typeCol.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getType()));
+        priceCol.setCellValueFactory(c -> new SimpleDoubleProperty(c.getValue().getPrice()).asObject());
         loadFlights();
     }
 
     public void loadFlights() {
-        flightsList = flightDAO.getAllFlights();
-        flightsTable.setItems(flightsList);
+        flightsTable.setItems(flightDAO.getAllFlights());
     }
 
     @FXML
     private void addFlight() {
-        showFlightDialog(null);
+        Flight newFlight = showFlightDialog(null);
+        if (newFlight != null) {
+            flightDAO.addFlight(newFlight);
+            loadFlights();
+        }
     }
 
     @FXML
     private void editFlight() {
         Flight selected = flightsTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
-            showFlightDialog(selected);
+            Flight edited = showFlightDialog(selected);
+            if (edited != null) {
+                flightDAO.updateFlight(edited);
+                loadFlights();
+            }
+        } else {
+            new Alert(AlertType.WARNING, "No flight selected.").show();
         }
     }
 
@@ -54,88 +69,95 @@ public class ManageFlightsController extends SharedController {
     private void deleteFlight() {
         Flight selected = flightsTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
-            Alert confirmation = new Alert(AlertType.CONFIRMATION, "Delete flight " + selected.getflightNo() + "?");
-            confirmation.showAndWait().ifPresent(response -> {
-                if (response == ButtonType.OK) {
-                    flightDAO.deleteFlight(selected.getflightNo());
-                    loadFlights();
-                }
-            });
+            Alert confirm = new Alert(AlertType.CONFIRMATION, "Delete flight " + selected.getflightNo() + "?");
+            if (confirm.showAndWait().get() == ButtonType.OK) {
+                flightDAO.deleteFlight(selected.getflightNo());
+                loadFlights();
+            }
+        } else {
+            new Alert(AlertType.WARNING, "No flight selected.").show();
         }
     }
 
-    private void showFlightDialog(Flight flight) {
+    private Flight showFlightDialog(Flight existing) {
         Dialog<Flight> dialog = new Dialog<>();
-        dialog.setTitle(flight == null ? "Add Flight" : "Edit Flight");
+        dialog.setTitle(existing == null ? "Add Flight" : "Edit Flight");
+        dialog.setHeaderText(null);
+
         ButtonType saveButtonType = new ButtonType("Save", ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
 
         TextField flightNoField = new TextField();
         TextField originField = new TextField();
         TextField destField = new TextField();
         TextField scheduleField = new TextField();
         TextField statusField = new TextField();
-        ComboBox<String> typeCombo = new ComboBox<>(FXCollections.observableArrayList("Domestic", "International"));
+        TextField typeField = new TextField();
+        TextField priceField = new TextField();
 
-        grid.add(new Label("Flight No:"), 0, 0);
+        if (existing != null) {
+            flightNoField.setText(String.valueOf(existing.getflightNo()));
+            flightNoField.setDisable(true);  // Flight no typically not editable
+            originField.setText(existing.getOrigin());
+            destField.setText(existing.getdest());
+            scheduleField.setText(existing.getSchedule());
+            statusField.setText(existing.getStatus());
+            typeField.setText(existing.getType());
+            priceField.setText(String.valueOf(existing.getPrice()));
+        }
+
+        grid.add(new Label("Flight #:"), 0, 0);
         grid.add(flightNoField, 1, 0);
         grid.add(new Label("Origin:"), 0, 1);
         grid.add(originField, 1, 1);
         grid.add(new Label("Destination:"), 0, 2);
         grid.add(destField, 1, 2);
-        grid.add(new Label("Schedule:"), 0, 3);
+        grid.add(new Label("Schedule (YYYY-MM-DD HH:mm):"), 0, 3);
         grid.add(scheduleField, 1, 3);
         grid.add(new Label("Status:"), 0, 4);
         grid.add(statusField, 1, 4);
         grid.add(new Label("Type:"), 0, 5);
-        grid.add(typeCombo, 1, 5);
-
-        if (flight != null) {
-            flightNoField.setText(String.valueOf(flight.getflightNo()));
-            flightNoField.setDisable(true);
-            originField.setText(flight.getOrigin());
-            destField.setText(flight.getdest());
-            scheduleField.setText(flight.getSchedule());
-            statusField.setText(flight.getStatus());
-            typeCombo.setValue(flight.getType());
-        }
+        grid.add(typeField, 1, 5);
+        grid.add(new Label("Price:"), 0, 6);
+        grid.add(priceField, 1, 6);
 
         dialog.getDialogPane().setContent(grid);
 
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == saveButtonType) {
                 try {
-                    int flightNo = Integer.parseInt(flightNoField.getText());
-                    String origin = originField.getText();
-                    String dest = destField.getText();
-                    String schedule = scheduleField.getText();
-                    String status = statusField.getText();
-                    String type = typeCombo.getValue();
-                    return new Flight(flightNo, origin, dest, schedule, status, type);
+                    int flightNo = Integer.parseInt(flightNoField.getText().trim());
+                    String origin = originField.getText().trim();
+                    String dest = destField.getText().trim();
+                    String scheduleStr = scheduleField.getText().trim();
+                    LocalDateTime.parse(scheduleStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));  // Validate format
+                    String status = statusField.getText().trim();
+                    String type = typeField.getText().trim();
+                    double price = Double.parseDouble(priceField.getText().trim());
+
+                    if (price < 0) {
+                        throw new IllegalArgumentException("Price must be non-negative.");
+                    }
+
+                    return new Flight(flightNo, origin, dest, scheduleStr, status, type, price);
+                } catch (DateTimeParseException e) {
+                    new Alert(AlertType.ERROR, "Invalid schedule format. Use YYYY-MM-DD HH:mm.").show();
+                } catch (NumberFormatException e) {
+                    new Alert(AlertType.ERROR, "Invalid number format for flight # or price.").show();
                 } catch (Exception e) {
-                    new Alert(AlertType.ERROR, "Invalid input.").show();
-                    return null;
+                    new Alert(AlertType.ERROR, "Invalid input: " + e.getMessage()).show();
                 }
             }
             return null;
         });
 
         Optional<Flight> result = dialog.showAndWait();
-        result.ifPresent(flightResult -> {
-            if (flight == null) {
-                flightDAO.addFlight(flightResult);
-                new Alert(AlertType.INFORMATION, "Flight added successfully.").show();
-            } else {
-                flightResult.setflightNo(flight.getflightNo());
-                flightDAO.updateFlight(flightResult);
-                new Alert(AlertType.INFORMATION, "Flight updated successfully.").show();
-            }
-            loadFlights();
-        });
+        return result.orElse(null);
     }
 
     @FXML
@@ -147,15 +169,15 @@ public class ManageFlightsController extends SharedController {
             double y = stage.getY();
             Scene newScene = new Scene(loader.load());
             newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
-            
+
             stage.setScene(newScene);
             stage.setX(x);
             stage.setY(y);
-            
+
             ProfileController controller = loader.getController();
             controller.setUser(user);
             controller.initializeProfile();
-            
+
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

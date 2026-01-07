@@ -1,20 +1,42 @@
-# Flypass_Quantum
+# Flypass Quantum: Airline Management System (JavaFX Demo)
 
-## Getting Started
+Educational JavaFX application demonstrating a full-stack airline management system with database integration, role-based access, and USB authentication. Models users, flights, duties using OOP principles.
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+<div align="center">
+    <img src="./UML.png" alt="UML" width="70%">
+</div>
 
-## Folder Structure
+## Project Overview
 
-The workspace contains two folders by default, where:
+- **Purpose:** Comprehensive demo of JavaFX UI with MySQL backend for airline operations, including secure login, flight booking, and admin tools.
+- **Language:** Java (JDK 17+ with JavaFX), MySQL for persistence.
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+## Key Classes
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+- `Main` — Application entry point, launches JavaFX stage.
+- `DBConnection` — Handles MySQL connection and schema initialization.
+- `UserDAO`, `FlightDAO`, `DutyDAO` — Data access objects for CRUD operations.
+- `User`, `Flight`, `Duty` — Model classes representing entities.
+- Controllers (e.g., `LoginController`, `ProfileController`) — Handle UI logic for FXML views.
+- Utilities (e.g., `EncryptionUtil`, `UsbKeyFetcher`) — For security and USB detection.
 
-If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+## Project Structure
 
-## Dependency Management
+- src/
+  - Main.java
+  - DBConnection.java
+  - dao/ (UserDAO.java, FlightDAO.java, DutyDAO.java)
+  - models/ (User.java, Flight.java, Duty.java)
+  - controllers/ (LoginController.java, ProfileController.java, etc.)
+  - utils/ (EncryptionUtil.java, UsbKeyFetcher.java)
+  - fxml/ (*.fxml) — UI layouts
+- css/ (*.css) — Stylesheets for themes
+- resources/ (titleicon.png, etc.)
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+## Build & Run
+
+From the repository root run:
+
+```bash
+javac -cp .:/path/to/mysql-connector.jar --module-path /path/to/javafx-sdk/lib --add-modules javafx.controls,javafx.fxml -d out src/*.java src/controllers/*.java src/dao/*.java src/models/*.java src/utils/*.java
+java -cp .:/path/to/mysql-connector.jar --module-path /path/to/javafx-sdk/lib --add-modules javafx.controls,javafx.fxml -Djava.library.path=/path/to/javafx-sdk/lib out.Main

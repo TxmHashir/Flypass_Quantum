@@ -37,8 +37,8 @@ public class FlightDAO {
 
     /**
      * Retrieves a single Flight by its flight number.
-     * @param flightNo The flight number of the flight.
-     * @return The Flight object, or null if not found.
+     * @param flightNo The flight_no of the flight.
+     * @return The populated Flight object, or null if not found.
      */
     public Flight getFlightByNo(int flightNo) {
         String sql = "SELECT * FROM flight WHERE flight_no = ?";
@@ -66,7 +66,8 @@ public class FlightDAO {
      * @param flight The Flight object to add.
      */
     public void addFlight(Flight flight) {
-        String sql = "INSERT INTO flight (flight_no, origin, destination, schedule, status, type) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO flight (flight_no, origin, destination, schedule, status, type, price) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -86,27 +87,32 @@ public class FlightDAO {
      * Updates an existing Flight in the database.
      * @param flight The Flight object with updated fields (identified by flight_no).
      */
-    public void updateFlight(Flight flight) {
-        String sql = "UPDATE flight SET origin = ?, destination = ?, schedule = ?, status = ?, type = ? WHERE flight_no = ?";
+   public void updateFlight(Flight flight) {
+    String sql = "UPDATE flight SET origin = ?, destination = ?, schedule = ?, status = ?, type = ?, price = ? WHERE flight_no = ?"; // Fix: Add price
+    
+    try (Connection conn = DBConnection.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
         
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            
-            setFlightPreparedStatement(pstmt, flight);
-            pstmt.setInt(6, flight.getflightNo()); // For WHERE clause
-            pstmt.executeUpdate();
-            
-        } catch (SQLException e) {
-            System.err.println("Error updating flight: " + e.getMessage());
-            e.printStackTrace();
-        }
+        pstmt.setString(1, flight.getOrigin());
+        pstmt.setString(2, flight.getdest());
+        pstmt.setString(3, flight.getSchedule());
+        pstmt.setString(4, flight.getStatus());
+        pstmt.setString(5, flight.getType());
+        pstmt.setDouble(6, flight.getPrice()); // Fix: Set price
+        pstmt.setInt(7, flight.getflightNo()); // Fix: Shift index
+        
+        pstmt.executeUpdate();
+        
+    } catch (SQLException e) {
+        System.err.println("Error updating flight: " + e.getMessage());
+        e.printStackTrace();
     }
-
+}
     // --- DELETE Operation ---
 
     /**
      * Deletes a Flight from the database by its flight number.
-     * @param flightNo The flight number of the flight to delete.
+     * @param flightNo The flight_no of the flight to delete.
      */
     public void deleteFlight(int flightNo) {
         String sql = "DELETE FROM flight WHERE flight_no = ?";
@@ -136,7 +142,8 @@ public class FlightDAO {
             rs.getString("destination"),
             rs.getString("schedule"),
             rs.getString("status"),
-            rs.getString("type")
+            rs.getString("type"),
+            rs.getDouble("price")
         );
     }
 
@@ -151,5 +158,6 @@ public class FlightDAO {
         pstmt.setString(4, flight.getSchedule());
         pstmt.setString(5, flight.getStatus());
         pstmt.setString(6, flight.getType());
+        pstmt.setDouble(7, flight.getPrice());
     }
 }
