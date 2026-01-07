@@ -17,6 +17,8 @@ private String profImgPath = "titleicon.png";
 private String country;
 private String city;
 private String postCode;
+// New DOB field
+private String dob;
 // New associations
 private List<Flight> assignedFlights = new ArrayList<>();
 private List<Duty> assignedDuties = new ArrayList<>();
@@ -115,6 +117,13 @@ return postCode;
 }
 public void setpostCode(String postCode) {
 this.postCode = postCode;
+}
+// DOB getter and setter
+public String getDob() {
+    return dob;
+}
+public void setDob(String dob) {
+    this.dob = dob;
 }
 public List<Flight> getAssignedFlights() {
 return assignedFlights;

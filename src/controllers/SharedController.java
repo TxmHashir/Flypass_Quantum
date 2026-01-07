@@ -6,63 +6,91 @@ import javafx.stage.Stage;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import java.io.IOException;
+
 public class SharedController {
-protected User user;
-protected User loggedInUser;
-public void setUser(User user) {
-this.user = user;
-}
-public void setLoggedInUser(User loggedInUser) {
-    this.loggedInUser = loggedInUser;
-}
-public void signOut(ActionEvent event) {
-String key = UsbKeyFetcher.searchAllTxtFiles();
-if (key == null) {
-key = UsbKeyFetcher.fetchEncryptionKeyFromUsb("encrypted_key.txt");
-}
-if (key != null) {
-Alert alert = new Alert(AlertType.WARNING, "First remove your card.");
-alert.initOwner(getStageFromEvent(event));
-alert.show();
-return;
-}
-try {
-Stage stage = getStageFromEvent(event);
-double x = stage.getX();
-double y = stage.getY();
-FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
-Scene newScene = new Scene(loader.load());
-newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
-stage.setScene(newScene);
-stage.setX(x);
-stage.setY(y);
-stage.show();
-LoginController controller = loader.getController();
-controller.setJustSignedOut(true);
-controller.startUsbPolling();
-} catch (IOException e) {
-e.printStackTrace();
-}
-}
-public void openSettings(ActionEvent event) {
-try {
-FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Settings.fxml"));
-Stage stage = getStageFromEvent(event);
-double x = stage.getX();
-double y = stage.getY();
-Scene newScene = new Scene(loader.load());
-newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
-stage.setScene(newScene);
-stage.setX(x);
-stage.setY(y);
-SettingsController controller = loader.getController();
-controller.setUser(user);
-stage.show();
-} catch (IOException e) {
-e.printStackTrace();
-}
-}
-protected Stage getStageFromEvent(ActionEvent event) {
-return (Stage)((Node)event.getSource()).getScene().getWindow();
-}
+    protected User user;
+    protected User loggedInUser;
+    /**
+     * Primary stage reference (optionally set from Main).
+     */
+    protected Stage stage;
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setLoggedInUser(User loggedInUser) {
+        this.loggedInUser = loggedInUser;
+    }
+
+    /**
+     * Allows Main to pass the primary stage so controllers can use it
+     * even when there is no ActionEvent available.
+     */
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    public void signOut(ActionEvent event) {
+        String key = UsbKeyFetcher.searchAllTxtFiles();
+        if (key == null) {
+            key = UsbKeyFetcher.fetchEncryptionKeyFromUsb("encrypted_key.txt");
+        }
+        if (key != null) {
+            Alert alert = new Alert(AlertType.WARNING, "First remove your card.");
+            alert.initOwner(getStageFromEvent(event));
+            alert.show();
+            return;
+        }
+        try {
+            Stage stage = getStageFromEvent(event);
+            double x = stage.getX();
+            double y = stage.getY();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
+            Scene newScene = new Scene(loader.load());
+            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
+
+            stage.setScene(newScene);
+            stage.setX(x);
+            stage.setY(y);
+            stage.show();
+
+            LoginController controller = loader.getController();
+            controller.setJustSignedOut(true);
+            controller.startUsbPolling();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openSettings(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Settings.fxml"));
+            Stage stage = getStageFromEvent(event);
+            double x = stage.getX();
+            double y = stage.getY();
+
+            Scene newScene = new Scene(loader.load());
+            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
+
+            stage.setScene(newScene);
+            stage.setX(x);
+            stage.setY(y);
+
+            SettingsController controller = loader.getController();
+            controller.setUser(user);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected Stage getStageFromEvent(ActionEvent event) {
+        if (event != null && event.getSource() instanceof Node) {
+            return (Stage) ((Node) event.getSource()).getScene().getWindow();
+        }
+        // Fallback to primary stage if explicitly provided
+        return this.stage;
+    }
 }

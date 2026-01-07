@@ -7,7 +7,7 @@ public class DBConnection {
 
     private static final String DB_URL = "jdbc:mysql://localhost:3306/flypass_quantum?useSSL=false&allowPublicKeyRetrieval=true";
     private static final String USER = "root"; 
-    private static final String PASS = "One1_Two2"; 
+    private static final String PASS = ""; 
 
     public static Connection getConnection() {
         Connection conn = null;

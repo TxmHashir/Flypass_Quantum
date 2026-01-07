@@ -23,6 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoginController extends SharedController {
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
     @FXML private HBox animationBox;
     @FXML private Label instuctLabel;
 
@@ -64,7 +67,7 @@ public class LoginController extends SharedController {
     private void loginUser(User user) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Profile.fxml"));
-            Stage stage = (Stage) instuctLabel.getScene().getWindow();
+                Stage stage = this.stage;
             Scene newScene = new Scene(loader.load());
             newScene.getStylesheets().addAll(stage.getScene().getStylesheets());
             stage.setScene(newScene);

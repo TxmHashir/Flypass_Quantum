@@ -66,9 +66,8 @@ public class UserDAO {
      * @param user The User object to add.
      */
     public void addUser(User user) {
-        String sql = "INSERT INTO user (name, cnic, email, contact, passport_number, citizenship, visa, role, encryp_key, " +
-                     "bank_name, bank_acc, salary, prof_img_path, country, city, post_code) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO user (name, cnic, email, contact, passport_number, citizenship, visa, role, encryp_key, bank_name, bank_acc, salary, prof_img_path, country, city, post_code, dob) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -89,16 +88,14 @@ public class UserDAO {
      * @param user The User object with updated fields (identified by encryp_key).
      */
     public void updateUser(User user) {
-        String sql = "UPDATE user SET name = ?, cnic = ?, email = ?, contact = ?, passport_number = ?, citizenship = ?, " +
-                     "visa = ?, role = ?, bank_name = ?, bank_acc = ?, salary = ?, prof_img_path = ?, " +
-                     "country = ?, city = ?, post_code = ? " +
-                     "WHERE encryp_key = ?";
+        String sql = "UPDATE user SET name = ?, cnic = ?, email = ?, contact = ?, passport_number = ?, citizenship = ?, visa = ?, role = ?, encryp_key = ?, " +
+                     "bank_name = ?, bank_acc = ?, salary = ?, prof_img_path = ?, country = ?, city = ?, post_code = ?, dob = ? WHERE encryp_key = ?";
         
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             setUserPreparedStatement(pstmt, user);
-            pstmt.setString(16, user.getencrypKey()); // For WHERE clause
+            pstmt.setString(18, user.getencrypKey()); // For WHERE clause
             pstmt.executeUpdate();
             
         } catch (SQLException e) {
@@ -151,6 +148,7 @@ public class UserDAO {
         user.setCountry(rs.getString("country"));
         user.setCity(rs.getString("city"));
         user.setpostCode(rs.getString("post_code"));
+        user.setDob(rs.getString("dob"));  // New DOB mapping
 
         // Fetch assigned flights and duties
         int userId = rs.getInt("id");
@@ -184,6 +182,59 @@ public class UserDAO {
         }
         return flights;
     }
+
+
+public boolean signUp(User user) {
+    String sql = "INSERT INTO user (" +
+                 "name, cnic, email, contact, passport_no, citizenship, visa, role, " +
+                 "encryp_key, bank_name, bank_acc, salary, prof_img_path, " +
+                 "country, city, post_code, dob" +
+                 ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    try (Connection conn = DBConnection.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        int i = 1;
+        pstmt.setString(i++, user.getName());
+        pstmt.setString(i++, user.getCnic());
+        pstmt.setString(i++, user.getEmail());
+        pstmt.setString(i++, user.getContact());
+        pstmt.setString(i++, user.getPassportNumber());
+        pstmt.setString(i++, user.getCitizenship());
+        pstmt.setString(i++, user.getVisa());
+        pstmt.setString(i++, user.getRole());
+        pstmt.setString(i++, user.getencrypKey());
+        pstmt.setString(i++, user.getBankName());
+        pstmt.setString(i++, user.getbankAcc());
+        pstmt.setDouble(i++, user.getSalary());
+        pstmt.setString(i++, user.getprofImgPath());
+        pstmt.setString(i++, user.getCountry());
+        pstmt.setString(i++, user.getCity());
+        pstmt.setString(i++, user.getpostCode());
+        pstmt.setString(i++, user.getDob());
+
+        int rowsAffected = pstmt.executeUpdate();
+        return rowsAffected > 0;
+
+    } catch (SQLException e) {
+        System.err.println("Error during user sign-up: " + e.getMessage());
+        e.printStackTrace();
+        return false;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Fetches assigned Duties for a given user ID.
@@ -223,9 +274,7 @@ public class UserDAO {
         pstmt.setString(i++, user.getCitizenship());
         pstmt.setString(i++, user.getVisa());
         pstmt.setString(i++, user.getRole());
-        if (pstmt.getParameterMetaData().getParameterCount() > 8) { // For addUser (includes encryp_key)
-            pstmt.setString(i++, user.getencrypKey());
-        }
+        pstmt.setString(i++, user.getencrypKey());
         pstmt.setString(i++, user.getBankName());
         pstmt.setString(i++, user.getbankAcc());
         pstmt.setDouble(i++, user.getSalary());
@@ -233,6 +282,7 @@ public class UserDAO {
         pstmt.setString(i++, user.getCountry());
         pstmt.setString(i++, user.getCity());
         pstmt.setString(i++, user.getpostCode());
+        pstmt.setString(i++, user.getDob());  // New DOB set
     }
 
     /**

@@ -43,26 +43,30 @@
                 <Label text="Citizenship:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
                 <TextField fx:id="citizenshipField" promptText="Citizenship" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                 
-                <Label text="Visa Type:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
-                <ComboBox fx:id="visaTypeField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                <!-- New DOB Field -->
+                <Label text="Date of Birth" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                <TextField fx:id="dobField" promptText="DD-MM-YYYY" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                 
-                <Label text="Visa Country:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
-                <TextField fx:id="visaCountryField" promptText="Visa Country" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                <Label text="Visa Type:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+                <ComboBox fx:id="visaTypeField" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                 
-                <Label text="Profile Image:" GridPane.columnIndex="0" GridPane.rowIndex="8" />
-                <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                <Label text="Visa Country:" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+                <TextField fx:id="visaCountryField" promptText="Visa Country" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                
+                <Label text="Profile Image:" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+                <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="9">
                     <TextField fx:id="profileImgField" promptText="Image Path" />
                     <Button onAction="#chooseImage" text="Choose" />
                 </HBox>
                 
-                <Label text="Country:" GridPane.columnIndex="0" GridPane.rowIndex="9" />
-                <TextField fx:id="countryField" promptText="Country" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                <Label text="Country:" GridPane.columnIndex="0" GridPane.rowIndex="10" />
+                <TextField fx:id="countryField" promptText="Country" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                 
-                <Label text="City:" GridPane.columnIndex="0" GridPane.rowIndex="10" />
-                <TextField fx:id="cityField" promptText="City" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                <Label text="City:" GridPane.columnIndex="0" GridPane.rowIndex="11" />
+                <TextField fx:id="cityField" promptText="City" GridPane.columnIndex="1" GridPane.rowIndex="11" />
                 
-                <Label text="Post Code:" GridPane.columnIndex="0" GridPane.rowIndex="11" />
-                <TextField fx:id="postCodeField" promptText="Post Code" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                <Label text="Post Code:" GridPane.columnIndex="0" GridPane.rowIndex="12" />
+                <TextField fx:id="postCodeField" promptText="Post Code" GridPane.columnIndex="1" GridPane.rowIndex="12" />
                 
             <columnConstraints>
                <ColumnConstraints />
@@ -75,6 +79,7 @@
                <RowConstraints />
                <RowConstraints />
                <RowConstraints />
+               <RowConstraints />  <!-- Extra for DOB -->
                <RowConstraints />
                <RowConstraints />
                <RowConstraints />

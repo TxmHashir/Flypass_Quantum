@@ -87,7 +87,9 @@ public class ViewVisaController extends SharedController {
     private void goBack(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Profile.fxml"));
-            Stage stage = getStageFromEvent(event);
+            Stage stage = (event != null)
+                    ? getStageFromEvent(event)
+                    : (Stage) visaDetailsPane.getScene().getWindow();
             double x = stage.getX();
             double y = stage.getY();
             Scene newScene = new Scene(loader.load());
