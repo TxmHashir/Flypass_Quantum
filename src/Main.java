@@ -9,7 +9,6 @@ public void start(Stage stage) throws Exception {
 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
 Scene scene = new Scene(loader.load());
 scene.getStylesheets().add(getClass().getResource("/css/light-theme.css").toExternalForm());
-// Get controller and pass the stage
 LoginController controller = loader.getController();
 controller.setStage(stage);
 stage.setScene(scene);

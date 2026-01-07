@@ -31,7 +31,7 @@ public class ForgetPasswordController extends SharedController {
             double y = stage.getY();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
             Scene newScene = new Scene(loader.load());
-            newScene.getStylesheets().addAll(stage.getScene().getStylesheets());  // Copy theme
+            newScene.getStylesheets().addAll(stage.getScene().getStylesheets()); 
             stage.setScene(newScene);
             stage.setX(x);
             stage.setY(y);

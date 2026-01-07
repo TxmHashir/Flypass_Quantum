@@ -10,9 +10,6 @@ import java.io.IOException;
 public class SharedController {
     protected User user;
     protected User loggedInUser;
-    /**
-     * Primary stage reference (optionally set from Main).
-     */
     protected Stage stage;
 
     public void setUser(User user) {
@@ -22,11 +19,6 @@ public class SharedController {
     public void setLoggedInUser(User loggedInUser) {
         this.loggedInUser = loggedInUser;
     }
-
-    /**
-     * Allows Main to pass the primary stage so controllers can use it
-     * even when there is no ActionEvent available.
-     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }
@@ -90,7 +82,6 @@ public class SharedController {
         if (event != null && event.getSource() instanceof Node) {
             return (Stage) ((Node) event.getSource()).getScene().getWindow();
         }
-        // Fallback to primary stage if explicitly provided
         return this.stage;
     }
 }

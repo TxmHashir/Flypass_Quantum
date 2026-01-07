@@ -1,8 +1,6 @@
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,11 +18,11 @@ import javafx.scene.layout.GridPane;
 
 public class ManageFlightsController extends SharedController {
     @FXML private TableView<Flight> flightsTable;
-    @FXML private TableColumn<Flight, Integer> flightNoCol;  // Changed from Number to Integer to fix type mismatch
+    @FXML private TableColumn<Flight, Integer> flightNoCol;
     @FXML private TableColumn<Flight, String> originCol, destCol, scheduleCol, statusCol, typeCol;
     @FXML private TableColumn<Flight, Double> priceCol;
 
-    private FlightDAO flightDAO = new FlightDAO();  // Correct DAO; no unused userDAO here
+    private FlightDAO flightDAO = new FlightDAO();
 
     @FXML
     private void initialize() {
@@ -102,7 +100,7 @@ public class ManageFlightsController extends SharedController {
 
         if (existing != null) {
             flightNoField.setText(String.valueOf(existing.getflightNo()));
-            flightNoField.setDisable(true);  // Flight no typically not editable
+            flightNoField.setDisable(true);
             originField.setText(existing.getOrigin());
             destField.setText(existing.getDest());
             scheduleField.setText(existing.getSchedule());
@@ -135,7 +133,7 @@ public class ManageFlightsController extends SharedController {
                     String origin = originField.getText().trim();
                     String dest = destField.getText().trim();
                     String scheduleStr = scheduleField.getText().trim();
-                    LocalDateTime.parse(scheduleStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));  // Validate format
+                    LocalDateTime.parse(scheduleStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
                     String status = statusField.getText().trim();
                     String type = typeField.getText().trim();
                     double price = Double.parseDouble(priceField.getText().trim());

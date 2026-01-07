@@ -14,7 +14,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewVisaController">
     <center>
-        <VBox fx:id="visaDetailsPane" alignment="TOP_CENTER" maxWidth="600.0" minWidth="600.0" spacing="10" style="-fx-background-color: white; -fx-padding: 20; -fx-border-color: #0B3D91; -fx-border-width: 2; -fx-border-radius: 5;">
+        <VBox fx:id="visaDetailsPane" alignment="TOP_CENTER" maxHeight="471.0" maxWidth="600.0" minWidth="600.0" prefHeight="357.0" prefWidth="600.0" spacing="10" style="-fx-background-color: white; -fx-padding: 20; -fx-border-color: #0B3D91; -fx-border-width: 2; -fx-border-radius: 5;">
             <padding>
                 <Insets bottom="20" left="20" right="20" top="20" />
             </padding>
@@ -23,7 +23,7 @@
 
             <Label fx:id="visaTypeHeader" style="-fx-font-size: 18px; -fx-text-fill: #333333;" text="TYPE" />
 
-            <GridPane hgap="10" vgap="5">
+            <GridPane hgap="10" maxWidth="200.0" vgap="5">
                 <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                 <Label fx:id="nameLabel" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 

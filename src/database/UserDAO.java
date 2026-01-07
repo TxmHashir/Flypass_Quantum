@@ -5,19 +5,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Data Access Object (DAO) for the 'user' table (note: table name is 'user' in MySQL schema).
- * Handles database operations for User entities.
- */
 public class UserDAO {
     
     // --- READ Operations ---
-
-    /**
-     * Retrieves a single User by their unique encryption key.
-     * @param key The unique encryp_key of the user.
-     * @return The populated User object, or null if not found.
-     */
     public User getUserByEncrypKey(String key) {
         String sql = "SELECT * FROM user WHERE encryp_key = ?";
         try (Connection conn = DBConnection.getConn();
@@ -37,10 +27,6 @@ public class UserDAO {
         return null;
     }
 
-    /**
-     * Retrieves all users from the database.
-     * @return A List of all User objects.
-     */
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM user";
@@ -61,10 +47,6 @@ public class UserDAO {
 
     // --- CREATE Operation ---
 
-    /**
-     * Adds a new User to the database.
-     * @param user The User object to add.
-     */
     public void addUser(User user) {
         String sql = "INSERT INTO user (name, cnic, email, contact, passport_number, citizenship, visa, role, encryp_key, bank_name, bank_acc, salary, prof_img_path, country, city, post_code, dob) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -83,10 +65,6 @@ public class UserDAO {
 
     // --- UPDATE Operation ---
 
-    /**
-     * Updates an existing User in the database.
-     * @param user The User object with updated fields (identified by encryp_key).
-     */
     public void updateUser(User user) {
         String sql = "UPDATE user SET name = ?, cnic = ?, email = ?, contact = ?, passport_number = ?, citizenship = ?, visa = ?, role = ?, encryp_key = ?, " +
                      "bank_name = ?, bank_acc = ?, salary = ?, prof_img_path = ?, country = ?, city = ?, post_code = ?, dob = ? WHERE encryp_key = ?";
@@ -95,7 +73,7 @@ public class UserDAO {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             setUserPreparedStatement(pstmt, user);
-            pstmt.setString(18, user.getencrypKey()); // For WHERE clause
+            pstmt.setString(18, user.getencrypKey()); 
             pstmt.executeUpdate();
             
         } catch (SQLException e) {
@@ -106,10 +84,6 @@ public class UserDAO {
 
     // --- DELETE Operation ---
 
-    /**
-     * Deletes a User from the database by their encryp_key.
-     * @param key The unique encryp_key of the user to delete.
-     */
     public void deleteUserByEncrypKey(String key) {
         String sql = "DELETE FROM user WHERE encryp_key = ?";
         
@@ -124,12 +98,6 @@ public class UserDAO {
             e.printStackTrace();
         }
     }
-
-    // --- Private Helper Methods ---
-
-    /**
-     * Helper to map a database ResultSet row to a User object.
-     */
     private User mapResultSetToUser(ResultSet rs) throws SQLException {
         User user = new User();
         user.setName(rs.getString("name"));
@@ -148,9 +116,8 @@ public class UserDAO {
         user.setCountry(rs.getString("country"));
         user.setCity(rs.getString("city"));
         user.setpostCode(rs.getString("post_code"));
-        user.setDob(rs.getString("dob"));  // New DOB mapping
+        user.setDob(rs.getString("dob"));
 
-        // Fetch assigned flights and duties
         int userId = rs.getInt("id");
         user.getAssignedFlights().addAll(getAssignedFlightsForUser(userId));
         user.getAssignedDuties().addAll(getAssignedDutiesForUser(userId));
@@ -158,9 +125,6 @@ public class UserDAO {
         return user;
     }
 
-    /**
-     * Fetches assigned Flights for a given user ID.
-     */
     private List<Flight> getAssignedFlightsForUser(int userId) {
         List<Flight> flights = new ArrayList<>();
         String sql = "SELECT f.* FROM flight f " +
@@ -183,9 +147,6 @@ public class UserDAO {
         return flights;
     }
 
-    /**
-     * Fetches assigned Duties for a given user ID.
-     */
     private List<Duty> getAssignedDutiesForUser(int userId) {
         List<Duty> duties = new ArrayList<>();
         String sql = "SELECT d.* FROM duty d " +
@@ -247,9 +208,6 @@ public class UserDAO {
         }
     }
 
-    /**
-     * Helper to set all parameters for a User PreparedStatement (used by addUser and updateUser).
-     */
     private void setUserPreparedStatement(PreparedStatement pstmt, User user) throws SQLException {
         int i = 1;
         pstmt.setString(i++, user.getName());
@@ -271,9 +229,6 @@ public class UserDAO {
         pstmt.setString(i++, user.getDob());  // New DOB set
     }
 
-    /**
-     * Maps a ResultSet row to a Flight object.
-     */
     private Flight mapResultSetToFlight(ResultSet rs) throws SQLException {
         return new Flight(
             rs.getInt("flight_no"),
@@ -285,10 +240,6 @@ public class UserDAO {
             rs.getDouble("price")
         );
     }
-
-    /**
-     * Maps a ResultSet row to a Duty object.
-     */
     private Duty mapResultSetToDuty(ResultSet rs) throws SQLException {
         return new Duty(
             rs.getInt("id"),

@@ -56,7 +56,7 @@ public class AdminManageUsersController extends SharedController {
         result.ifPresent(salaryStr -> {
             try {
                 double newSalary = Double.parseDouble(salaryStr);
-                if (newSalary < 0 || newSalary > 9999999999999.99) {  // DECIMAL(15,2) max
+                if (newSalary < 0 || newSalary > 9999999999999.99) { 
                     throw new NumberFormatException("Out of range");
                 }
                 selected.setSalary(newSalary);

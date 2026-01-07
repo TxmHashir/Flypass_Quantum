@@ -39,7 +39,7 @@ public class DBConnection {
                 "contact VARCHAR(50), " +
                 "passport_number VARCHAR(50), " +
                 "citizenship VARCHAR(100), " +
-                "visa VARCHAR(255), " + // Stored as "Type, Country" e.g., "Tourist, USA"
+                "visa VARCHAR(255), " +
                 "role ENUM('admin', 'pilot', 'customer') NOT NULL, " +
                 "encryp_key VARCHAR(255) UNIQUE NOT NULL, " +
                 "bank_name VARCHAR(255), " +
