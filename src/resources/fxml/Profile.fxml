@@ -27,7 +27,7 @@
         <StackPane>
             <!-- Customer Profile -->
                     <VBox fx:id="customerPane" visible="false" spacing="20">
-                        <!-- My Profile Card -->
+                        <!--Profile Card -->
                         <VBox style="-fx-background-color: transparent; -fx-background-radius: 15; -fx-padding: 30; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" spacing="20">
                             <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #0B3D91;" text="My Profile" />
                             <HBox spacing="40" alignment="CENTER_LEFT">
@@ -46,7 +46,7 @@
                             </HBox>
                         </VBox>
                         
-                        <!-- Personal Information Card -->
+                        <!--Information Card -->
                         <VBox style="-fx-background-color: transparent; -fx-background-radius: 15; -fx-padding: 30; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" spacing="20">
                             <HBox alignment="CENTER_LEFT" spacing="20">
                                 <Label style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #0B3D91;" text="Personal Information" />
@@ -118,7 +118,7 @@
                         </HBox>
                     </VBox>
 
-                    <!-- Staff/Pilot/Air Hostess/Admin profiles with similar structure -->
+                    <!--profiles with similar structure -->
                     <VBox fx:id="staffPane" visible="false" spacing="20">
                         <VBox style="-fx-background-color: transparent; -fx-background-radius: 15; -fx-padding: 30; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" spacing="20">
                             <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #0B3D91;" text="My Profile" />
@@ -200,7 +200,7 @@
 
             <!-- Pilot Profile -->
                     <VBox fx:id="pilotPane" visible="false" spacing="20">
-                        <!-- My Profile Card -->
+                        <!--Profile Card -->
                         <VBox style="-fx-background-color: transparent; -fx-background-radius: 15; -fx-padding: 30; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" spacing="20">
                             <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #0B3D91;" text="My Profile" />
                             <HBox spacing="40" alignment="CENTER_LEFT">
@@ -218,7 +218,7 @@
                     </HBox>
                         </VBox>
                         
-                        <!-- Personal Information Card -->
+                        <!--Information Card -->
                         <VBox style="-fx-background-color: transparent; -fx-background-radius: 15; -fx-padding: 30; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" spacing="20">
                             <Label style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #0B3D91;" text="Personal Information" />
                             <GridPane hgap="40" vgap="20">
@@ -283,8 +283,6 @@
                             <Button onAction="#viewPilotDuties" prefHeight="50" prefWidth="150" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 5;" text="View Duties" />
                     </HBox>
                     </VBox>
-
-            <!-- Air Hostess Profile -->
                     <VBox fx:id="airHostessPane" visible="false" spacing="20">
                         <!-- My Profile Card -->
                         <VBox style="-fx-background-color: transparent; -fx-background-radius: 15; -fx-padding: 30; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" spacing="20">
@@ -363,8 +361,7 @@
                                 </VBox>
                             </GridPane>
                     </VBox>
-                        
-                        <!-- Air Hostess Actions -->
+
                         <HBox alignment="CENTER" spacing="20" style="-fx-padding: 20;">
                             <Button onAction="#viewAirHostessDuties" prefHeight="50" prefWidth="150" style="-fx-background-color: #0B3D91; -fx-text-fill: white; -fx-font-size: 16px; -fx-background-radius: 5;" text="View Duties" />
                     </HBox>

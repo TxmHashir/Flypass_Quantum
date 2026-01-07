@@ -7,7 +7,7 @@ public class DBConnection {
 
     private static final String DB_URL = "jdbc:mysql://localhost:3306/flypass_quantum?useSSL=false&allowPublicKeyRetrieval=true";
     private static final String USER = "root"; 
-    private static final String PASS = ""; 
+    private static final String PASS = "One1_Two2"; 
 
     public static Connection getConnection() {
         Connection conn = null;
@@ -39,7 +39,7 @@ public class DBConnection {
                 "contact VARCHAR(50), " +
                 "passport_number VARCHAR(50), " +
                 "citizenship VARCHAR(100), " +
-                "visa VARCHAR(255), " + // Stored as "Type, Country" e.g., "Tourist, USA"
+                "visa VARCHAR(255), " +
                 "role ENUM('admin', 'pilot', 'customer') NOT NULL, " +
                 "encryp_key VARCHAR(255) UNIQUE NOT NULL, " +
                 "bank_name VARCHAR(255), " +

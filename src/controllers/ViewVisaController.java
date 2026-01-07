@@ -39,13 +39,11 @@ public class ViewVisaController extends SharedController {
                 citizenshipLabel.setText(user.getCitizenship());
                 
                 LocalDate issueDate = LocalDate.now();
-                LocalDate expDate = issueDate.plusMonths(6); // Mock 6 months validity
+                LocalDate expDate = issueDate.plusMonths(6); 
                 issueDateLabel.setText(issueDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy")));
                 expDateLabel.setText(expDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy")));
                 
                 visaNoLabel.setText("VISA-" + new Random().nextInt(1000000));
-                
-                // Mock MRZ
                 mrzLine1.setText("V<" + country.toUpperCase() + "<" + visaType.toUpperCase() + "<" + user.getName().replace(" ", "<") + "<");
                 mrzLine2.setText(user.getPassportNumber() + "<" + user.getCnic() + "<" + issueDate.format(DateTimeFormatter.ofPattern("yyMMdd")) + "<<");
             } else {

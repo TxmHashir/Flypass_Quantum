@@ -16,12 +16,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.layout.StackPane;
 import java.io.File;
 
-import javafx.scene.control.Button; // Already there, but ensure
-
-// Add imports for specific controllers
-
-// Optionally: import ApplyVisaController; if adding
-
 public class ProfileController extends SharedController {
     @FXML private VBox customerPane, staffPane, pilotPane, adminPane, airHostessPane;
     @FXML private ImageView customerImageView, staffImageView, pilotImageView, airHostessImageView, adminImageView;
@@ -32,10 +26,8 @@ public class ProfileController extends SharedController {
     // Pilot
     @FXML private Label pilotNameLabel, pilotNameLabel2, pilotCnicLabel, pilotEmailLabel, pilotContactLabel, pilotPassportLabel, pilotCitizenshipLabel, pilotVisaLabel, pilotVisaStatusLabel, pilotRoleLabel, pilotRoleLabel2, pilotSalaryLabel;
     @FXML private Label pilotCountryLabel, pilotCityLabel, pilotPostalCodeLabel;
-    // Staff
     @FXML private Label staffNameLabel, staffNameLabel2, staffCnicLabel, staffEmailLabel, staffContactLabel, staffPassportLabel, staffCitizenshipLabel, staffVisaLabel, staffVisaStatusLabel, staffRoleLabel, staffRoleDisplayLabel, staffSalaryLabel;
     @FXML private Label staffCountryLabel, staffCityLabel, staffPostalCodeLabel;
-    // Air Hostess
     @FXML private Label ahNameLabel, ahNameLabel2, ahCnicLabel, ahEmailLabel, ahContactLabel, ahPassportLabel, ahCitizenshipLabel, ahVisaLabel, ahVisaStatusLabel, ahRoleLabel, ahRoleLabel2, ahSalaryLabel;
     @FXML private Label ahCountryLabel, ahCityLabel, ahPostalCodeLabel;
     // Admin
@@ -397,13 +389,12 @@ public class ProfileController extends SharedController {
             stage.setX(x);
             stage.setY(y);
            
-            SharedController controller = loader.getController(); // Base class
+            SharedController controller = loader.getController();
             controller.setUser(user);
-           
-            // Specific initialization based on FXML
+
             if (fxmlPath.equals("/fxml/ViewVisa.fxml")) {
                 ViewVisaController visaController = loader.getController();
-                visaController.initializeVisaDetails(); // Added this call to populate the visa details
+                visaController.initializeVisaDetails();
             } else if (fxmlPath.equals("/fxml/Profile.fxml")) {
                 ProfileController profileController = loader.getController();
                 profileController.initializeProfile();
@@ -416,7 +407,7 @@ public class ProfileController extends SharedController {
             } else if (fxmlPath.equals("/fxml/AirHostessDuty.fxml")) {
                 AirHostessDutyController ahController = loader.getController();
                 ahController.loadDuties();
-            } // Add similar for other controllers if needed (e.g., ApplyVisa: ApplyVisaController c = ...; c.prefillFields();)
+            }
            
             stage.show();
         } catch (Exception e) {
